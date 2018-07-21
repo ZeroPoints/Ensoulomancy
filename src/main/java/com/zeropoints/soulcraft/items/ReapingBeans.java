@@ -13,8 +13,8 @@ public class ReapingBeans extends ItemFood implements IHasModel {
 
 	public ReapingBeans() {
 		super(3, 0.6f, false);
-		setUnlocalizedName("reapingbeans");
-		setRegistryName("reapingbeans");
+		setUnlocalizedName("reaping_beans");
+		setRegistryName("reaping_beans");
 		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
@@ -23,7 +23,7 @@ public class ReapingBeans extends ItemFood implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "reapingbeans");
+		Main.proxy.registerItemRenderer(this, 0, "reaping_beans");
 		
 	}
 	

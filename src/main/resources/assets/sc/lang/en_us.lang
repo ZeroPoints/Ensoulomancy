@@ -3,8 +3,8 @@
 itemGroup.soulcraft_tab=Soulcraft
 
 // Items
-item.reapingseeds.name=Reaping Seeds
-item.reapingbeans.name=Reaping Beans
+item.reaping_seeds.name=Reaping Seeds
+item.reaping_beans.name=Reaping Beans
 
 // Blocks
 

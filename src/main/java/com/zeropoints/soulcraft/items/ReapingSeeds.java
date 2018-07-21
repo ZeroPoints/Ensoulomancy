@@ -31,8 +31,8 @@ public class ReapingSeeds extends Item implements IHasModel, IPlantable {
 	public ReapingSeeds() {
 		super();
 		
-		setUnlocalizedName("reapingseeds");
-		setRegistryName("reapingseeds");
+		setUnlocalizedName("reaping_seeds");
+		setRegistryName("reaping_seeds");
 		
 		setCreativeTab(Main.SOULCRAFT_TAB);
 		
@@ -42,7 +42,7 @@ public class ReapingSeeds extends Item implements IHasModel, IPlantable {
 	 
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "reapingseeds");
+		Main.proxy.registerItemRenderer(this, 0, "reaping_seeds");
 	}
 
 
@@ -54,7 +54,7 @@ public class ReapingSeeds extends Item implements IHasModel, IPlantable {
 		IBlockState state = worldIn.getBlockState(pos);		
 		if(facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, stack) && 
 				state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, this) && worldIn.isAirBlock(pos.up())) {
-			worldIn.setBlockState(pos.up(), ModBlocks.REAPINGBEANSCROP.getDefaultState());
+			worldIn.setBlockState(pos.up(), ModBlocks.REAPING_BEANS_CROP.getDefaultState());
 			stack.shrink(1);
 			return EnumActionResult.SUCCESS;
 		}
@@ -64,7 +64,7 @@ public class ReapingSeeds extends Item implements IHasModel, IPlantable {
 	
     @Override
     public net.minecraft.block.state.IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos) {
-        return ModBlocks.REAPINGBEANSCROP.getDefaultState();
+        return ModBlocks.REAPING_BEANS_CROP.getDefaultState();
     }
 	
     /**

@@ -30,8 +30,8 @@ public class ReapingBeansCrop extends BlockCrops {
 	public ReapingBeansCrop() {
 		//super();
 		
-		setUnlocalizedName("reapingbeanscrop");
-		setRegistryName("reapingbeanscrop");
+		setUnlocalizedName("reaping_beans_crop");
+		setRegistryName("reaping_beans_crop");
 		
 		ModBlocks.BLOCKS.add(this);
 	}
@@ -45,12 +45,12 @@ public class ReapingBeansCrop extends BlockCrops {
 	
 	@Override
 	protected Item getSeed() {
-		return ModItems.REAPINGSEEDS;
+		return ModItems.REAPING_SEEDS;
 	}
 	
 	@Override
 	protected Item getCrop() {
-		return ModItems.REAPINGBEANS;
+		return ModItems.REAPING_BEANS;
 	}
 	
 	/*

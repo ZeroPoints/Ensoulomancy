@@ -3,12 +3,11 @@ package com.zeropoints.soulcraft.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zeropoints.soulcraft.items.tools.ToolSword;
 import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.items.*;
 import com.zeropoints.soulcraft.items.armor.ArmorBase;
 import com.zeropoints.soulcraft.util.Reference;
-
-
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -24,17 +23,18 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public class ModItems {
 	
-	
-	
-	
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	
 	
-	public static final ReapingBeans REAPINGBEANS = new ReapingBeans();
-
-	public static final ReapingSeeds REAPINGSEEDS = new ReapingSeeds();
-
+	// Materials
+	public static final ToolMaterial MATERIAL_SOUL_INGOT = EnumHelper.addToolMaterial("material_soul_ingot", 2, 250, 6.0F, 5.0F, 10);
 	
+	// Plants
+	public static final ReapingBeans REAPING_BEANS = new ReapingBeans();
+	public static final ReapingSeeds REAPING_SEEDS = new ReapingSeeds();
+
+	// Tools
+	public static final ItemSword REAPING_SCYTHE = new ToolSword("reaping_scythe", MATERIAL_SOUL_INGOT);
 	
 	
 }

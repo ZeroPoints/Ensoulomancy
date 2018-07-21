@@ -7,42 +7,42 @@
         "age": {
             "0": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/0"
+                    "cross": "sc:blocks/reaping_beans/0"
                 }
             },
             "1": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/1"
+                    "cross": "sc:blocks/reaping_beans/1"
                 }
             },
             "2": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/2"
+                    "cross": "sc:blocks/reaping_beans/2"
                 }
             },
             "3": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/3"
+                    "cross": "sc:blocks/reaping_beans/3"
                 }
             },
             "4": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/4"
+                    "cross": "sc:blocks/reaping_beans/4"
                 }
             },
             "5": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/5"
+                    "cross": "sc:blocks/reaping_beans/5"
                 }
             },
             "6": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/6"
+                    "cross": "sc:blocks/reaping_beans/6"
                 }
             },
             "7": {
                 "textures": {
-                    "cross": "sc:blocks/reapingbeans/7"
+                    "cross": "sc:blocks/reaping_beans/7"
                 }
             }
         }
