@@ -54,7 +54,7 @@ public class ReapingBeansCrop extends BlockCrops {
 	}
 	
 	/*
-	 * This does not actually change the block it can grow on. See @com.zeropoints.soulcraft.items.ReapingSeeds getPlantType()
+	 * This does not actually change the block it can grow on. See @com.zeropoints.soulcraft.items.ReapingSeeds#getPlantType
 	 */
 	@Override
 	protected boolean canSustainBush(IBlockState state) {
