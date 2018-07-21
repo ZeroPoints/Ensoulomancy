@@ -3,9 +3,12 @@ package com.zeropoints.soulcraft.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zeropoints.soulcraft.items.ItemBase;
+import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
+import com.zeropoints.soulcraft.items.*;
 import com.zeropoints.soulcraft.items.armor.ArmorBase;
 import com.zeropoints.soulcraft.util.Reference;
+
+
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -25,6 +28,12 @@ public class ModItems {
 	
 	
 	public static final List<Item> ITEMS = new ArrayList<Item>();
+	
+	
+	public static final ReapingBeans REAPINGBEANS = new ReapingBeans();
+
+	public static final ReapingSeeds REAPINGSEEDS = new ReapingSeeds();
+
 	
 	
 	

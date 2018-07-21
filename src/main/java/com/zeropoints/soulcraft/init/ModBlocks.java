@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zeropoints.soulcraft.blocks.BlockBase;
+import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,5 +15,6 @@ public class ModBlocks {
 
 	
 
+	public static final ReapingBeansCrop REAPINGBEANSCROP = new ReapingBeansCrop();
 	
 }
