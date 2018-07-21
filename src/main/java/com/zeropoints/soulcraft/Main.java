@@ -1,11 +1,10 @@
 package com.zeropoints.soulcraft;
 
-
-
 import com.zeropoints.soulcraft.proxy.CommonProxy;
 import com.zeropoints.soulcraft.util.Reference;
+import com.zeropoints.soulcraft.util.SoulcraftTab;
 
-
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,6 +20,8 @@ public class Main {
 
 	@Mod.Instance
 	public static Main instance;
+	
+	public static final CreativeTabs SOULCRAFT_TAB = new SoulcraftTab("soulcraft_tab");
 	
 	
     public static Logger logger;

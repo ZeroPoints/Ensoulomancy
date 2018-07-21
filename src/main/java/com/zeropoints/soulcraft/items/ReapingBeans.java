@@ -15,15 +15,12 @@ public class ReapingBeans extends ItemFood implements IHasModel {
 		super(3, 0.6f, false);
 		setUnlocalizedName("reapingbeans");
 		setRegistryName("reapingbeans");
-		setCreativeTab(CreativeTabs.FOOD);
+		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
 	}
 
-
-
-
-	 
+	
 	@Override
 	public void registerModels() {
 		Main.proxy.registerItemRenderer(this, 0, "reapingbeans");
