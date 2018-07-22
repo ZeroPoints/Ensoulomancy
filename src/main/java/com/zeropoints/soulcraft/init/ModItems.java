@@ -3,6 +3,7 @@ package com.zeropoints.soulcraft.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zeropoints.soulcraft.items.tools.ReapingScythe;
 import com.zeropoints.soulcraft.items.tools.ToolSword;
 import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.items.*;
@@ -34,7 +35,7 @@ public class ModItems {
 	public static final ReapingSeeds REAPING_SEEDS = new ReapingSeeds();
 
 	// Tools
-	public static final ItemSword REAPING_SCYTHE = new ToolSword("reaping_scythe", MATERIAL_SOUL_INGOT);
+	public static final ReapingScythe REAPING_SCYTHE = new ReapingScythe();
 	
 	// Items
 	public static final SoulIngot SOUL_INGOT = new SoulIngot();

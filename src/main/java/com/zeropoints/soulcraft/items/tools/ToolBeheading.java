@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-
+// TODO: Change this to a enchantment attribute instead of hard-coding???
 public class ToolBeheading {
 	
 	public static Random random = new Random();
@@ -40,7 +40,7 @@ public class ToolBeheading {
 	}
 		
 	/**
-	 * When a beheading weapon kills a mob and they drop, drop a head item
+	 * When a beheading weapon kills a mob and they drop items, drop a head item based on the item head drop chance
 	 */
 	@SubscribeEvent
 	public void onLivingDrops(LivingDropsEvent event) {
@@ -50,15 +50,9 @@ public class ToolBeheading {
 
 			// Is capable of beheading
 			if(item instanceof ToolSword) {
-				ToolSword tool = (ToolSword)item;
-				System.out.println(tool.CAN_BEHEAD);
-				
 				ItemStack head = getHeadDrop(event.getEntityLiving());
-				Float rand = random.nextFloat();
-				System.out.println(rand);
 				
-				if(head != null && !head.isEmpty() && !alreadyContainsDrop(event, head) && tool.HEAD_DROP_CHANCE > rand) {
-					System.out.println("Get Head");
+				if(head != null && !head.isEmpty() && !alreadyContainsDrop(event, head) && ((ToolSword)item).HEAD_DROP_CHANCE > random.nextFloat()) {
 					EntityLivingBase entityLiving = event.getEntityLiving();
 					EntityItem entityitem = new EntityItem(entityLiving.getEntityWorld(), entityLiving.posX, entityLiving.posY, entityLiving.posZ, head);
 					entityitem.setDefaultPickupDelay();
