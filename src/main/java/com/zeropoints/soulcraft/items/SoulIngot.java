@@ -5,16 +5,16 @@ import com.zeropoints.soulcraft.init.ModItems;
 import com.zeropoints.soulcraft.util.IHasModel;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemFood;
+import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
 
 
-public class ReapingBeans extends ItemFood implements IHasModel {
+public class SoulIngot extends Item implements IHasModel {
 
-	public ReapingBeans() {
-		super(3, 0.6f, false);
-		setUnlocalizedName("reaping_beans");
-		setRegistryName("reaping_beans");
+	public SoulIngot() {
+		super();
+		setUnlocalizedName("soul_ingot");
+		setRegistryName("soul_ingot");
 		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
@@ -23,7 +23,7 @@ public class ReapingBeans extends ItemFood implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "reaping_beans");
+		Main.proxy.registerItemRenderer(this, 0, "soul_ingot");
 		
 	}
 	

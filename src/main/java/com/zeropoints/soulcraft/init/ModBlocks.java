@@ -14,7 +14,9 @@ public class ModBlocks {
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
 
 	
-
-	public static final ReapingBeansCrop REAPINGBEANSCROP = new ReapingBeansCrop();
+	// Crops
+	public static final ReapingBeansCrop REAPING_BEANS_CROP = new ReapingBeansCrop();
+	
+	
 	
 }

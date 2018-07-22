@@ -1,11 +1,10 @@
 package com.zeropoints.soulcraft;
 
-
-
 import com.zeropoints.soulcraft.proxy.CommonProxy;
 import com.zeropoints.soulcraft.util.Reference;
+import com.zeropoints.soulcraft.util.SoulcraftTab;
 
-
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,6 +20,8 @@ public class Main {
 
 	@Mod.Instance
 	public static Main instance;
+	
+	public static final CreativeTabs SOULCRAFT_TAB = new SoulcraftTab("soulcraft_tab");
 	
 	
     public static Logger logger;
@@ -39,15 +40,12 @@ public class Main {
 	public static void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		
-		
-		
         proxy.preInit(event);
 	}
 	
 	@Mod.EventHandler
 	public static void init(FMLInitializationEvent event) {
 		proxy.init(event);
-		 
 	}
 	
 	@Mod.EventHandler
@@ -58,6 +56,7 @@ public class Main {
 	
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
+		proxy.load(event);
 	}
 	
 }
