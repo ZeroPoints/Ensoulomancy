@@ -46,7 +46,7 @@ public class CommonProxy {
     
 
 	
-    public void load(FMLPostInitializationEvent e) {
+    public void load(FMLInitializationEvent event) {
     	
     }
 
