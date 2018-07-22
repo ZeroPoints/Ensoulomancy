@@ -1,10 +1,20 @@
 package com.zeropoints.soulcraft.proxy;
 
+import java.util.concurrent.Callable;
+
+import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.init.ModGuiHandler;
 import com.zeropoints.soulcraft.init.ModItems;
+import com.zeropoints.soulcraft.player.ISoulpool;
+import com.zeropoints.soulcraft.player.PlayerData;
+import com.zeropoints.soulcraft.player.PlayerDataFactory;
+import com.zeropoints.soulcraft.player.Soulpool;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,9 +29,19 @@ import net.minecraft.util.text.translation.I18n;
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
 
+		
+    	
+    	
     }
 
     public void init(FMLInitializationEvent e) {
+
+		CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), new PlayerDataFactory());
+		//Old style
+    	//CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), Soulpool.class);
+
+    	ModEvents.init();
+
     }
 
     public void postInit(FMLPostInitializationEvent e) {
