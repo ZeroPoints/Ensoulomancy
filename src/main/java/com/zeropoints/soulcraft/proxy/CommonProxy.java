@@ -29,9 +29,6 @@ import net.minecraft.util.text.translation.I18n;
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
 
-		
-    	
-    	
     }
 
     public void init(FMLInitializationEvent e) {
@@ -46,6 +43,14 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent e) {
     }
+    
+
+	
+    public void load(FMLPostInitializationEvent e) {
+    	
+    }
+
+    
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {

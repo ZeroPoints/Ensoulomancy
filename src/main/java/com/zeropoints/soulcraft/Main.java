@@ -56,8 +56,10 @@ public class Main {
 	
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
-		proxy.load(event);
+		
 	}
+	
+	
 	
 }
 
