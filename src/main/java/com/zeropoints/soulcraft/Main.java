@@ -40,15 +40,12 @@ public class Main {
 	public static void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		
-		
-		
         proxy.preInit(event);
 	}
 	
 	@Mod.EventHandler
 	public static void init(FMLInitializationEvent event) {
 		proxy.init(event);
-		 
 	}
 	
 	@Mod.EventHandler
@@ -59,6 +56,7 @@ public class Main {
 	
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
+		proxy.load(event);
 	}
 	
 }

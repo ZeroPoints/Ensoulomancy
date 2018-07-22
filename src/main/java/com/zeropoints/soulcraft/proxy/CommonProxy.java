@@ -1,5 +1,6 @@
 package com.zeropoints.soulcraft.proxy;
 
+import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.init.ModGuiHandler;
 import com.zeropoints.soulcraft.init.ModItems;
 
@@ -18,13 +19,16 @@ import net.minecraft.util.text.translation.I18n;
 @Mod.EventBusSubscriber
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
-
     }
 
     public void init(FMLInitializationEvent e) {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
+    }
+    
+    public void load(FMLInitializationEvent e) {
+    	ModEvents.init();
     }
 
     @SubscribeEvent

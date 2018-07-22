@@ -36,5 +36,7 @@ public class ModItems {
 	// Tools
 	public static final ItemSword REAPING_SCYTHE = new ToolSword("reaping_scythe", MATERIAL_SOUL_INGOT);
 	
+	// Items
+	public static final SoulIngot SOUL_INGOT = new SoulIngot();
 	
 }
