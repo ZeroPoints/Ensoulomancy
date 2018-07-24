@@ -1,15 +1,20 @@
 package com.zeropoints.soulcraft.world;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModBiomes;
 
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityZombie;
+//import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
@@ -30,20 +35,61 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     private Biome[] biomesForGeneration;
 
     
-    private ArrayList<SpawnListEntry> mobs = new ArrayList<SpawnListEntry>();
     
-
+    private ArrayList<SpawnListEntry> UpperMobs = Lists.newArrayList(
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 5, 1, 4),
+    	new SpawnListEntry(EntityBlaze.class, 5, 1, 4),
+    	new SpawnListEntry(EntityHusk.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityGhast.class, 5, 1, 4)
+    ) ;
+    
+    private ArrayList<SpawnListEntry> PurgatoryMobs = Lists.newArrayList(
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityCreeper.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 5, 1, 4)
+    ) ;
+    
+    private ArrayList<SpawnListEntry> LowerMobs = Lists.newArrayList(
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityElderGuardian.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityEndermite.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityGiantZombie.class, 5, 1, 4),
+    	new SpawnListEntry(net.minecraft.entity.monster.EntityGolem.class, 5, 1, 4)
+    ) ;
+    
+    
+            
+    
+        
 
     private MapGenBase caveGenerator = new MapGenCaves();
     private NormalTerrainGenerator terraingen = new NormalTerrainGenerator();
 
-    public PurgatoryChunkGenerator(World worldObj) {
+    
+    public PurgatoryChunkGenerator(World world, long seed, boolean mapFeaturesEnabled, String chunkProviderSettingsString) {
 
-    	//What is even this
-    	mobs.add(new SpawnListEntry(EntityZombie.class, 5, 1, 4));
+    	//biomesForGeneration = new Biome[]{ModBiomes.PROFANE_BIOME, ModBiomes.HALLOWED_BIOME, ModBiomes.STYX_BIOME};
+    	List<Biome> tmpBiomes = new ArrayList<Biome>();
+    	for(int i = 0; i < 300; i++) {
+    		switch(i%3) {
+				case 0:
+		    		tmpBiomes.add(ModBiomes.PROFANE_BIOME);    			
+					break;
+				case 1:
+		    		tmpBiomes.add(ModBiomes.HALLOWED_BIOME);    			
+					break;
+				case 2:
+		    		tmpBiomes.add(ModBiomes.STYX_BIOME);    			
+					break;
+    		}
+    	}
+    	biomesForGeneration  = tmpBiomes.toArray(new Biome[0]);
     	
-        this.worldObj = worldObj;
-        long seed = worldObj.getSeed();
+    	
+    	terraingen.setBiomesForGeneration(biomesForGeneration);
+    	
+    	
+        this.worldObj = world;
         this.random = new Random((seed + 516) * 314);
         terraingen.setup(worldObj, random);
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, EventType.CAVE);
@@ -54,12 +100,12 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         ChunkPrimer chunkprimer = new ChunkPrimer();
 
         // Setup biomes for terraingen
-        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
+        //this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
         terraingen.setBiomesForGeneration(biomesForGeneration);
         terraingen.generate(x, z, chunkprimer);
 
         // Setup biomes again for actual biome decoration
-        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
+        //this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
         // This will replace stone with the biome specific stones
         terraingen.replaceBiomeBlocks(x, z, chunkprimer, this, biomesForGeneration);
 
@@ -103,8 +149,9 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
 //        Biome biome = this.worldObj.getBiome(pos);
 //        return biome.getSpawnableList(creatureType);
 
+    	
         if (creatureType == EnumCreatureType.MONSTER){
-            return mobs;
+            return PurgatoryMobs;
         }
         return ImmutableList.of();
 

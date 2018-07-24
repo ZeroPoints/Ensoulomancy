@@ -1,6 +1,7 @@
 package com.zeropoints.soulcraft.world;
 
 import com.zeropoints.soulcraft.util.ConfigurationHandler;
+import com.zeropoints.soulcraft.init.ModBiomes;
 import com.zeropoints.soulcraft.init.ModDimensions;
 import com.zeropoints.soulcraft.Main;
 
@@ -11,11 +12,14 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+
 
 public class PurgatoryWorldProvider extends WorldProvider {
 
@@ -25,16 +29,35 @@ public class PurgatoryWorldProvider extends WorldProvider {
     protected void init () {
 
         // Set the base biome to match config
-        final Biome configBiome = ForgeRegistries.BIOMES.getValue(new ResourceLocation(ConfigurationHandler.defaultBiome));
-        biomeProvider = new BiomeProviderSingle(configBiome != null ? configBiome : Biomes.ICE_MOUNTAINS);
+        //final Biome configBiome = ForgeRegistries.BIOMES.getValue(new ResourceLocation(ConfigurationHandler.defaultBiome));
+        //biomeProvider = new BiomeProviderSingle(configBiome != null ? configBiome : Biomes.ICE_MOUNTAINS);
+    	///this.terrainType.getBiomeProvider(world);
 
+    	// = this.terrainType.getBiomeProvider(world);
+    	//biomeProvider = new BiomeProviderSingle(Biomes.HELL);
+
+        //final Biome configBiome = ForgeRegistries.BIOMES.getValue(new ResourceLocation(ConfigurationHandler.defaultBiome));
+        //Default single biome works
+        //biomeProvider = new BiomeProviderSingle(configBiome != null ? configBiome : Biomes.ICE_MOUNTAINS);
+        
+        
+        //This works but uses default stuff
+        //biomeProvider = new BiomeProvider(ModDimensions.purgatoryWorldInfo);
+        
+        //New test custom provider
+        //Defaults biomes
+        biomeProvider = new PurgatoryBiomeProvider(world);
+        
+        
+        
+        hasSkyLight = true;
+    	
         setDimension(ConfigurationHandler.dimensionId);
         
-        Main.LogMesssage("Purgatory", "Init");
+        Main.LogMesssage("PurgatoryWorldProvider", "init");
         
         // Override generator settings
         //WorldUtils.setWorldSettings(this, ConfigurationHandler.generatorPreset);
-        hasSkyLight = true;
     }
     
 	
@@ -67,7 +90,8 @@ public class PurgatoryWorldProvider extends WorldProvider {
     
     @Override
     public IChunkGenerator createChunkGenerator() {
-        return new PurgatoryChunkGenerator(world);
+        Main.LogMesssage("PurgatoryWorldProvider", "createChunkGenerator");
+        return new PurgatoryChunkGenerator(this.world, this.world.getSeed(), false, world.getWorldInfo().getGeneratorOptions());
     }
     
     

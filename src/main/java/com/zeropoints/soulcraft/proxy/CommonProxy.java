@@ -3,6 +3,7 @@ package com.zeropoints.soulcraft.proxy;
 import java.util.concurrent.Callable;
 
 import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModBiomes;
 import com.zeropoints.soulcraft.init.ModDimensions;
 import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.init.ModGuiHandler;
@@ -30,13 +31,16 @@ import net.minecraft.util.text.translation.I18n;
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
 
-		ModDimensions.init();
 
 		
     }
 
     public void init(FMLInitializationEvent e) {
 
+		ModDimensions.init();
+		ModBiomes.init();
+		
+		
 		CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), new PlayerDataFactory());
 		//Old style
     	//CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), Soulpool.class);
