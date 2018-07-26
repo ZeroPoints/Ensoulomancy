@@ -35,32 +35,6 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     private Biome[] biomesForGeneration;
 
     
-    
-    private ArrayList<SpawnListEntry> UpperMobs = Lists.newArrayList(
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 5, 1, 4),
-    	new SpawnListEntry(EntityBlaze.class, 5, 1, 4),
-    	new SpawnListEntry(EntityHusk.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityGhast.class, 5, 1, 4)
-    ) ;
-    
-    private ArrayList<SpawnListEntry> PurgatoryMobs = Lists.newArrayList(
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityCreeper.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 5, 1, 4)
-    ) ;
-    
-    private ArrayList<SpawnListEntry> LowerMobs = Lists.newArrayList(
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityElderGuardian.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityEndermite.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityGiantZombie.class, 5, 1, 4),
-    	new SpawnListEntry(net.minecraft.entity.monster.EntityGolem.class, 5, 1, 4)
-    ) ;
-    
-    
-            
-    
-        
 
     private MapGenBase caveGenerator = new MapGenCaves();
     private NormalTerrainGenerator terraingen = new NormalTerrainGenerator();
@@ -70,18 +44,14 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
 
     	//biomesForGeneration = new Biome[]{ModBiomes.PROFANE_BIOME, ModBiomes.HALLOWED_BIOME, ModBiomes.STYX_BIOME};
     	List<Biome> tmpBiomes = new ArrayList<Biome>();
-    	for(int i = 0; i < 300; i++) {
-    		switch(i%3) {
-				case 0:
-		    		tmpBiomes.add(ModBiomes.PROFANE_BIOME);    			
-					break;
-				case 1:
-		    		tmpBiomes.add(ModBiomes.HALLOWED_BIOME);    			
-					break;
-				case 2:
-		    		tmpBiomes.add(ModBiomes.STYX_BIOME);    			
-					break;
-    		}
+    	for(int i = 0; i < 90; i++) {
+    		tmpBiomes.add(ModBiomes.PROFANE_BIOME);   
+    	}
+    	for(int i = 0; i < 90; i++) { 	
+    		tmpBiomes.add(ModBiomes.HALLOWED_BIOME);      		
+    	}
+    	for(int i = 0; i < 90; i++) {
+    		tmpBiomes.add(ModBiomes.STYX_BIOME);       		
     	}
     	biomesForGeneration  = tmpBiomes.toArray(new Biome[0]);
     	
@@ -146,14 +116,24 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
         // If you want normal creatures appropriate for this biome then uncomment the
         // following two lines:
-//        Biome biome = this.worldObj.getBiome(pos);
-//        return biome.getSpawnableList(creatureType);
-
     	
-        if (creatureType == EnumCreatureType.MONSTER){
-            return PurgatoryMobs;
-        }
-        return ImmutableList.of();
+    	
+    	String newHeight = "";
+    	if(pos.getY() <= 50) {
+    		newHeight = "low";
+    		return ModBiomes.PROFANE_BIOME.getSpawnableList(creatureType);
+    	}
+    	if(pos.getY() > 50 && pos.getY() <= 90) {
+    		return ModBiomes.STYX_BIOME.getSpawnableList(creatureType);
+    	}
+    	if(pos.getY() >= 90) {
+    		return ModBiomes.HALLOWED_BIOME.getSpawnableList(creatureType);
+    	}
+    	
+    	return ModBiomes.HALLOWED_BIOME.getSpawnableList(creatureType);
+    	
+    	//Biome biome = this.worldObj.getBiome(pos);
+    	//return biome.getSpawnableList(creatureType);
 
     }
 

@@ -22,11 +22,9 @@ public class ModBiomes {
 		ForgeRegistries.BIOMES.register(PROFANE_BIOME);
 		ForgeRegistries.BIOMES.register(HALLOWED_BIOME);
 		ForgeRegistries.BIOMES.register(STYX_BIOME);
-
 		
-		//Biome.registerBiome(2000, "Profane", PROFANE_BIOME);
-		//Biome.registerBiome(2001, "Hallowed", HALLOWED_BIOME);
-		//Biome.registerBiome(2002, "Styx", STYX_BIOME);
+		
+		
 	}
 	
 	
