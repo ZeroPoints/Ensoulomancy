@@ -7,6 +7,11 @@ item.reaping_seeds.name=Reaping Seeds
 item.reaping_beans.name=Reaping Beans
 item.soul_ingot.name=Soul Ingot
 
+// Heads
+item.soul_skull.blaze.name=Blaze Head
+item.soul_skull.cow.name=Cow Head
+item.soul_skull.chicken.name=Chicken Head
+
 // Blocks
 
 // Tools
@@ -15,3 +20,6 @@ item.reaping_scythe.name=Reaping Scythe
 // Armor
 
 // Entities
+
+// Tile Entities
+tile.soul_skull.name=Tile Skull

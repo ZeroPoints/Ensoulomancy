@@ -11,10 +11,12 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class SoulIngot extends Item implements IHasModel {
 
+	private String name = "soul_ingot";
+	
 	public SoulIngot() {
 		super();
-		setUnlocalizedName("soul_ingot");
-		setRegistryName("soul_ingot");
+		setUnlocalizedName(name);
+		setRegistryName(name);
 		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
@@ -23,9 +25,7 @@ public class SoulIngot extends Item implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "soul_ingot");
-		
+		Main.proxy.registerItemRenderer(this, 0, name);
 	}
-	
 	
 }

@@ -11,15 +11,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 
-
-
-
 public class PlayerHandler {
 
-	
 	@SubscribeEvent 
-	public void onPlayerLogsIn(PlayerLoggedInEvent event) 
-	{ 
+	public void onPlayerLogsIn(PlayerLoggedInEvent event) { 
 		EntityPlayer player = event.player; 
 		ISoulpool soul = player.getCapability(PlayerDataProvider.SOULPOOL_CAPABILITY, null); 
 	
@@ -31,12 +26,9 @@ public class PlayerHandler {
 		player.sendMessage(new TextComponentString(message)); 
 	} 
 	
-	
-		
-	
+
 	@SubscribeEvent 
-	public void onPlayerSleep(PlayerSleepInBedEvent event) 
-	{ 
+	public void onPlayerSleep(PlayerSleepInBedEvent event) { 
 		EntityPlayer player = event.getEntityPlayer(); 
 		
 		if (player.world.isRemote) return; 
@@ -53,6 +45,5 @@ public class PlayerHandler {
 		String message = String.format("You received 50 souls, you have %1$d soul.", soul.get()); 
 		player.sendMessage(new TextComponentString(message)); 
 	}
-	
 	
 }

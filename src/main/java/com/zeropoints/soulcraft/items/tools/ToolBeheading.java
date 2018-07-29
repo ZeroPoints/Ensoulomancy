@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.mojang.authlib.GameProfile;
 import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModItems;
+import com.zeropoints.soulcraft.renderer.tileentity.TileEntitySoulSkullRenderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
@@ -33,11 +35,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 // TODO: Change this to a enchantment attribute instead of hard-coding???
 public class ToolBeheading {
 	
-	public static Random random = new Random();
+	private static final Random random = new Random();
 	
-	public ToolBeheading() {
-		System.out.println("Subscribed");
-	}
 		
 	/**
 	 * When a beheading weapon kills a mob and they drop items, drop a head item based on the item head drop chance
@@ -49,7 +48,7 @@ public class ToolBeheading {
 			Item item = ((EntityLivingBase) event.getSource().getTrueSource()).getHeldItem(EnumHand.MAIN_HAND).getItem();
 
 			// Is capable of beheading
-			if(item instanceof ToolSword) {
+			if(item instanceof ToolSword && ((ToolSword)item).CAN_BEHEAD) {
 				ItemStack head = getHeadDrop(event.getEntityLiving());
 				
 				if(head != null && !head.isEmpty() && !alreadyContainsDrop(event, head) && ((ToolSword)item).HEAD_DROP_CHANCE > random.nextFloat()) {
@@ -92,10 +91,15 @@ public class ToolBeheading {
 				return new ItemStack(Items.SKULL, 1, 1);
 			case "Zombie": // meta 2: zombie
 				return new ItemStack(Items.SKULL, 1, 2);
-			case "Creeper": // meta 4: creep)er
+			case "Creeper": // meta 4: creeper
 				return new ItemStack(Items.SKULL, 1, 4);
 			case "EnderDragon": // meta 5: dragon
 				return new ItemStack(Items.SKULL, 1, 5);
+			default:
+				// Custom heads, look up using the meta index using SoulSkullTypeMap
+				if(TileEntitySoulSkullRenderer.SoulSkullTypeMap.containsKey(entityName)) {
+					return new ItemStack(ModItems.SOUL_SKULL, 1, TileEntitySoulSkullRenderer.SoulSkullTypeMap.get(entityName));
+				}
 		}
 	    
 	    // Entity does not have a skull drop

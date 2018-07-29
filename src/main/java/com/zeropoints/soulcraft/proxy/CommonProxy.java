@@ -26,55 +26,38 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraft.util.text.translation.I18n;
 
-
+/**
+ * CommonProxy makes sure initialisation certain registry/events are triggered both client and server side.
+ */
 @Mod.EventBusSubscriber
 public class CommonProxy {
+
 	public void preInit(FMLPreInitializationEvent e) {
-
-
 		
     }
 
     public void init(FMLInitializationEvent e) {
-
-		ModDimensions.init();
+    	ModDimensions.init();
 		ModBiomes.init();
-		
-		
 		CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), new PlayerDataFactory());
-		//Old style
-    	//CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), Soulpool.class);
-
-    	ModEvents.init();
-
+		
+		ModEvents.init();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-    }
-    
-
-	
-    public void load(FMLInitializationEvent event) {
-    	
-    }
-
-    
-
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-    }
-
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-    }
-    
-    public void registerItemRenderer(Item item, int meta, String id) {
     	
     }
     
+    public void load(FMLInitializationEvent e) {
+    	
+    }
+    
+    public void registerItemRenderer(Item item, int meta, String id) {	
+
+    }
     
     public String localize(String unlocalized, Object... args) {
 		return I18n.translateToLocalFormatted(unlocalized, args);
 	}
-    
+
 }

@@ -17,21 +17,14 @@ public class ConfigurationHandler {
     public static File configFile = new File(directory, "soulcraft.cfg");
     public static File worldPreset = new File(directory, "worldgen.json");
 
-    
-    public static Configuration config;
-    
+    public static Configuration config;    
 
     public static String generatorPreset = "";
 
     public static int dimensionId = 133780085;
-
     
     public static String defaultBiome = "minecraft:ice_mountains";
 
-    
-    
-    
-    
     
     
     public ConfigurationHandler() {
@@ -40,16 +33,10 @@ public class ConfigurationHandler {
             directory.mkdirs();
         }
     	
-
         config = new Configuration(configFile);
         generatePresets();
         syncConfigData();
-        
     }
-    
-    
-    
-    
     
 
     private void generatePresets () {
@@ -57,15 +44,12 @@ public class ConfigurationHandler {
         final File preset = new File(directory, "world_generator_settings.json");
 
         if (!preset.exists()) {
-
             Main.LogMesssage("Config","World generator settings does not exist. Generating a new one.");
 
             try {
-
                 FileUtils.copyURLToFile(PurgatoryWorldProvider.class.getResource("/assets/sc/presets/soulcraft_dimension_generator_settings.json"), preset);
                 Main.LogMesssage("Config","Finished generating world generator settings.");
             }
-
             catch (final IOException e) {
             	Main.LogMesssage("Config","Could not generate world generator settings." + e.getMessage());
             }
@@ -74,19 +58,14 @@ public class ConfigurationHandler {
         Main.LogMesssage("Config","Reading world generator settings.");
 
         try {
-
             generatorPreset = FileUtils.readFileToString(preset, StandardCharsets.UTF_8);
             Main.LogMesssage("Config","World settings loaded: " + generatorPreset.replaceAll("\\R", "").replaceAll("\\s", " "));
         }
-
         catch (final IOException e) {
         	Main.LogMesssage("Config","Could not read world generator settings! Default will be used! " + e.getMessage());
 
         }
     }
-    
-    
-    
     
 
     private void syncConfigData () {
@@ -101,10 +80,6 @@ public class ConfigurationHandler {
             Main.LogMesssage("Config","Saving config file.");
             config.save();
         }
-    }
-    
-    
-    
-    
+    }    
     
 }

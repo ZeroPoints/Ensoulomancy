@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.zeropoints.soulcraft.items.tools.ReapingScythe;
 import com.zeropoints.soulcraft.items.tools.ToolSword;
+import com.zeropoints.soulcraft.items.ItemSoulSkull;
 import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.items.*;
 import com.zeropoints.soulcraft.items.armor.ArmorBase;
+import com.zeropoints.soulcraft.util.IHasModel;
 import com.zeropoints.soulcraft.util.Reference;
 
 import net.minecraft.init.SoundEvents;
@@ -21,11 +23,16 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModItems {
 	
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	
+	//---------------------------------------------------------------------
 	
 	// Materials
 	public static final ToolMaterial MATERIAL_SOUL_INGOT = EnumHelper.addToolMaterial("material_soul_ingot", 2, 250, 6.0F, 5.0F, 10);
@@ -39,5 +46,32 @@ public class ModItems {
 	
 	// Items
 	public static final SoulIngot SOUL_INGOT = new SoulIngot();
+	public static final ItemSoulSkull SOUL_SKULL = new ItemSoulSkull();
+	
+	//---------------------------------------------------------------------
+	
+	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+	public static class RegistrationHandler {
+		
+		@SubscribeEvent
+		public static void registerItems(final RegistryEvent.Register<Item> event) {
+			// uses fixed array with items to register instead of generated list
+			//final Item[] items = {
+			//		SOUL_SKULL
+			//};
+			
+			final IForgeRegistry<Item> registry = event.getRegistry();
+						
+			for (final Item item: ITEMS) {
+				registry.register(item);
+				
+				// Only when item has IHasModel implemented do we want to force 'generic' render
+				if(item instanceof IHasModel) {
+					((IHasModel)item).registerModels();	
+				}
+			}
+			
+		}
+	}
 	
 }
