@@ -16,15 +16,15 @@ public class ModelChickenHead extends ModelHeadBase {
     public ModelChickenHead() {
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.Head = new ModelRenderer(this, 0, 0);
-        this.Head.setRotationPoint(0, 0, 0);
-        this.Head.addBox(-2, -6, -2, 4, 6, 3, 0);
         this.Red = new ModelRenderer(this, 14, 4);
         this.Red.setRotationPoint(0, 0, 0);
         this.Red.addBox(-1, -2, -3, 2, 2, 2, 0);
         this.Beak = new ModelRenderer(this, 14, 0);
         this.Beak.setRotationPoint(0, 0, 0);
         this.Beak.addBox(-2, -4, -4, 4, 2, 2, 0);
+        this.Head = new ModelRenderer(this, 0, 0);
+        this.Head.setRotationPoint(0, 0, 0);
+        this.Head.addBox(-2, -6, -2, 4, 6, 3, 0);
         this.Head.addChild(this.Red);
         this.Head.addChild(this.Beak);
     }

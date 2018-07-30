@@ -5,7 +5,13 @@ import java.util.Random;
 import com.mojang.authlib.GameProfile;
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.init.ModItems;
+import com.zeropoints.soulcraft.model.heads.ModelCatHead;
+import com.zeropoints.soulcraft.model.heads.ModelHorseHead;
+import com.zeropoints.soulcraft.model.heads.ModelLlamaHead;
+import com.zeropoints.soulcraft.model.heads.ModelParrotHead;
+import com.zeropoints.soulcraft.model.heads.ModelRabbitHead;
 import com.zeropoints.soulcraft.renderer.tileentity.TileEntitySoulSkullRenderer;
+import com.zeropoints.soulcraft.util.SoulSkullType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
@@ -16,6 +22,11 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityLlama;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.passive.EntityParrot;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -25,6 +36,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -32,7 +44,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 
-// TODO: Change this to a enchantment attribute instead of hard-coding???
+// TODO: Change this to a enchantment attribute instead of assigning to an event???
 public class ToolBeheading {
 	
 	private static final Random random = new Random();
@@ -63,18 +75,18 @@ public class ToolBeheading {
 	
 	
 	/**
-	 * Check if a head has already dropped
+	 * Check if a head has already dropped (would be weird if 2 heads dropped)
 	 */
 	private boolean alreadyContainsDrop(LivingDropsEvent event, ItemStack head) {
 	    return event.getDrops().stream().map(EntityItem::getItem).anyMatch(drop -> ItemStack.areItemStacksEqual(drop, head));
 	}
 	
 	/*
-	 * Get the type of item to drop. Only works for vanilla heads
+	 * Get the type of item to drop. Works for vanilla and custom skulls listed in the TileEntitySoulSkullRenderer class
 	 */
 	private ItemStack getHeadDrop(EntityLivingBase entity) {
 		String entityName = EntityList.getEntityString(entity);
-		System.out.println(entityName);
+		System.out.println(entityName + ", " + entity.getName());
 		
 		// Players are special - get their meta and return the special head 
 		if(entity instanceof EntityPlayer) {
@@ -82,6 +94,8 @@ public class ToolBeheading {
 	    	NBTUtil.writeGameProfile(head.getOrCreateSubCompound("SkullOwner"), ((EntityPlayer)entity).getGameProfile());
 	    	return head;
 	    }
+		
+		int variant;
 		
 		// For all other types of heads, use vanilla skull types for existing heads
 		switch(entityName) {
@@ -95,16 +109,36 @@ public class ToolBeheading {
 				return new ItemStack(Items.SKULL, 1, 4);
 			case "EnderDragon": // meta 5: dragon
 				return new ItemStack(Items.SKULL, 1, 5);
-			default:
-				// Custom heads, look up using the meta index using SoulSkullTypeMap
-				if(TileEntitySoulSkullRenderer.SoulSkullTypeMap.containsKey(entityName)) {
-					return new ItemStack(ModItems.SOUL_SKULL, 1, TileEntitySoulSkullRenderer.SoulSkullTypeMap.get(entityName));
-				}
+			case "Horse": // Horses have two textures layers. Variants are split by 256 + type
+				variant = ((EntityHorse)entity).getHorseVariant(); 
+				while(variant > 6) variant-=256;
+				entityName += "." + ModelHorseHead.subTypes[variant];
+				break;
+			case "Parrot":
+				variant = ((EntityParrot)entity).getVariant();
+				entityName += "." + ModelParrotHead.subTypes[variant];
+				break;
+			case "Llama":
+				variant = ((EntityLlama)entity).getVariant();
+				entityName += "." + ModelLlamaHead.subTypes[variant];
+				break;
+			case "Ozelot":
+				variant = ((EntityOcelot)entity).getTameSkin();
+				entityName += "." + ModelCatHead.subTypes[variant];
+				break;
+			case "Rabbit":
+				variant = "Toast".equals(TextFormatting.getTextWithoutFormattingCodes(entity.getName())) ? 6 : ((EntityRabbit)entity).getRabbitType();
+				entityName += "." + ModelRabbitHead.subTypes[variant];
+				break;
+		}
+		
+		// Custom heads, look up using the meta index using SoulSkullTypeMap
+		if(TileEntitySoulSkullRenderer.SoulSkullTypeMap.containsKey(entityName)) {
+			return new ItemStack(ModItems.SOUL_SKULL, 1, TileEntitySoulSkullRenderer.SoulSkullTypeMap.get(entityName));
 		}
 	    
 	    // Entity does not have a skull drop
 	    return null;
 	}
 
-	
 }

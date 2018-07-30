@@ -18,7 +18,7 @@ public class ModelCowHead extends ModelHeadBase {
         this.textureHeight = 32;
         this.RightHorn = new ModelRenderer(this, 22, 0);
         this.RightHorn.setRotationPoint(0, 0, 0);
-        this.RightHorn.addBox(-5, -8, -1, 1, 3, 1, 0);
+        this.RightHorn.addBox(-5, -9, -1, 1, 3, 1, 0);
         this.LeftHorn = new ModelRenderer(this, 22, 0);
         this.LeftHorn.setRotationPoint(0, 0, 0);
         this.LeftHorn.addBox(4, -9, -1, 1, 3, 1, 0);
