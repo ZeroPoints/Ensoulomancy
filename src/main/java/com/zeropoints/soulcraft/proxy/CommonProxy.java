@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.init.ModBiomes;
 import com.zeropoints.soulcraft.init.ModDimensions;
+import com.zeropoints.soulcraft.init.ModEntities;
 import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.init.ModGuiHandler;
 import com.zeropoints.soulcraft.init.ModItems;
@@ -49,7 +50,7 @@ public class CommonProxy {
     }
     
     public void load(FMLInitializationEvent e) {
-    	
+    	//ModEntities.init();
     }
     
     public void registerItemRenderer(Item item, int meta, String id) {	

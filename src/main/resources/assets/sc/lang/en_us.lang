@@ -20,6 +20,7 @@ item.reaping_scythe.name=Reaping Scythe
 // Armor
 
 // Entities
+entity.imp.name=Imp
 
 // Tile Entities
 tile.soul_skull.name=Tile Skull

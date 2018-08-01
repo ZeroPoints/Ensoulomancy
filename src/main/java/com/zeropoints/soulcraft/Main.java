@@ -1,5 +1,6 @@
 package com.zeropoints.soulcraft;
 
+import com.zeropoints.soulcraft.init.ModEntities;
 import com.zeropoints.soulcraft.proxy.CommonProxy;
 import com.zeropoints.soulcraft.util.ConfigurationHandler;
 import com.zeropoints.soulcraft.util.Reference;
@@ -50,6 +51,7 @@ public class Main {
 	@EventHandler
     public void init(FMLInitializationEvent e) {
 		proxy.init(e);
+		ModEntities.init();
     }
 
 	@EventHandler

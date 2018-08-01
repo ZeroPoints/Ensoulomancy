@@ -1,2 +1,0 @@
-# Soulcraft
-Necromancy Mod
