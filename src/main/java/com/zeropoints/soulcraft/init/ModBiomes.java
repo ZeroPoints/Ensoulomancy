@@ -6,6 +6,8 @@ import com.zeropoints.soulcraft.world.PurgatoryWorldType;
 import com.zeropoints.soulcraft.world.StyxBiome;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModBiomes {
@@ -16,9 +18,15 @@ public class ModBiomes {
 
     
 	public static void init() {
+		
 		ForgeRegistries.BIOMES.register(PROFANE_BIOME);
 		ForgeRegistries.BIOMES.register(HALLOWED_BIOME);
 		ForgeRegistries.BIOMES.register(STYX_BIOME);
+		
+		//Cant remember what this did
+		BiomeDictionary.addTypes(PROFANE_BIOME, Type.HOT);
+		BiomeDictionary.addTypes(HALLOWED_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(STYX_BIOME, Type.SPOOKY);
 	}
 	
 	
