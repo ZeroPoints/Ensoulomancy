@@ -13,11 +13,16 @@ import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.layer.GenLayer;
+import net.minecraft.world.gen.layer.GenLayerRiver;
+import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
+import net.minecraft.world.gen.layer.GenLayerZoom;
 import net.minecraft.world.gen.layer.IntCache;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 
@@ -30,60 +35,46 @@ public class PurgatoryBiomeProvider extends BiomeProvider {
 	
 	
 	
-	
-	
 	public PurgatoryBiomeProvider(World world) {
+		this(world.getSeed(), world.getWorldInfo().getTerrainType(), world.getWorldInfo().getGeneratorOptions());
+	}
+	
+	public PurgatoryBiomeProvider(long seed, WorldType worldType, String chunkProviderSettings) {
 		super(ModDimensions.purgatoryWorldInfo);
-		
-		//GenLayer[] agenlayer = initializeAllBiomeGenerators(seed, default1, str, properties);//GenLayer.initializeAllBiomeGenerators(seed, default1); //;
-		//agenlayer = getModdedBiomeGenerators(default1, seed, agenlayer);
-		//this.genBiomes = agenlayer[0];
-		//this.biomeIndexLayer = agenlayer[1];
-		
-		
-		//this.
-		
-		//allowedBiomes = Lists.newArrayList(HALLOWED_BIOME, PROFANE_BIOME, STYX_BIOME);
-		
-		//biomeCache = new BiomeCache(this);
-
 		
 	}
 	
 	
 	
+	
+
 	/*
-	public Biome[] getBiomesForGeneration(Biome[] biomes, int x, int z, int width, int height)
-    {
-        IntCache.resetIntCache();
+	 * Gets how this biome provider initiates its GenLayers for spawning biomes
+	 * The more zoom the larger the biome size
+	 * Ignore genlayerriverstyx for now
+	 */
+    @Override
+    public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
+        GenLayer biomes = new GenLayerPurgatory(seed);
 
-        if (biomes == null || biomes.length < width * height)
-        {
-            biomes = new Biome[width * height];
-        }
+        biomes = new GenLayerZoom(1337800851, biomes);
+        biomes = new GenLayerZoom(1337800852, biomes);
+        biomes = new GenLayerZoom(1337800853, biomes);
+        biomes = new GenLayerZoom(1337800854, biomes);
 
-        int[] aint = this.genBiomes.getInts(x, z, width, height);
+        //biomes = new GenLayerRiverStyx(1337800855, biomes);
+        
 
-        try
-        {
-            for (int i = 0; i < width * height; ++i)
-            {
-                biomes[i] = Biome.getBiome(aint[i], Biomes.DEFAULT);
-            }
+        GenLayer biomeIndexLayer = new GenLayerVoronoiZoom(10L, biomes);
+        biomeIndexLayer.initWorldGenSeed(seed);
 
-            return biomes;
-        }
-        catch (Throwable throwable)
-        {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Invalid Biome id");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("RawBiomeBlock");
-            crashreportcategory.addCrashSection("biomes[] size", Integer.valueOf(biomes.length));
-            crashreportcategory.addCrashSection("x", Integer.valueOf(x));
-            crashreportcategory.addCrashSection("z", Integer.valueOf(z));
-            crashreportcategory.addCrashSection("w", Integer.valueOf(width));
-            crashreportcategory.addCrashSection("h", Integer.valueOf(height));
-            throw new ReportedException(crashreport);
-        }
+        return new GenLayer[]{
+                biomes,
+                biomeIndexLayer
+        };
     }
-    */
+	
+	
+	
+	
 }

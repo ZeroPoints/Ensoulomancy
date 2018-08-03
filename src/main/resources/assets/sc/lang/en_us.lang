@@ -11,6 +11,7 @@ item.soul_ingot.name=Soul Ingot
 item.soul_skull.blaze.name=Blaze Head
 item.soul_skull.cow.name=Cow Head
 item.soul_skull.chicken.name=Chicken Head
+item.soul_skull.bat.name=Bat Head
 
 // Blocks
 
@@ -20,6 +21,7 @@ item.reaping_scythe.name=Reaping Scythe
 // Armor
 
 // Entities
+entity.imp.name=Imp
 
 // Tile Entities
 tile.soul_skull.name=Tile Skull
@@ -27,3 +29,9 @@ tile.soul_skull.name=Tile Skull
 //World
 generator.PURGATORY=Purgatory
 generator.PURGATORY.info=Bridge between worlds.
+
+//New stuff for new stuffy
+
+
+
+

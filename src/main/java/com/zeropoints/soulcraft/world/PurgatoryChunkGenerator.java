@@ -42,41 +42,41 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     
     public PurgatoryChunkGenerator(World world, long seed, boolean mapFeaturesEnabled, String chunkProviderSettingsString) {
 
-    	//biomesForGeneration = new Biome[]{ModBiomes.PROFANE_BIOME, ModBiomes.HALLOWED_BIOME, ModBiomes.STYX_BIOME};
-    	List<Biome> tmpBiomes = new ArrayList<Biome>();
-    	for(int i = 0; i < 90; i++) {
-    		tmpBiomes.add(ModBiomes.PROFANE_BIOME);   
-    	}
-    	for(int i = 0; i < 90; i++) { 	
-    		tmpBiomes.add(ModBiomes.HALLOWED_BIOME);      		
-    	}
-    	for(int i = 0; i < 90; i++) {
-    		tmpBiomes.add(ModBiomes.STYX_BIOME);       		
-    	}
-    	biomesForGeneration  = tmpBiomes.toArray(new Biome[0]);
-    	
-    	
-    	terraingen.setBiomesForGeneration(biomesForGeneration);
-    	
     	
         this.worldObj = world;
         this.random = new Random((seed + 516) * 314);
         terraingen.setup(worldObj, random);
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, EventType.CAVE);
+        
+        
+
+        /*
+        //Debugging what id each biome had
+        for(int i = 0; i < 300; i++) {
+        	Biome test = Biome.getBiome(i);
+        	if(test == null || test.getBiomeName() == null) {
+        		continue;
+        	}
+        	Main.LogMesssage("Biome", i + " - " + test.getRegistryName() + " - " + test.getBiomeName());
+        }
+        */
+        
     }
 
     @Override
     public Chunk generateChunk(int x, int z) {
         ChunkPrimer chunkprimer = new ChunkPrimer();
 
+        
         // Setup biomes for terraingen
-        //this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
+        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
         terraingen.setBiomesForGeneration(biomesForGeneration);
+        //Builds height map stuff for chunk based on biomes
         terraingen.generate(x, z, chunkprimer);
 
         // Setup biomes again for actual biome decoration
-        //this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
-        // This will replace stone with the biome specific stones
+        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
+        // This will replace top layer with biome top block and filler block
         terraingen.replaceBiomeBlocks(x, z, chunkprimer, this, biomesForGeneration);
 
         // Generate caves
