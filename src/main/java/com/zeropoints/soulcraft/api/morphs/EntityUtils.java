@@ -1,4 +1,4 @@
-package com.zeropoints.soulcraft.api;
+package com.zeropoints.soulcraft.api.morphs;
 
 import java.util.List;
 
@@ -8,8 +8,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
 import com.zeropoints.soulcraft.api.morphs.models.IMorphProvider;
-import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
-import com.zeropoints.soulcraft.api.morphs.EntityMorph;
 import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
 import com.zeropoints.soulcraft.capabilities.morphing.MorphingProvider;
 import net.minecraft.entity.Entity;

@@ -46,7 +46,7 @@ public class ModBiomes {
 		BIOMES.add(HALLOWED_BIOME);
 		BIOMES.add(SPIRIT_BIOME);
 		//BIOMES.add(RIVERSTYX_BIOME);
-		
+							
 		
 		BIOMEIDS = new int[BIOMES.size()];
 		BIOMEIDS[0] = Biome.getIdForBiome(PROFANE_BIOME);

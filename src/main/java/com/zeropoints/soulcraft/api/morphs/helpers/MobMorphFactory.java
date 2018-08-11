@@ -1,11 +1,11 @@
 package com.zeropoints.soulcraft.api.morphs.helpers;
 
-import com.zeropoints.soulcraft.api.EntityUtils;
 import com.zeropoints.soulcraft.api.morphs.IMorphFactory;
 import com.zeropoints.soulcraft.api.morphs.MorphList;
 import com.zeropoints.soulcraft.api.morphs.MorphManager;
 import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
 import com.zeropoints.soulcraft.api.morphs.EntityMorph;
+import com.zeropoints.soulcraft.api.morphs.EntityUtils;
 import com.zeropoints.soulcraft.api.morphs.helpers.IronGolemMorph;
 import com.zeropoints.soulcraft.api.morphs.helpers.morphs.BlockMorph;
 import com.zeropoints.soulcraft.api.morphs.helpers.morphs.ShulkerMorph;
