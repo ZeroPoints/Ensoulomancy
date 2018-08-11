@@ -1,14 +1,16 @@
-package com.zeropoints.soulcraft.world;
+package com.zeropoints.soulcraft.world.biome;
 
+import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModBiomes;
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityHusk;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -20,30 +22,40 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 
-public class HallowedBiome extends Biome {
+public class SpiritBiome extends Biome implements ICustomBiome {
 
-	public HallowedBiome(BiomeProperties properties) {
+	
+	protected List<Biome.SpawnListEntry> highMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	protected List<Biome.SpawnListEntry> midMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	protected List<Biome.SpawnListEntry> lowMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	
+	
+	public SpiritBiome(BiomeProperties properties) {
 		super(properties);
 
+		
 
-		this.setRegistryName("sc", "hallowed");
+		this.setRegistryName("sc", "spirit");
 
-		this.topBlock = Blocks.WOOL.getDefaultState(); 
+		this.topBlock = Blocks.ICE.getDefaultState(); 
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
 
-	    spawnableMonsterList = Lists.newArrayList(
-        	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityCreeper.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 5, 1, 4)
+		highMonsterList = Lists.newArrayList(
+        	new SpawnListEntry(net.minecraft.entity.monster.EntityElderGuardian.class, 5, 1, 4)
+	    ) ;
+		midMonsterList = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityEndermite.class, 5, 1, 4)
+	    ) ;
+		lowMonsterList = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityGiantZombie.class, 5, 1, 4)
 	    ) ;
 	    
+        
 	}
 	
 	
 	
-	
-	
+
 	@Override
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
@@ -58,9 +70,9 @@ public class HallowedBiome extends Biome {
         int i1 = z & 15;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for (int j1 = 255; j1 >= 0; --j1)
+        for (int j1 = 160; j1 >= 64; --j1)
         {
-            if (j1 <= rand.nextInt(5))
+            if (j1 <= 64)
             {
                 chunkPrimerIn.setBlockState(i1, j1, l, BEDROCK);
             }
@@ -76,40 +88,15 @@ public class HallowedBiome extends Biome {
                 {
                     if (j == -1)
                     {
-                        if (k <= 0)
-                        {
-                            iblockstate = AIR;
-                            iblockstate1 = STONE;
-                        }
-                        else if (j1 >= i - 4 && j1 <= i + 1)
-                        {
-                            iblockstate = this.topBlock;
-                            iblockstate1 = this.fillerBlock;
-                        }
-
-                        if (j1 < i && (iblockstate == null || iblockstate.getMaterial() == Material.AIR))
-                        {
-                            if (this.getTemperature(blockpos$mutableblockpos.setPos(x, j1, z)) < 0.15F)
-                            {
-                                iblockstate = ICE;
-                            }
-                            else
-                            {
-                                iblockstate = WATER;
-                            }
-                        }
-
+                        
+                        iblockstate = this.topBlock;
+                        iblockstate1 = this.fillerBlock;
+                        
                         j = k;
 
                         if (j1 >= i - 1)
                         {
                             chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
-                        }
-                        else if (j1 < i - 7 - k)
-                        {
-                            iblockstate = AIR;
-                            iblockstate1 = STONE;
-                            chunkPrimerIn.setBlockState(i1, j1, l, GRAVEL);
                         }
                         else
                         {
@@ -120,12 +107,6 @@ public class HallowedBiome extends Biome {
                     {
                         --j;
                         chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
-
-                        if (j == 0 && iblockstate1.getBlock() == Blocks.SAND && k > 1)
-                        {
-                            j = rand.nextInt(4) + Math.max(0, j1 - 63);
-                            iblockstate1 = iblockstate1.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND ? RED_SANDSTONE : SANDSTONE;
-                        }
                     }
                 }
             }
@@ -135,6 +116,22 @@ public class HallowedBiome extends Biome {
     }
 	
 	
+	
+	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
+    {
+
+    	if(pos.getY() <= 50) {
+    		return lowMonsterList;
+    	}
+    	if(pos.getY() > 50 && pos.getY() <= 90) {
+    		return midMonsterList;
+    	}
+    	if(pos.getY() > 90) {
+    		return highMonsterList;
+    	}
+		return midMonsterList;
+
+    }
 	
 	
 	

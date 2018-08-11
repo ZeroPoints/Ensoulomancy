@@ -1,10 +1,11 @@
-package com.zeropoints.soulcraft.world;
+package com.zeropoints.soulcraft.world.biome;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.zeropoints.soulcraft.init.ModDimensions;
+import com.zeropoints.soulcraft.world.genlayer.GenLayerPurgatory;
 
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -56,16 +57,14 @@ public class PurgatoryBiomeProvider extends BiomeProvider {
     @Override
     public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original) {
         GenLayer biomes = new GenLayerPurgatory(seed);
-
+        
         biomes = new GenLayerZoom(1337800851, biomes);
         biomes = new GenLayerZoom(1337800852, biomes);
         biomes = new GenLayerZoom(1337800853, biomes);
         biomes = new GenLayerZoom(1337800854, biomes);
-
-        //biomes = new GenLayerRiverStyx(1337800855, biomes);
-        
-
-        GenLayer biomeIndexLayer = new GenLayerVoronoiZoom(10L, biomes);
+        biomes = new GenLayerZoom(1337800855, biomes);
+       
+        GenLayer biomeIndexLayer = new GenLayerVoronoiZoom(seed, biomes);
         biomeIndexLayer.initWorldGenSeed(seed);
 
         return new GenLayer[]{

@@ -1,6 +1,8 @@
 package com.zeropoints.soulcraft.world;
 
 
+import com.zeropoints.soulcraft.world.biome.PurgatoryBiomeProvider;
+
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;

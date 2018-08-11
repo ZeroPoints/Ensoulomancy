@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.init.ModBiomes;
+import com.zeropoints.soulcraft.world.biome.ICustomBiome;
 
 import net.minecraft.entity.EnumCreatureType;
 //import net.minecraft.entity.monster.EntityZombie;
@@ -49,18 +50,6 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, EventType.CAVE);
         
         
-
-        /*
-        //Debugging what id each biome had
-        for(int i = 0; i < 300; i++) {
-        	Biome test = Biome.getBiome(i);
-        	if(test == null || test.getBiomeName() == null) {
-        		continue;
-        	}
-        	Main.LogMesssage("Biome", i + " - " + test.getRegistryName() + " - " + test.getBiomeName());
-        }
-        */
-        
     }
 
     @Override
@@ -80,7 +69,7 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         terraingen.replaceBiomeBlocks(x, z, chunkprimer, this, biomesForGeneration);
 
         // Generate caves
-        this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
+        //this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
 
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 
@@ -114,26 +103,15 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
 
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
-        // If you want normal creatures appropriate for this biome then uncomment the
-        // following two lines:
+        
+    	Biome biome = this.worldObj.getBiome(pos);
+    	if(biome instanceof ICustomBiome) {
+    		return ((ICustomBiome)biome).getSpawnableList(creatureType, pos);	
+		}
     	
     	
-    	String newHeight = "";
-    	if(pos.getY() <= 50) {
-    		newHeight = "low";
-    		return ModBiomes.PROFANE_BIOME.getSpawnableList(creatureType);
-    	}
-    	if(pos.getY() > 50 && pos.getY() <= 90) {
-    		return ModBiomes.STYX_BIOME.getSpawnableList(creatureType);
-    	}
-    	if(pos.getY() >= 90) {
-    		return ModBiomes.HALLOWED_BIOME.getSpawnableList(creatureType);
-    	}
-    	
-    	return ModBiomes.HALLOWED_BIOME.getSpawnableList(creatureType);
-    	
-    	//Biome biome = this.worldObj.getBiome(pos);
-    	//return biome.getSpawnableList(creatureType);
+    	//DEFAULT RETURN SPIRIT BIOME MOD. This shouldnt fire...
+		return ModBiomes.SPIRIT_BIOME.getSpawnableList(creatureType, pos);
 
     }
 
