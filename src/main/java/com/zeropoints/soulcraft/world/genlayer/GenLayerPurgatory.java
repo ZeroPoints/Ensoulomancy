@@ -1,4 +1,4 @@
-package com.zeropoints.soulcraft.world;
+package com.zeropoints.soulcraft.world.genlayer;
 
 import com.zeropoints.soulcraft.init.ModBiomes;
 
@@ -10,7 +10,7 @@ public class GenLayerPurgatory extends GenLayer {
     private Biome[] biomes = new Biome[]{
             ModBiomes.HALLOWED_BIOME,
             ModBiomes.PROFANE_BIOME,
-            ModBiomes.STYX_BIOME
+            ModBiomes.SPIRIT_BIOME
     };
 
     public GenLayerPurgatory(long seed, GenLayer parentIn) {
@@ -24,6 +24,8 @@ public class GenLayerPurgatory extends GenLayer {
 
     @Override
     public int[] getInts(int x, int y, int width, int depth) {
+    	
+    	
         int dest[] = IntCache.getIntCache(width * depth);
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {

@@ -2,6 +2,8 @@ package com.zeropoints.soulcraft.world;
 
 import java.util.Random;
 
+import com.zeropoints.soulcraft.Main;
+
 import net.minecraft.util.math.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -179,7 +181,7 @@ public class NormalTerrainGenerator {
                 int i2 = (i1 + z4) * 33;
                 int j2 = (i1 + z4 + 1) * 33;
 
-                for (int height32 = 0; height32 < 32; ++height32) {
+                for (int height32 = 8; height32 < 16; ++height32) {
                     double d0 = 0.125D;
                     double d1 = heightMap[k1 + height32];
                     double d2 = heightMap[l1 + height32];
@@ -205,6 +207,7 @@ public class NormalTerrainGenerator {
 
                             for (int z = 0; z < 4; ++z) {
                                 if (height < 2) {
+                                	Main.LogMesssage("DEBUG", "SHOULDNT BE HIT");
                                     primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.BEDROCK.getDefaultState());
                                 } else if ((d15 += d16) > 0.0D) {
                                     primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
@@ -225,6 +228,8 @@ public class NormalTerrainGenerator {
         }
     }
 
+    
+    
     public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, IChunkGenerator generator, Biome[] biomes) {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(generator, x, z, primer, this.world)) return;
         this.depthBuffer = this.surfaceNoise.getRegion(this.depthBuffer, (x * 16), (z * 16), 16, 16, 0.0625D, 0.0625D, 1.0D);

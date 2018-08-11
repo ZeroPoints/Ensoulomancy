@@ -1,12 +1,15 @@
-package com.zeropoints.soulcraft.world;
+package com.zeropoints.soulcraft.world.biome;
 
+import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import com.zeropoints.soulcraft.init.ModBiomes;
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -18,23 +21,32 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 
-public class StyxBiome extends Biome {
+public class RiverStyxBiome extends Biome implements ICustomBiome {
 
-	public StyxBiome(BiomeProperties properties) {
+	
+	protected List<Biome.SpawnListEntry> highMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	protected List<Biome.SpawnListEntry> midMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	protected List<Biome.SpawnListEntry> lowMonsterList = Lists.<Biome.SpawnListEntry>newArrayList();
+	
+	
+	public RiverStyxBiome(BiomeProperties properties) {
 		super(properties);
 
 		
 
-		this.setRegistryName("sc", "styx");
+		this.setRegistryName("sc", "riverstyx");
 
-		this.topBlock = Blocks.ICE.getDefaultState(); 
+		this.topBlock = Blocks.WATER.getDefaultState(); 
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
 
-	    spawnableMonsterList = Lists.newArrayList(
-        	new SpawnListEntry(net.minecraft.entity.monster.EntityElderGuardian.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityEndermite.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityGiantZombie.class, 5, 1, 4)
-        	//,new SpawnListEntry(net.minecraft.entity.monster.EntityIllusionIllager.class, 5, 1, 4)
+		highMonsterList = Lists.newArrayList(
+        	new SpawnListEntry(net.minecraft.entity.monster.EntitySilverfish.class, 5, 1, 4)
+	    ) ;
+		midMonsterList = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityShulker.class, 5, 1, 4)
+	    ) ;
+		lowMonsterList = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityPolarBear.class, 5, 1, 4)
 	    ) ;
 	    
         
@@ -132,6 +144,25 @@ public class StyxBiome extends Biome {
         
 		
     }
+	
+	
+	
+	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
+    {
+
+    	if(pos.getY() <= 50) {
+    		return lowMonsterList;
+    	}
+    	if(pos.getY() > 50 && pos.getY() <= 90) {
+    		return midMonsterList;
+    	}
+    	if(pos.getY() > 90) {
+    		return highMonsterList;
+    	}
+		return midMonsterList;
+
+    }
+	
 	
 	
 }
