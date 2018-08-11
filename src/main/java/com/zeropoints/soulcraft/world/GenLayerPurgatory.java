@@ -10,7 +10,7 @@ public class GenLayerPurgatory extends GenLayer {
     private Biome[] biomes = new Biome[]{
             ModBiomes.HALLOWED_BIOME,
             ModBiomes.PROFANE_BIOME,
-            ModBiomes.STYX_BIOME
+            ModBiomes.SPIRIT_BIOME
     };
 
     public GenLayerPurgatory(long seed, GenLayer parentIn) {

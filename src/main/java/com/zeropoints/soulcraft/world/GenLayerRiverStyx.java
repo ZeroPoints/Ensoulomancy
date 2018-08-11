@@ -44,7 +44,7 @@ public class GenLayerRiverStyx extends GenLayer
                 }
                 else
                 {
-                    aint1[j1 + i1 * areaWidth] = Biome.getIdForBiome(ModBiomes.STYX_BIOME);
+                    aint1[j1 + i1 * areaWidth] = Biome.getIdForBiome(ModBiomes.SPIRIT_BIOME);
                 }
             }
         }

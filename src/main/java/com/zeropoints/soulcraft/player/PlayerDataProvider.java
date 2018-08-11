@@ -17,7 +17,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class PlayerDataProvider implements ICapabilitySerializable<NBTBase> {
 
-
 	@CapabilityInject(ISoulpool.class) 
 	public static final Capability<ISoulpool> SOULPOOL_CAPABILITY = null; 
 
@@ -26,28 +25,22 @@ public class PlayerDataProvider implements ICapabilitySerializable<NBTBase> {
 	
 	
 	@Override 
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) 
-	{ 
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		return capability == SOULPOOL_CAPABILITY; 
 	} 
 
 	@Override 
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) 
-	{ 
-
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing)  { 
 		return capability == SOULPOOL_CAPABILITY ? SOULPOOL_CAPABILITY.<T> cast(this.instance) : null; 
 	} 
 
 	@Override 
-	public NBTBase serializeNBT() 
-	{ 
+	public NBTBase serializeNBT() { 
 		return SOULPOOL_CAPABILITY.getStorage().writeNBT(SOULPOOL_CAPABILITY, this.instance, null); 
 	} 
 
 	@Override 
-	public void deserializeNBT(NBTBase nbt) 
-	{ 
-		
+	public void deserializeNBT(NBTBase nbt) { 
 		SOULPOOL_CAPABILITY.getStorage().readNBT(SOULPOOL_CAPABILITY, this.instance, null, nbt); 
 	} 
 	

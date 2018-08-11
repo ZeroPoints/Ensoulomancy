@@ -5,6 +5,8 @@ package com.zeropoints.soulcraft.player;
 
 import java.util.concurrent.Callable;
 
+import org.apache.logging.log4j.Level;
+
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.util.Reference;
 
@@ -23,7 +25,7 @@ public class PlayerDataFactory implements Callable<ISoulpool> {
 
   @Override
   public ISoulpool call() throws Exception {
-	  Main.LogMesssage("factory", "new");
+	  Main.log(Level.INFO, "new factory");
     return new Soulpool();
   }
 }
