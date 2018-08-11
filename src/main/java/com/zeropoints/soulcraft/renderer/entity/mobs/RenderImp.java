@@ -1,13 +1,17 @@
 package com.zeropoints.soulcraft.renderer.entity.mobs;
 
 import com.zeropoints.soulcraft.model.profane.ModelImp;
+import com.zeropoints.soulcraft.renderer.player.RenderMorph;
 import com.zeropoints.soulcraft.util.Reference;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 
 
@@ -18,7 +22,6 @@ public class RenderImp extends RenderLiving<EntityImp> {
 	
 	public RenderImp(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelImp(), 0.2F);
-		GlStateManager.scale(0.1F, 0.1F, 0.1F);
 		//this.addLayer(new LayerImp(this));
 	}
 	
@@ -42,5 +45,17 @@ public class RenderImp extends RenderLiving<EntityImp> {
 			GlStateManager.rotate(6.5F * f2, 0.0F, 0.0F, 1.0F);
 		}
 	}
+	
+	/**
+     * Rendering factory
+     * 
+     * Returns new instance of the morph renderer
+     */
+    public static class RenderFactory implements IRenderFactory<EntityImp> {
+        @Override
+        public Render<? super EntityImp> createRenderFor(RenderManager manager) {
+            return new RenderImp(manager);
+        }
+    }
 	
 }

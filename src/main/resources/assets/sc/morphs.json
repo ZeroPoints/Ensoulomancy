@@ -1,0 +1,191 @@
+{
+    "metamorph.Block": {
+        "hands": false,
+        "hostile": true
+    },
+    "Player": {
+        "health": 20,
+        "hands": true
+    },
+    
+    "Bat": {
+        "abilities": ["fly", "night_vision", "prevent_fall"],
+        "health": 6,
+        "hostile": true
+    },
+    "CaveSpider": {
+        "abilities": ["climb"],
+        "attack": "poison",
+        "health": 12,
+        "hostile": true
+    },
+    "Chicken": {
+        "abilities": ["glide"],
+        "health": 4,
+        "hands": true
+    },
+    "Cow": {
+        "health": 10,
+        "hands": true
+    },
+    "EntityHorse": {
+        "abilities": ["prevent_fall"],
+        "action": "jump",
+        "health": 24,
+        "speed": 0.15,
+        "hands": false
+    },
+    "MushroomCow": {
+        "health": 10,
+        "hands": true
+    },
+    "Ozelot": {
+        "health": 10,
+        "speed": 0.15,
+        "hands": true
+    },
+    "Pig": {
+        "health": 10,
+        "hands": true
+    },
+    "PolarBear": {
+        "health": 30,
+        "hands": true
+    },
+    "Rabbit": {
+        "abilities": ["prevent_fall", "jumping"],
+        "action": "jump",
+        "health": 3,
+        "speed": 0.13
+    },
+    "Sheep": {
+        "health": 8,
+        "hands": true
+    },
+    "Spider": {
+        "abilities": ["climb"],
+        "health": 16,
+        "hostile": true
+    },
+    "Squid": {
+        "abilities": ["water_breath", "swim", "night_vision"],
+        "health": 10,
+        "hands": true
+    },
+    "Wolf": {
+        "health": 8,
+        "hostile": true,
+        "hands": true
+    },
+    
+    "Enderman": {
+        "abilities": ["water_allergy"],
+        "action": "teleport",
+        "health": 40,
+        "hostile": true,
+        "hands": true
+    },
+    "Endermite": {
+        "action": "endermite",
+        "health": 8,
+        "hostile": true
+    },
+    "PigZombie": {
+        "abilities": ["fire_proof", "hungerless"],
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "SnowMan": {
+        "abilities": ["snow_walk"],
+        "action": "snowball",
+        "health": 4
+    },
+    "Villager": {
+        "health": 20,
+        "hands": true
+    },
+    "VillagerGolem": {
+        "attack": "knockback",
+        "health": 100,
+        "speed": 0.04,
+        "hands": true
+    },
+    
+    "Blaze": {
+        "abilities": ["fly", "fire_proof", "water_allergy"],
+        "action": "small_fireball",
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "Creeper": {
+        "action": "explode",
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "Ghast": {
+        "abilities": ["fly", "fire_proof"],
+        "action": "fireball",
+        "health": 10,
+        "hostile": true,
+        "hands": true
+    },
+    "Guardian": {
+        "abilities": ["water_breath", "night_vision", "swim", "jumping"],
+        "health": 30,
+        "hostile": true
+    },
+    "LavaSlime": {
+        "abilities": ["jumping", "fire_proof"],
+        "health": 4,
+        "hostile": true
+    },
+    "Silverfish": {
+        "action": "silverfish",
+        "health": 8,
+        "hostile": true
+    },
+    "Shulker": {
+        "action": "shulker_bullet",
+        "health": 15,
+        "hostile": true
+    },
+    "Slime": {
+        "abilities": ["jumping"],
+        "health": 4,
+        "hostile": true
+    },
+    "Skeleton": {
+        "abilities": ["sun_allergy"],
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "WitherSkeleton": {
+        "abilities": ["fire_proof"],
+        "attack": "wither",
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "Witch": {
+        "action": "potions",
+        "health": 26,
+        "hostile": true,
+        "hands": true
+    },
+    "Zombie": {
+        "abilities": ["sun_allergy", "hungerless"],
+        "health": 20,
+        "hostile": true,
+        "hands": true
+    },
+    "EnderDragon": {
+        "abilities": ["fly"],
+        "action": "fire_breath",
+        "health": 200,
+        "hostile": true
+    }
+}

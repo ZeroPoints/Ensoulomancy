@@ -1,5 +1,7 @@
 package com.zeropoints.soulcraft;
 
+import com.zeropoints.soulcraft.api.morphs.MorphManager;
+import com.zeropoints.soulcraft.api.morphs.MorphUtils;
 import com.zeropoints.soulcraft.init.ModEntities;
 import com.zeropoints.soulcraft.proxy.CommonProxy;
 import com.zeropoints.soulcraft.util.ConfigurationHandler;
@@ -16,8 +18,11 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 
@@ -26,10 +31,23 @@ public class Main {
     
 	public static final CreativeTabs SOULCRAFT_TAB = new SoulcraftTab("soulcraft_tab");
 	
-    public static Logger logger;
+    public static boolean DEBUG = false;
+    public static Logger LOGGER;
+    
+    /**
+     * Log out the message if in DEBUG mode.
+     */
+    public static void log(Level level, String message) {
+        if (DEBUG) {
+        	if(level == null) {
+        		level = Level.INFO;
+        	}
+            LOGGER.log(level, message);
+        }
+    }
     
     public static void LogMesssage(String type, String message) {
-    	logger.info(type + " ----- " + message);
+    	log(null, type + " ----- " + message);
     } 
 
 	
@@ -41,17 +59,15 @@ public class Main {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		logger = e.getModLog();
-
+		LOGGER = e.getModLog();
         new ConfigurationHandler();
-		
+        
 		proxy.preInit(e);
     }
-
+	
 	@EventHandler
     public void init(FMLInitializationEvent e) {
 		proxy.init(e);
-		ModEntities.init();
     }
 
 	@EventHandler
@@ -59,6 +75,16 @@ public class Main {
 		proxy.postInit(e);
     }
 
+	@EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        /* Setting up the blacklist */
+        MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
+
+        /* Register commands */
+        //event.registerServerCommand(new CommandMorph());
+        //event.registerServerCommand(new CommandAcquireMorph());
+        //event.registerServerCommand(new CommandMetamorph());
+    }
 }
 
 
