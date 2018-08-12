@@ -19,9 +19,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModBiomes {
 
-    public static final ProfaneBiome PROFANE_BIOME = new ProfaneBiome(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(1.5F).setHeightVariation(-0.5F));
+    public static final ProfaneBiome PROFANE_BIOME = new ProfaneBiome(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
     public static final HallowedBiome HALLOWED_BIOME = new HallowedBiome(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
-    public static final SpiritBiome SPIRIT_BIOME = new SpiritBiome(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(1.5F));
+    public static final SpiritBiome SPIRIT_BIOME = new SpiritBiome(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
 
     //public static final RiverStyxBiome RIVERSTYX_BIOME = new RiverStyxBiome(new Biome.BiomeProperties("RiverStyxBiome"));
     

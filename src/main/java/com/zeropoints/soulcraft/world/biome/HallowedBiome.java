@@ -37,75 +37,77 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 		this.setRegistryName("sc", "hallowed");
 
 		this.topBlock = Blocks.END_STONE.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
+		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
+		
 
 		highMonsterList = Lists.newArrayList(
-        	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 5, 1, 4)
+        	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 1, 1, 1)
 	    ) ;
 		midMonsterList = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 5, 1, 4)
+			new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 1, 1, 1)
 	    ) ;
 		lowMonsterList = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 5, 1, 4)
+			new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 1, 1, 1)
 	    ) ;
 	    
 	}
 	
 	
-	
+
+	public IBlockState getBaseBlock() {
+		return Blocks.GLASS.getDefaultState();
+	}
 	
 	
 	@Override
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
-		int i = worldIn.getSeaLevel();
         IBlockState iblockstate = this.topBlock;
         IBlockState iblockstate1 = this.fillerBlock;
         int j = -1;
         //int k = (int)(noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
         //K is noise for how many blocks it will FILL up. Fill goes reverse from air to fill depth
-        int k = 10;
+        int k = 5;
         int l = x & 15;
         int i1 = z & 15;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for (int j1 = 160; j1 >= 64; --j1)
+        IBlockState iPrevBlockState = Blocks.AIR.getDefaultState();
+        
+        for (int j1 = 300; j1 >= 0; --j1)
         {
-            if (j1 <= 64)
-            {
-                chunkPrimerIn.setBlockState(i1, j1, l, BEDROCK);
-            }
-            else
-            {
-                IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
+            
+            IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
 
-                if (iblockstate2.getMaterial() == Material.AIR)
-                {
-                    j = -1;
+            if (iblockstate2.getMaterial() == Material.AIR)
+            {
+                j = -1;
+                if(iPrevBlockState.getMaterial() != Material.AIR) {
+                    iPrevBlockState = Blocks.AIR.getDefaultState();
+                    chunkPrimerIn.setBlockState(i1, j1 + 1, l, iPrevBlockState);
                 }
-                else if (iblockstate2.getBlock() == Blocks.EMERALD_BLOCK)
+            }
+            else if (iblockstate2.getBlock() == Blocks.EMERALD_BLOCK)
+            {
+            	if (j == -1 && iPrevBlockState.getMaterial() == Material.AIR)
                 {
-                    if (j == -1)
-                    {
-                    	iblockstate = this.topBlock;
-                        iblockstate1 = this.fillerBlock;
-                        
-                        j = k;
-
-                        if (j1 >= i - 1)
-                        {
-                            chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
-                        }
-                        else
-                        {
-                            chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
-                        }
-                    }
-                    else if (j > 0)
-                    {
-                        --j;
-                        chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
-                    }
+                	iblockstate = this.topBlock;
+                    iblockstate1 = this.fillerBlock;
+                    
+                    j = k;
+                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
+                    iPrevBlockState = iblockstate;
+                    
+                }
+                else if (j >= 0)
+                {
+                    --j;
+                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
+                    iPrevBlockState = iblockstate1;
+                }
+                else {
+                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
+                    iPrevBlockState = iblockstate1;
                 }
             }
         }

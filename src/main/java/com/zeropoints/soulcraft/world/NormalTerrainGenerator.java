@@ -3,6 +3,7 @@ package com.zeropoints.soulcraft.world;
 import java.util.Random;
 
 import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.world.biome.ICustomBiome;
 
 import net.minecraft.util.math.*;
 import net.minecraft.init.Blocks;
@@ -13,13 +14,15 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
+
+
 public class NormalTerrainGenerator {
 
 	
 	private World world;
     private Random random;
 
-    private final double[] heightMap;
+    
     private double[] mainNoiseRegion;
     private double[] minLimitRegion;
     private double[] maxLimitRegion;
@@ -39,7 +42,6 @@ public class NormalTerrainGenerator {
     private Biome[] biomesForGeneration;
 
     public NormalTerrainGenerator() {
-        this.heightMap = new double[825];
 
         this.biomeWeights = new float[25];
         for (int j = -2; j <= 2; ++j) {
@@ -78,7 +80,14 @@ public class NormalTerrainGenerator {
     }
 
 
-    private void generateHeightmap(int chunkX4, int chunkY4, int chunkZ4) {
+    public enum HeightSelector{
+    	Top,
+    	Bot,
+    	Mid
+    }
+
+    
+    private double[] generateHeightmap(int chunkX4, int chunkY4, int chunkZ4, HeightSelector selector) {
         this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX4, chunkZ4, 5, 5, 200.0D, 200.0D, 0.5D);
         this.mainNoiseRegion = this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX4, chunkY4, chunkZ4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
         this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion, chunkX4, chunkY4, chunkZ4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
@@ -86,6 +95,8 @@ public class NormalTerrainGenerator {
         int l = 0;
         int i1 = 0;
 
+        double[] heightMap = new double[825];
+        
         for (int j1 = 0; j1 < 5; ++j1) {
             for (int k1 = 0; k1 < 5; ++k1) {
                 float f = 0.0F;
@@ -96,8 +107,27 @@ public class NormalTerrainGenerator {
                 for (int l1 = -b0; l1 <= b0; ++l1) {
                     for (int i2 = -b0; i2 <= b0; ++i2) {
                         Biome biome = this.biomesForGeneration[j1 + 2 + (k1 + 2) * 10];
+                        
+                        
+                        
+                        //Create 3 height maps
                         float baseHeight = biome.getBaseHeight();
                         float variation = biome.getHeightVariation();
+                        
+                        switch(selector) {
+                        default:
+                        case Mid:
+                        	baseHeight = 2.5F;
+                        	break;
+                        case Top:
+                        	baseHeight = 8.1F;
+                        	break;
+                        case Bot:
+                        	baseHeight = -2.5F;
+                        	break;
+                        }
+                        
+                        
 
                         float f5 = biomeWeights[l1 + 2 + (i2 + 2) * 5] / (baseHeight + 2.0F);
                         f += variation * f5;
@@ -159,16 +189,21 @@ public class NormalTerrainGenerator {
                         d10 = d10 * (1.0D - d11) + -10.0D * d11;
                     }
 
-                    this.heightMap[l] = d10;
+                    heightMap[l] = d10;
                     ++l;
                 }
             }
         }
+        
+        return heightMap;
     }
 
 
     public void generate(int chunkX, int chunkZ, ChunkPrimer primer) {
-        generateHeightmap(chunkX * 4, 0, chunkZ * 4);
+        double[] top = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Top);
+        double[] bot = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Bot);
+        double[] mid = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Mid);
+    	
 
         byte waterLevel = 63;
         for (int x4 = 0; x4 < 4; ++x4) {
@@ -181,53 +216,75 @@ public class NormalTerrainGenerator {
                 int i2 = (i1 + z4) * 33;
                 int j2 = (i1 + z4 + 1) * 33;
 
-                for (int height32 = 8; height32 < 16; ++height32) {
-                    double d0 = 0.125D;
-                    double d1 = heightMap[k1 + height32];
-                    double d2 = heightMap[l1 + height32];
-                    double d3 = heightMap[i2 + height32];
-                    double d4 = heightMap[j2 + height32];
-                    double d5 = (heightMap[k1 + height32 + 1] - d1) * d0;
-                    double d6 = (heightMap[l1 + height32 + 1] - d2) * d0;
-                    double d7 = (heightMap[i2 + height32 + 1] - d3) * d0;
-                    double d8 = (heightMap[j2 + height32 + 1] - d4) * d0;
+            	//public float TopMax = 27;
+            	//public float TopMin = 25;
 
-                    for (int h = 0; h < 8; ++h) {
-                        double d9 = 0.25D;
-                        double d10 = d1;
-                        double d11 = d2;
-                        double d12 = (d3 - d1) * d9;
-                        double d13 = (d4 - d2) * d9;
-                        int height = (height32 * 8) + h;
-
-                        for (int x = 0; x < 4; ++x) {
-                            double d14 = 0.25D;
-                            double d16 = (d11 - d10) * d14;
-                            double d15 = d10 - d16;
-
-                            for (int z = 0; z < 4; ++z) {
-                                if (height < 2) {
-                                	Main.LogMesssage("DEBUG", "SHOULDNT BE HIT");
-                                    primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.BEDROCK.getDefaultState());
-                                } else if ((d15 += d16) > 0.0D) {
-                                    primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
-                                }
-                            }
-
-                            d10 += d12;
-                            d11 += d13;
-                        }
-
-                        d1 += d5;
-                        d2 += d6;
-                        d3 += d7;
-                        d4 += d8;
-                    }
-                }
+            	//public float MidMax = 15;
+            	//public float MidMin = 13;
+            	
+            	//public float BotMax = 2;
+            	//public float BotMin = 0;
+            	
+                Test1(primer, x4, z4, k1, l1, i2, j2, top, 25, 32);
+                Test1(primer, x4, z4, k1, l1, i2, j2, bot, 0, 6);
+                Test1(primer, x4, z4, k1, l1, i2, j2, mid, 13, 18);
+                
             }
         }
     }
 
+    
+    
+    
+    
+    public void Test1(ChunkPrimer primer, int x4, int z4, int k1, int l1, int i2, int j2, double[] tmpHeightMap, int minHeight, int maxHeight) {
+    	
+    for (int height32 = minHeight; height32 < maxHeight; ++height32) {
+            double d0 = 0.125D;
+            double d1 = tmpHeightMap[k1 + height32];
+            double d2 = tmpHeightMap[l1 + height32];
+            double d3 = tmpHeightMap[i2 + height32];
+            double d4 = tmpHeightMap[j2 + height32];
+            double d5 = (tmpHeightMap[k1 + height32 + 1] - d1) * d0;
+            double d6 = (tmpHeightMap[l1 + height32 + 1] - d2) * d0;
+            double d7 = (tmpHeightMap[i2 + height32 + 1] - d3) * d0;
+            double d8 = (tmpHeightMap[j2 + height32 + 1] - d4) * d0;
+
+            for (int h = 0; h < 8; ++h) {
+                double d9 = 0.25D;
+                double d10 = d1;
+                double d11 = d2;
+                double d12 = (d3 - d1) * d9;
+                double d13 = (d4 - d2) * d9;
+                int height = (height32 * 8) + h;
+
+                for (int x = 0; x < 4; ++x) {
+                    double d14 = 0.25D;
+                    double d16 = (d11 - d10) * d14;
+                    double d15 = d10 - d16;
+
+                    for (int z = 0; z < 4; ++z) {
+                    	if ((d15 += d16) > 0.0D) {
+                            primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
+                        }
+                    	//primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
+                    }
+
+                    d10 += d12;
+                    d11 += d13;
+                }
+
+                d1 += d5;
+                d2 += d6;
+                d3 += d7;
+                d4 += d8;
+            }
+        }
+    }
+    
+    
+    
+    
     
     
     public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, IChunkGenerator generator, Biome[] biomes) {
