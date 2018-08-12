@@ -78,9 +78,7 @@ public abstract class AbstractMorph {
      * method also responsible for updating AABB size. 
      */
     public void update(EntityLivingBase target, IMorphing cap) {
-        if (!Main.proxy.config.disable_health) {
-            this.setMaxHealth(target, this.settings.health);
-        }
+        this.setMaxHealth(target, this.settings.health);
 
         if (this.settings.speed != 0.1F) {
             target.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.settings.speed);
@@ -155,16 +153,11 @@ public abstract class AbstractMorph {
      * @author asanetargoss
      */
     protected void setHealth(EntityLivingBase target, float health) {
-        if (Main.proxy.config.disable_health) {
-            return;
-        }
-
         float maxHealth = target.getMaxHealth();
         float currentHealth = target.getHealth();
         float ratio = currentHealth / maxHealth;
 
-        // A sanity check to prevent "healing" health when morphing to and from
-        // a mob
+        // A sanity check to prevent "healing" health when morphing to and from a mob
         // with essentially zero health
         if (target instanceof EntityPlayer) {
             IMorphing capability = Morphing.get((EntityPlayer) target);
@@ -186,8 +179,7 @@ public abstract class AbstractMorph {
         }
 
         this.setMaxHealth(target, health);
-        // We need to retrieve the max health of the target after modifiers are
-        // applied
+        // We need to retrieve the max health of the target after modifiers are applied
         // to get a sensible value
         float proportionalHealth = Math.round(target.getMaxHealth() * ratio);
         target.setHealth(proportionalHealth <= 0 ? 1 : proportionalHealth);

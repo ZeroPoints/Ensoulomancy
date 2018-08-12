@@ -18,23 +18,6 @@ public interface IMorphing {
     public static final float REASONABLE_HEALTH_VALUE = Float.MIN_VALUE * 100;
 
     /**
-     * Whether this morph is in the process of animation 
-     */
-    public boolean isAnimating();
-
-    /**
-     * Get animation tick
-     */
-    @SideOnly(Side.CLIENT)
-    public int getAnimation();
-
-    /**
-     * Get previous animation morph 
-     */
-    @SideOnly(Side.CLIENT)
-    public AbstractMorph getPreviousMorph();
-
-    /**
      * Render player as a morph
      */
     @SideOnly(Side.CLIENT)
@@ -48,7 +31,7 @@ public interface IMorphing {
     /**
      * Set current morph
      */
-    public boolean setCurrentMorph(AbstractMorph morph, EntityPlayer player, boolean force);
+    public boolean setCurrentMorph(AbstractMorph morph, EntityPlayer player);
 
     /**
      * Demorph this capability 

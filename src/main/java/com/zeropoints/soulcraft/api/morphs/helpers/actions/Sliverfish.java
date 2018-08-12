@@ -41,7 +41,7 @@ public class Sliverfish implements IAction {
 
             target.world.setBlockToAir(block.blockPos);
 
-            MorphAPI.morph((EntityPlayer) target, block, true);
+            MorphAPI.morph((EntityPlayer) target, block);
         }
     }
 }

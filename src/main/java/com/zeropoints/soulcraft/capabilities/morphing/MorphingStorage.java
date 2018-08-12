@@ -50,7 +50,7 @@ public class MorphingStorage implements IStorage<IMorphing> {
             instance.setLastHealthRatio(tag.getFloat("lastHealthRatio"));
 
             if (!tag.hasNoTags()) {
-                instance.setCurrentMorph(MorphManager.INSTANCE.morphFromNBT(morphTag), null, true);
+                instance.setCurrentMorph(MorphManager.INSTANCE.morphFromNBT(morphTag), null);
             }
         }
     }

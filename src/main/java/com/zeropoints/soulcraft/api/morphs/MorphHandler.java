@@ -10,16 +10,23 @@ import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
 import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
 import com.zeropoints.soulcraft.capabilities.morphing.Morphing;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -98,11 +105,11 @@ public class MorphHandler {
      * 
      * I think I need to implement some mechanism or a callback to map some 
      * entities with the same name onto different morphs. 
-     */
-    // I will use this event for now to morph the player. 
+     */ 
+    /*
     @SubscribeEvent
     public void onPlayerKillEntity(LivingDeathEvent event) {
-        Entity source = event.getSource().getTrueSource(); // getEntity()
+        Entity source = event.getSource().getTrueSource();
         Entity target = event.getEntity();
 
         if (target.world.isRemote || source instanceof FakePlayer) {
@@ -136,6 +143,8 @@ public class MorphHandler {
         
         MorphAPI.morph(player, morph, true); 
     }
+    */
+    
 
     /**
      * When player is morphed, he can deal an damage or effect onto the enemy. 
@@ -164,21 +173,15 @@ public class MorphHandler {
     /**
      * Another morphing handler.
      * 
-     * This handler is responsible for canceling setting attack target for 
-     * hostile morphs.
+     * This handler is responsible for canceling setting attack target for hostile morphs.
      */
     @SubscribeEvent
     public void onLivingSetAttackTarget(LivingSetAttackTargetEvent event) {
-        if (Main.proxy.config.disable_morph_disguise) {
-            return;
-        }
-
         Entity target = event.getTarget();
         EntityLivingBase source = event.getEntityLiving();
 
         if (target instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) target;
-            IMorphing morphing = Morphing.get(player);
+            IMorphing morphing = Morphing.get((EntityPlayer) target);
 
             if (morphing == null || !morphing.isMorphed()) {
                 return;
@@ -204,4 +207,5 @@ public class MorphHandler {
             FUTURE_TASKS_SERVER.remove(0).run();
         }
     }
+    
 }

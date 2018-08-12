@@ -28,14 +28,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  * This handler is rendering handler which is responsible for few things:
  * 
- * - Overlays (survival morph menu, morph acquiring)
  * - Player model
  */
 @SideOnly(Side.CLIENT)
 public class RenderingHandler {
 	
-    //private GuiSurvivalMorphs overlay;
-    //private GuiOverlay morphOverlay;
     private RenderManager manager;
     
     public RenderingHandler() {
@@ -62,71 +59,14 @@ public class RenderingHandler {
             return;
         }
 
-        int animation = capability.getAnimation();
-
         /* Render the morph */
         if (capability.renderPlayer(player, event.getX(), event.getY(), event.getZ(), player.rotationYaw, event.getPartialRenderTick())) {
             event.setCanceled(true);
         }
-        else if (capability.isAnimating()) {
-            float partialTick = event.getPartialRenderTick();
-
-            GlStateManager.pushMatrix();
-
-            if (capability.getCurrentMorph() == null && animation <= 10) {
-                float anim = (animation - partialTick) / 10.0F;
-                float offset = 0;
-
-                if (anim >= 0) {
-                    offset = -anim * anim * 2F;
-                }
-
-                GlStateManager.translate(0, offset, 0);
-
-                if (anim >= 0) {
-                    GlStateManager.rotate(anim * -90.0F, 1, 0, 0);
-                    GlStateManager.scale(1 - anim, 1 - anim, 1 - anim);
-                }
-            }
-            else if (capability.getPreviousMorph() == null && animation > 10) {
-                float anim = (animation - 10 - partialTick) / 10.0F;
-                float offset = 0;
-
-                if (anim >= 0) {
-                    offset = (1 - anim);
-                }
-
-                GlStateManager.translate(0, offset, 0);
-
-                if (anim >= 0) {
-                    GlStateManager.rotate((1 - anim) * 90.0F, 1, 0, 0);
-                    GlStateManager.scale(anim, anim, anim);
-                }
-            }
-        }
     }
 
     /**
-     * Pop the matrix if animation is running 
-     */
-    @SubscribeEvent
-    public void onPlayerPostRender(RenderPlayerEvent.Post event) {
-        EntityPlayer player = event.getEntityPlayer();
-        IMorphing capability = Morphing.get(player);
-
-        /* No morph, no problem */
-        if (capability == null) {
-            return;
-        }
-
-        if (capability.isAnimating()) {
-            GlStateManager.popMatrix();
-        }
-    }
-
-    /**
-     * On name render, simply render the name of the user, instead of the name of 
-     * the entity.
+     * On name render, simply render the name of the user, instead of the name of the entity.
      */
     @SubscribeEvent
     public void onNameRender(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {

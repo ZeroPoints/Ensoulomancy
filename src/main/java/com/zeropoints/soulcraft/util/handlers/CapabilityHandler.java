@@ -46,14 +46,14 @@ public class CapabilityHandler {
     @SubscribeEvent
     public void playerLogsIn(PlayerLoggedInEvent event) {
         EntityPlayer player = event.player;
-        IMorphing cap = Morphing.get(player);
+        IMorphing capability = Morphing.get(player);
 
-        if (cap != null) {
-            this.sendAcquiredMorphs(cap, player);
+        if (capability != null) {
+            this.getCurrentMorph(capability, player);
 
             /* Ensure that player was morphed */
-            if (cap.isMorphed()) {
-                cap.getCurrentMorph().morph(player);
+            if (capability.isMorphed()) {
+            	capability.getCurrentMorph().morph(player);
             }
 
             /* Send data */
@@ -70,9 +70,9 @@ public class CapabilityHandler {
         if (event.getTarget() instanceof EntityPlayer) {
             Entity target = event.getTarget();
             EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
-            IMorphing cap = target.getCapability(MorphingProvider.MORPHING_CAP, null);
+            IMorphing capability = target.getCapability(MorphingProvider.MORPHING_CAP, null);
 
-            Dispatcher.sendTo(new PacketMorphPlayer(target.getEntityId(), cap.getCurrentMorph()), player);
+            Dispatcher.sendTo(new PacketMorphPlayer(target.getEntityId(), capability.getCurrentMorph()), player);
         }
     }
 
@@ -89,8 +89,7 @@ public class CapabilityHandler {
 
             if (!player.world.isRemote) {
                 IMorphing morphing = Morphing.get(player);
-
-                this.sendAcquiredMorphs(morphing, player);
+                this.getCurrentMorph(morphing, player);
             }
         }
     }
@@ -104,15 +103,15 @@ public class CapabilityHandler {
         IMorphing morphing = Morphing.get(player);
         IMorphing oldMorphing = Morphing.get(event.getOriginal());
 
-        if (Main.proxy.config.keep_morphs || !event.isWasDeath()) {
+        if (!event.isWasDeath()) {
             morphing.copy(oldMorphing, player);
         }
     }
 
     /**
-     * Send acquired morphs (and currently morphed morph) to the given player. 
+     * Send currently morphed morph to the given player. 
      */
-    private void sendAcquiredMorphs(IMorphing cap, EntityPlayer player) {
+    private void getCurrentMorph(IMorphing cap, EntityPlayer player) {
         Dispatcher.sendTo(new PacketMorph(cap.getCurrentMorph()), (EntityPlayerMP)player);
     }
 }

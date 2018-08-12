@@ -26,7 +26,7 @@ public class MorphAPI {
      * Demorph given player 
      */
     public static boolean demorph(EntityPlayer player) {
-        return morph(player, null, false);
+        return morph(player, null);
     }
 
     /**
@@ -34,20 +34,20 @@ public class MorphAPI {
      * 
      * @return true, if player was morphed successfully
      */
-    public static boolean morph(EntityPlayer player, AbstractMorph morph, boolean force) {
+    public static boolean morph(EntityPlayer player, AbstractMorph morph) {
         IMorphing morphing = Morphing.get(player);
 
         if (morphing == null) {
             return false;
         }
 
-        MorphEvent.Pre event = new MorphEvent.Pre(player, morph, force);
+        MorphEvent.Pre event = new MorphEvent.Pre(player, morph);
 
         if (MinecraftForge.EVENT_BUS.post(event)) {
             return false;
         }
 
-        boolean morphed = morphing.setCurrentMorph(event.morph, player, event.force);
+        boolean morphed = morphing.setCurrentMorph(event.morph, player);
 
         if (!player.world.isRemote && morphed) {
             Dispatcher.sendTo(new PacketMorph(morph), (EntityPlayerMP) player);
@@ -55,7 +55,7 @@ public class MorphAPI {
         }
 
         if (morphed) {
-            MinecraftForge.EVENT_BUS.post(new MorphEvent.Post(player, event.morph, force));
+            MinecraftForge.EVENT_BUS.post(new MorphEvent.Post(player, event.morph));
         }
 
         return morphed;

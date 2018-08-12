@@ -18,7 +18,7 @@ public class ClientHandlerMorphPlayer extends ClientMessageHandler<PacketMorphPl
         IMorphing capability = entity.getCapability(MorphingProvider.MORPHING_CAP, null);
 
         if (capability != null) {
-            capability.setCurrentMorph(message.morph, (EntityPlayer) entity, true);
+            capability.setCurrentMorph(message.morph, (EntityPlayer) entity);
         }
     }
 }

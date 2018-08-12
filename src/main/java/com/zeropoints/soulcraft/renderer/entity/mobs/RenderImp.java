@@ -1,7 +1,6 @@
 package com.zeropoints.soulcraft.renderer.entity.mobs;
 
 import com.zeropoints.soulcraft.model.profane.ModelImp;
-import com.zeropoints.soulcraft.renderer.player.RenderMorph;
 import com.zeropoints.soulcraft.util.Reference;
 
 import net.minecraft.client.renderer.GlStateManager;

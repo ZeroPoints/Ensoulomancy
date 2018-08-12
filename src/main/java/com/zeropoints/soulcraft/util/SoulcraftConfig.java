@@ -14,26 +14,10 @@ public class SoulcraftConfig {
     /* Config options */
 
     /**
-     * Prevents ghosts from spawning if the player has already a currently 
-     * killed mob's morph 
-     */
-    public boolean prevent_ghosts;
-
-    /**
-     * Retain morphs when player died 
-     */
-    public boolean keep_morphs;
-
-    /**
      * Hide username in the survival morphing menu. Added just because, for 
      * no reason, if you're asking 
      */
     public boolean hide_username;
-
-    /**
-     * Prevent acquiring morphs by killing morphs 
-     */
-    public boolean prevent_kill_acquire;
 
     /**
      * Show demorph as an option in survival morph menu 
@@ -44,28 +28,6 @@ public class SoulcraftConfig {
      * Disable modifying Point-of-View. Requested because of MorePlayerModels
      */
     public boolean disable_pov;
-
-    /**
-     * Disable modifying health. Requested because of Tough as Nails 
-     */
-    public boolean disable_health;
-
-    /**
-     * Disables morphing animation 
-     */
-    public boolean disable_morph_animation;
-
-    /**
-     * Disable the ability of morphs labeled as "hostile" to avoid being
-     * attacked by hostile mobs.
-     */
-    public boolean disable_morph_disguise;
-
-    /**
-     * Acquires morph immediately after player kills an entity instead 
-     * of spawning a ghost
-     */
-    public boolean acquire_immediately;
 
     /* End of config options */
 

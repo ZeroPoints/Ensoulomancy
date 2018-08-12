@@ -14,7 +14,7 @@ public class ClientHandlerMorph extends ClientMessageHandler<PacketMorph> {
         IMorphing capability = Morphing.get(player);
 
         if (capability != null) {
-            capability.setCurrentMorph(message.morph, player, true);
+            capability.setCurrentMorph(message.morph, player);
         }
     }
 }
