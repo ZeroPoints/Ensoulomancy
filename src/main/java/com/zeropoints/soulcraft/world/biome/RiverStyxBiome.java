@@ -162,6 +162,15 @@ public class RiverStyxBiome extends Biome implements ICustomBiome {
 		return midMonsterList;
 
     }
+
+
+
+
+	@Override
+	public IBlockState getBaseBlock() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
