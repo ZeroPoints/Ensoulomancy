@@ -1,20 +1,16 @@
 package com.zeropoints.soulcraft.world.biome;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.lang3.time.StopWatch;
-
 import com.google.common.collect.Lists;
-import com.zeropoints.soulcraft.Main;
+import com.zeropoints.soulcraft.init.ModBiomes;
+
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.passive.EntityRabbit;
@@ -26,28 +22,27 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 
-public class ProfaneBiome extends Biome implements ICustomBiome {
+public class VoidBiome extends Biome implements ICustomBiome {
 
 	
-
 	/**
-	 * Initiates the purgatories Profane biome 
+	 * Initiates the purgatories Void biome 
 	 */
-	public ProfaneBiome(BiomeProperties properties) {
+	public VoidBiome(BiomeProperties properties) {
 		super(properties);
 
-		this.setRegistryName("sc", "profane");
+		
 
+		this.setRegistryName("sc", "voidbiome");
 
-		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
+		this.topBlock = Blocks.AIR.getDefaultState(); 
+		this.fillerBlock = Blocks.AIR.getDefaultState(); 
 
 		
-	    
-	    
+        
 	}
-
-
+	
+	
 	
 
 	/**
@@ -56,8 +51,23 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	@Override
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
-		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
+        int l = x & 15;
+        int i1 = z & 15;
+
+        for (int j1 = 256; j1 >= 0; --j1)
+        {
+        	//If you want all to be air just get rid of IF
+        	
+        	chunkPrimerIn.setBlockState(i1, j1, l, AIR);
+        	
+        }
+        
+		
     }
+	
+	
+
+
 
 	
 	/**
@@ -65,48 +75,34 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
     {
-
-    	if(pos.getY() <= 50) {
-    		return getLocaleSpawn();
-    	}
-    	if(pos.getY() > 50 && pos.getY() <= 90) {
-    		return getMiddleSpawn();
-    	}
 		return null;
-
     }
 
-
-
+	
 	
 	@Override
 	public List<SpawnListEntry> getMiddleSpawn() {    
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityHusk.class, 1, 1, 1)
-				) ;	
+		return Lists.newArrayList() ;	
 	}
-
-
-	@Override
-	public List<SpawnListEntry> getLocaleSpawn() {
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 1, 1, 1)
-				) ;	
-	}
+	
 
 	
 	@Override
+	public List<SpawnListEntry> getLocaleSpawn() {
+		return Lists.newArrayList() ;	
+	}
+	
+	
+
+	@Override
 	public int GetMaxHeight() {
-		return 52;
+		return -1;
 	}
 	
 	@Override
 	public int GetMinHeight() {
-		return 10;
+		return -1;
 	}
-	
-	
-	
 	
 	
 }

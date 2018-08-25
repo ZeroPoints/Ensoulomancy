@@ -16,7 +16,9 @@ public class PurgatoryWorldType extends WorldType {
 
 	}
 
-	
+	/**
+	 * Dunno
+	 */
 	 @Override
     public BiomeProvider getBiomeProvider(World world)
     {
@@ -24,11 +26,13 @@ public class PurgatoryWorldType extends WorldType {
     }
 	
 	 
-
+	 /**
+	 * Dunno
+	 */
     @Override
     public IChunkGenerator getChunkGenerator(World world, String generatorOptions)
     {
-    	//, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions
+
         return new PurgatoryChunkGenerator(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions);
 
     }

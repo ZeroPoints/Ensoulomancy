@@ -31,7 +31,9 @@ public class ModWorldGen implements IWorldGenerator {
 	
 	
 	
-	
+	/*
+	 * Code found online to generate ore in overworld i think. Unused just example
+	 */
 	private void generateOre(IBlockState ore, World world, Random random, int x, int z, int minY, int maxY, int size, int chances) {
 		int deltaY = maxY - minY;
 	

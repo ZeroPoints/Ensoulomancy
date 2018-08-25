@@ -43,7 +43,9 @@ public class PurgatoryWorldProvider extends WorldProvider {
     
 	
 	
-	
+    /**
+	 * Dunno
+	 */
 	@Override
 	public DimensionType getDimensionType() {
 		
@@ -53,14 +55,18 @@ public class PurgatoryWorldProvider extends WorldProvider {
 	
 	
 	
-
+	/**
+	 * Dunno
+	 */
     @Override
     public int getAverageGroundLevel () {
 
         return 70;
     }
 
-
+    /**
+	 * Dunno
+	 */
     @Override
     public boolean isSurfaceWorld () {
 
@@ -68,13 +74,28 @@ public class PurgatoryWorldProvider extends WorldProvider {
     }
     
     
-    
+    /**
+	 * Dunno
+	 */
     @Override
     public IChunkGenerator createChunkGenerator() {
         Main.LogMesssage("PurgatoryWorldProvider", "createChunkGenerator");
         return new PurgatoryChunkGenerator(this.world, this.world.getSeed(), false, world.getWorldInfo().getGeneratorOptions());
     }
     
+    
+    /**
+	 * Dunno
+	 */
+    @Override
+    protected void generateLightBrightnessTable() {
+    	float f = 12.0F;
+    	for (int i = 0; i <= 15; i++) {
+	    	float f1 = 12.0F - i / 15.0F;
+	    	this.lightBrightnessTable[i] = ((1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f);
+    	}
+    }
+    	
 
     
 }
