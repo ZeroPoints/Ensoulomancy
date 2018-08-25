@@ -40,25 +40,9 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
 		
 
-<<<<<<< HEAD
-=======
-		highMonsterList = Lists.newArrayList(
-        	new SpawnListEntry(net.minecraft.entity.monster.EntityWitherSkeleton.class, 1, 1, 1)
-	    ) ;
-		midMonsterList = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityCaveSpider.class, 1, 1, 1)
-	    ) ;
-		lowMonsterList = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 1, 1, 1)
-	    ) ;
->>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
-	    
 	}
 	
 	
-
-<<<<<<< HEAD
-
 	/**
 	 * Goes through each block from ceiling to floor replacing blocks related to this biome
 	 */
@@ -66,72 +50,7 @@ public class HallowedBiome extends Biome implements ICustomBiome {
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
 		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
-=======
-	public IBlockState getBaseBlock() {
-		return Blocks.GLASS.getDefaultState();
-	}
-	
-	
-	@Override
-    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
-    {
-        IBlockState iblockstate = this.topBlock;
-        IBlockState iblockstate1 = this.fillerBlock;
-        int j = -1;
-        //int k = (int)(noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
-        //K is noise for how many blocks it will FILL up. Fill goes reverse from air to fill depth
-        int k = 5;
-        int l = x & 15;
-        int i1 = z & 15;
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-
-        IBlockState iPrevBlockState = Blocks.AIR.getDefaultState();
-        
-        for (int j1 = 300; j1 >= 0; --j1)
-        {
-            
-            IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
-
-            if (iblockstate2.getMaterial() == Material.AIR)
-            {
-                j = -1;
-                if(iPrevBlockState.getMaterial() != Material.AIR) {
-                    iPrevBlockState = Blocks.AIR.getDefaultState();
-                    chunkPrimerIn.setBlockState(i1, j1 + 1, l, iPrevBlockState);
-                }
-            }
-            else if (iblockstate2.getBlock() == Blocks.EMERALD_BLOCK)
-            {
-            	if (j == -1 && iPrevBlockState.getMaterial() == Material.AIR)
-                {
-                	iblockstate = this.topBlock;
-                    iblockstate1 = this.fillerBlock;
-                    
-                    j = k;
-                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate);
-                    iPrevBlockState = iblockstate;
-                    
-                }
-                else if (j >= 0)
-                {
-                    --j;
-                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
-                    iPrevBlockState = iblockstate1;
-                }
-                else {
-                    chunkPrimerIn.setBlockState(i1, j1, l, iblockstate1);
-                    iPrevBlockState = iblockstate1;
-                }
-            }
-        }
-        
-        
-        
-        
-		
->>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
     }
-	
 
 	
 	/**

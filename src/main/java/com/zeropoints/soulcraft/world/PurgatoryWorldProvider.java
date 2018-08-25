@@ -84,13 +84,9 @@ public class PurgatoryWorldProvider extends WorldProvider {
     }
     
     
-<<<<<<< HEAD
     /**
 	 * Dunno
 	 */
-=======
-
->>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
     @Override
     protected void generateLightBrightnessTable() {
     	float f = 12.0F;
