@@ -28,7 +28,6 @@ import net.minecraft.world.chunk.ChunkPrimer;
 
 public class ProfaneBiome extends Biome implements ICustomBiome {
 
-	
 
 	/**
 	 * Initiates the purgatories Profane biome 
@@ -42,11 +41,9 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
 
-		
 	    
 	    
 	}
-
 
 	
 
@@ -57,6 +54,7 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
 		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
+
     }
 
 	

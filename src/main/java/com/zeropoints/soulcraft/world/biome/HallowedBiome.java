@@ -40,12 +40,9 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
 		
 
-	    
 	}
 	
 	
-
-
 	/**
 	 * Goes through each block from ceiling to floor replacing blocks related to this biome
 	 */
@@ -54,7 +51,6 @@ public class HallowedBiome extends Biome implements ICustomBiome {
     {
 		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
     }
-	
 
 	
 	/**

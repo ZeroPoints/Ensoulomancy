@@ -24,6 +24,7 @@ public interface ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos);
 	
+
 	/**
 	 * Max height this biome will cut blocks from
 	 */
@@ -148,6 +149,7 @@ public interface ICustomBiome {
             
         }
 	}
+
 	
 	
 }

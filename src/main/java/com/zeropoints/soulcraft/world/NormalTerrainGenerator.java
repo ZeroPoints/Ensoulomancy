@@ -38,6 +38,7 @@ public class NormalTerrainGenerator {
     private Random random;
 
     
+
     private final BiomeHeights[] heightMaps;
 
     private double[] mainNoiseRegion;
@@ -121,7 +122,8 @@ public class NormalTerrainGenerator {
         int l = 0;
         int i1 = 0;
 
-        //why 5...
+        double[] heightMap = new double[825];
+        
         for (int j1 = 0; j1 < 5; ++j1) {
             for (int k1 = 0; k1 < 5; ++k1) {
                 float f = 0.0F;
@@ -208,6 +210,7 @@ public class NormalTerrainGenerator {
                 }
             }
         }
+        
     }
 
 
@@ -325,8 +328,10 @@ public class NormalTerrainGenerator {
                 }
             }
         }
+
     }
 
+    
     
     
     

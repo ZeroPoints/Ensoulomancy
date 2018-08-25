@@ -27,8 +27,6 @@ import net.minecraft.world.chunk.ChunkPrimer;
 public class SpiritBiome extends Biome implements ICustomBiome {
 
 	
-
-	
 	/**
 	 * Initiates the purgatories Spirit biome 
 	 */
@@ -42,8 +40,7 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 
 	}
 	
-
-
+	
 
 	/**
 	 * Goes through each block from ceiling to floor replacing blocks related to this biome
@@ -52,6 +49,7 @@ public class SpiritBiome extends Biome implements ICustomBiome {
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)
     {
 		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
+
     }
 	
 	
