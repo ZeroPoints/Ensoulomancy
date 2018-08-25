@@ -31,7 +31,7 @@ public class Main {
     
 	public static final CreativeTabs SOULCRAFT_TAB = new SoulcraftTab("soulcraft_tab");
 	
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     public static Logger LOGGER;
     
     /**
@@ -45,6 +45,10 @@ public class Main {
             LOGGER.log(level, message);
         }
     }
+
+    public static void LogMesssage(String message) {
+    	log(null, message);
+    } 
     
     public static void LogMesssage(String type, String message) {
     	log(null, type + " ----- " + message);

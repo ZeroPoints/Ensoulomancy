@@ -2,6 +2,8 @@ package com.zeropoints.soulcraft.world;
 
 import java.util.Random;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.world.biome.ICustomBiome;
 
@@ -15,14 +17,29 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 
 
-
+/**
+ * This code was from MCJTY tutorial on terrain for custom dimensions and then altered
+ */
 public class NormalTerrainGenerator {
 
+	
+	public class BiomeHeights {
+		
+		public double height;
+		
+		public Biome biome; 
+		
+		
+	}
+	
+	
 	
 	private World world;
     private Random random;
 
     
+    private final BiomeHeights[] heightMaps;
+
     private double[] mainNoiseRegion;
     private double[] minLimitRegion;
     private double[] maxLimitRegion;
@@ -41,8 +58,14 @@ public class NormalTerrainGenerator {
 
     private Biome[] biomesForGeneration;
 
+    /**
+     * Dunno...
+     */
     public NormalTerrainGenerator() {
 
+        this.heightMaps = new BiomeHeights[825];
+
+        
         this.biomeWeights = new float[25];
         for (int j = -2; j <= 2; ++j) {
             for (int k = -2; k <= 2; ++k) {
@@ -52,10 +75,18 @@ public class NormalTerrainGenerator {
         }
     }
 
+    
+    /**
+     * Tell this object what biomes this chunk will be using
+     */
     public void setBiomesForGeneration(Biome[] biomesForGeneration) {
         this.biomesForGeneration = biomesForGeneration;
     }
 
+    /**
+     * Setup all noise generators...
+     * This is for giving bumpy terrain
+     */
     public void setup(World world, Random rand) {
         this.world = world;
         this.random = rand;
@@ -80,23 +111,17 @@ public class NormalTerrainGenerator {
     }
 
 
-    public enum HeightSelector{
-    	Top,
-    	Bot,
-    	Mid
-    }
 
-    
-    private double[] generateHeightmap(int chunkX4, int chunkY4, int chunkZ4, HeightSelector selector) {
-        this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX4, chunkZ4, 5, 5, 200.0D, 200.0D, 0.5D);
-        this.mainNoiseRegion = this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX4, chunkY4, chunkZ4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
-        this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion, chunkX4, chunkY4, chunkZ4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
-        this.maxLimitRegion = this.maxLimitPerlinNoise.generateNoiseOctaves(this.maxLimitRegion, chunkX4, chunkY4, chunkZ4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+
+    /**
+     * Builds a heightmap of locations the biomes will be spawning in this chunk
+     */
+    private void generateHeightmap(int chunkX4, int chunkY4, int chunkZ4) {
+        
         int l = 0;
         int i1 = 0;
 
-        double[] heightMap = new double[825];
-        
+        //why 5...
         for (int j1 = 0; j1 < 5; ++j1) {
             for (int k1 = 0; k1 < 5; ++k1) {
                 float f = 0.0F;
@@ -104,30 +129,14 @@ public class NormalTerrainGenerator {
                 float f2 = 0.0F;
                 byte b0 = 2;
 
+                //-2 to 2  twice ?
+                Biome biome = this.biomesForGeneration[j1 + 2 + (k1 + 2) * 10];
+                
+                float baseHeight = biome.getBaseHeight();
+                float variation = biome.getHeightVariation();
+
                 for (int l1 = -b0; l1 <= b0; ++l1) {
                     for (int i2 = -b0; i2 <= b0; ++i2) {
-                        Biome biome = this.biomesForGeneration[j1 + 2 + (k1 + 2) * 10];
-                        
-                        
-                        
-                        //Create 3 height maps
-                        float baseHeight = biome.getBaseHeight();
-                        float variation = biome.getHeightVariation();
-                        
-                        switch(selector) {
-                        default:
-                        case Mid:
-                        	baseHeight = 2.5F;
-                        	break;
-                        case Top:
-                        	baseHeight = 8.1F;
-                        	break;
-                        case Bot:
-                        	baseHeight = -2.5F;
-                        	break;
-                        }
-                        
-                        
 
                         float f5 = biomeWeights[l1 + 2 + (i2 + 2) * 5] / (baseHeight + 2.0F);
                         f += variation * f5;
@@ -189,104 +198,142 @@ public class NormalTerrainGenerator {
                         d10 = d10 * (1.0D - d11) + -10.0D * d11;
                     }
 
-                    heightMap[l] = d10;
+                    
+                    this.heightMaps[l] = new BiomeHeights();
+                    this.heightMaps[l].height = d10;
+                    this.heightMaps[l].biome = biome;
+                    
                     ++l;
+                    //Main.LogMesssage("Height: " + l + " - " + d10);
                 }
             }
         }
-        
-        return heightMap;
     }
 
 
+    /**
+     * Generates the height map and places blocks at locations based on height map
+     */
     public void generate(int chunkX, int chunkZ, ChunkPrimer primer) {
-        double[] top = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Top);
-        double[] bot = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Bot);
-        double[] mid = generateHeightmap(chunkX * 4, 0, chunkZ * 4, HeightSelector.Mid);
-    	
+    	this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX * 4, chunkZ * 4, 5, 5, 200.0D, 200.0D, 0.5D);
+        this.mainNoiseRegion = this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
+        this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+        this.maxLimitRegion = this.maxLimitPerlinNoise.generateNoiseOctaves(this.maxLimitRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+        
+        generateHeightmap(chunkX * 4, 0, chunkZ * 4);
 
-        byte waterLevel = 63;
-        for (int x4 = 0; x4 < 4; ++x4) {
-            int l = x4 * 5;
-            int i1 = (x4 + 1) * 5;
 
-            for (int z4 = 0; z4 < 4; ++z4) {
-                int k1 = (l + z4) * 33;
-                int l1 = (l + z4 + 1) * 33;
-                int i2 = (i1 + z4) * 33;
-                int j2 = (i1 + z4 + 1) * 33;
+        double oneEighth = 0.125D;
+        double oneQuarter = 0.25D;
+        // entire chunk is 16x256x16
+        // process chunk in subchunks, each one 4x8x4 blocks in size
+        // 4 subchunks in x direction, each 4 blocks long
+        // 32 subchunks in y direction, each 8 blocks long
+        // 4 subchunks in z direction, each 4 blocks long
+        // for a total of 512 subchunks
+        
+        // divide chunk into 4 subchunks in x direction, index as ix
+        for (int ix = 0; ix < 4; ++ix)
+        {
+            int k_x0 = ix * 5;
+            int k_x1 = (ix + 1) * 5;
 
-            	//public float TopMax = 27;
-            	//public float TopMin = 25;
-
-            	//public float MidMax = 15;
-            	//public float MidMin = 13;
-            	
-            	//public float BotMax = 2;
-            	//public float BotMin = 0;
-            	
-                Test1(primer, x4, z4, k1, l1, i2, j2, top, 25, 32);
-                Test1(primer, x4, z4, k1, l1, i2, j2, bot, 0, 6);
-                Test1(primer, x4, z4, k1, l1, i2, j2, mid, 13, 18);
+            // divide chunk into 4 subchunks in z direction, index as iz
+            for (int iz = 0; iz < 4; ++iz)
+            {
+            	int k_x0z0 = (k_x0 + iz) * 33;
+                int k_x0z1 = (k_x0 + iz + 1) * 33;
+                int k_x1z0 = (k_x1 + iz) * 33;
+                int k_x1z1 = (k_x1 + iz + 1) * 33;
                 
-            }
-        }
-    }
+                
+                // divide chunk into 32 subchunks in y direction, index as iy
+                for (int iy = 0; iy < 32; ++iy)
+                {
+                	// get the noise values from the noise array
+                    // these are the values at the corners of the subchunk
+                	
+                	///Not totally sure if this is getting this block locations actual biome...dont ask me why..
+                	BiomeHeights n_x0y0z0 = heightMaps[k_x0z0 + iy];
+                	BiomeHeights n_x0y0z1 = heightMaps[k_x0z1 + iy];
+                	BiomeHeights n_x1y0z0 = heightMaps[k_x1z0 + iy];
+                	BiomeHeights n_x1y0z1 = heightMaps[k_x1z1 + iy];
+                	BiomeHeights n_x0y1z0 = heightMaps[k_x0z0 + iy + 1];
+                	BiomeHeights n_x0y1z1 = heightMaps[k_x0z1 + iy + 1];
+                	BiomeHeights n_x1y1z0 = heightMaps[k_x1z0 + iy + 1];
+                	BiomeHeights n_x1y1z1 = heightMaps[k_x1z1 + iy + 1];
+                    
+                    
 
-    
-    
-    
-    
-    public void Test1(ChunkPrimer primer, int x4, int z4, int k1, int l1, int i2, int j2, double[] tmpHeightMap, int minHeight, int maxHeight) {
-    	
-    for (int height32 = minHeight; height32 < maxHeight; ++height32) {
-            double d0 = 0.125D;
-            double d1 = tmpHeightMap[k1 + height32];
-            double d2 = tmpHeightMap[l1 + height32];
-            double d3 = tmpHeightMap[i2 + height32];
-            double d4 = tmpHeightMap[j2 + height32];
-            double d5 = (tmpHeightMap[k1 + height32 + 1] - d1) * d0;
-            double d6 = (tmpHeightMap[l1 + height32 + 1] - d2) * d0;
-            double d7 = (tmpHeightMap[i2 + height32 + 1] - d3) * d0;
-            double d8 = (tmpHeightMap[j2 + height32 + 1] - d4) * d0;
+                    // linearly interpolate between the noise points to get a noise value for each block in the subchunk
 
-            for (int h = 0; h < 8; ++h) {
-                double d9 = 0.25D;
-                double d10 = d1;
-                double d11 = d2;
-                double d12 = (d3 - d1) * d9;
-                double d13 = (d4 - d2) * d9;
-                int height = (height32 * 8) + h;
+                    double noiseStepY00 = (n_x0y1z0.height - n_x0y0z0.height) * oneEighth;
+                    double noiseStepY01 = (n_x0y1z1.height - n_x0y0z1.height) * oneEighth;
+                    double noiseStepY10 = (n_x1y1z0.height - n_x1y0z0.height) * oneEighth;
+                    double noiseStepY11 = (n_x1y1z1.height - n_x1y0z1.height) * oneEighth;
+                    
+                    double noiseStartX0 = n_x0y0z0.height;
+                    double noiseStartX1 = n_x0y0z1.height;
+                    double noiseEndX0 = n_x1y0z0.height;
+                    double noiseEndX1 = n_x1y0z1.height;
+                    
+                 // subchunk is 8 blocks high in y direction, index as jy
+                    for (int jy = 0; jy < 8; ++jy)
+                    {
+                        
+                        double noiseStartZ = noiseStartX0;
+                        double noiseEndZ = noiseStartX1;
+                        
+                        double noiseStepX0 = (noiseEndX0 - noiseStartX0) * oneQuarter;
+                        double noiseStepX1 = (noiseEndX1 - noiseStartX1) * oneQuarter;
 
-                for (int x = 0; x < 4; ++x) {
-                    double d14 = 0.25D;
-                    double d16 = (d11 - d10) * d14;
-                    double d15 = d10 - d16;
+                        // subchunk is 4 blocks long in x direction, index as jx
+                        for (int jx = 0; jx < 4; ++jx)
+                        {
+                            double noiseStepZ = (noiseEndZ - noiseStartZ) * oneQuarter;
+                            double noiseVal = noiseStartZ;
 
-                    for (int z = 0; z < 4; ++z) {
-                    	if ((d15 += d16) > 0.0D) {
-                            primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
+                            // subchunk is 4 blocks long in x direction, index as jz
+                            for (int jz = 0; jz < 4; ++jz)
+                            {
+                            	//Removes chance of spawning block at height level if its not in this biomes range...theoretically
+                            	if(iy * 8 + jy > ((ICustomBiome)n_x0y0z0.biome).GetMaxHeight()) {
+                            		continue;
+                            	}
+                            	if(iy * 8 + jy < ((ICustomBiome)n_x0y0z0.biome).GetMinHeight()) {
+                            		continue;
+                            	}
+                            	
+                            	//Emerald is our replacement block for calculations in our custom biomes genTerrainBlocks
+                            	if ((noiseVal) > 0.0D) {
+                                    primer.setBlockState(ix * 4 + jx, iy * 8 + jy, iz * 4 + jz, Blocks.EMERALD_BLOCK.getDefaultState());
+                                }
+                            	
+                            	
+                                noiseVal += noiseStepZ;
+                            }
+
+                            noiseStartZ += noiseStepX0;
+                            noiseEndZ += noiseStepX1;
                         }
-                    	//primer.setBlockState(x4 * 4 + x, height32 * 8 + h, z4 * 4 + z, Blocks.EMERALD_BLOCK.getDefaultState());
+
+                        noiseStartX0 += noiseStepY00;
+                        noiseStartX1 += noiseStepY01;
+                        noiseEndX0 += noiseStepY10;
+                        noiseEndX1 += noiseStepY11;
                     }
-
-                    d10 += d12;
-                    d11 += d13;
                 }
-
-                d1 += d5;
-                d2 += d6;
-                d3 += d7;
-                d4 += d8;
             }
         }
     }
+
     
     
     
     
-    
-    
+    /**
+     * Havent actually identified the exact functionality of this bubt its name is probably what it does. (replaceBiomeBlocks) && (genTerrainBlocks)
+     */
     public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, IChunkGenerator generator, Biome[] biomes) {
         if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(generator, x, z, primer, this.world)) return;
         this.depthBuffer = this.surfaceNoise.getRegion(this.depthBuffer, (x * 16), (z * 16), 16, 16, 0.0625D, 0.0625D, 1.0D);

@@ -7,6 +7,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.zeropoints.soulcraft.Main;
@@ -29,34 +31,41 @@ import net.minecraft.world.gen.MapGenCaves;
 import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
+/**
+ * Our custom chunk generator
+ * Mob spawning is called in here
+ */
 public class PurgatoryChunkGenerator implements IChunkGenerator {
 
     private final World worldObj;
     private Random random;
     private Biome[] biomesForGeneration;
 
-    
-
-    private MapGenBase caveGenerator = new MapGenCaves();
     private NormalTerrainGenerator terraingen = new NormalTerrainGenerator();
 
-    
+    /**
+     * Our custom chunk generator
+     */
     public PurgatoryChunkGenerator(World world, long seed, boolean mapFeaturesEnabled, String chunkProviderSettingsString) {
 
-    	
         this.worldObj = world;
         this.random = new Random((seed + 516) * 314);
         terraingen.setup(worldObj, random);
-        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, EventType.CAVE);
-        
         
     }
 
+    
+
+    /**
+     * Stuff i played with...i think
+     */
     @Override
     public Chunk generateChunk(int x, int z) {
-        ChunkPrimer chunkprimer = new ChunkPrimer();
-
         
+    	
+    	ChunkPrimer chunkprimer = new ChunkPrimer();
+
+    	
         // Setup biomes for terraingen
         this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomesForGeneration(this.biomesForGeneration, x * 4 - 2, z * 4 - 2, 10, 10);
         terraingen.setBiomesForGeneration(biomesForGeneration);
@@ -79,9 +88,15 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         }
 
         chunk.generateSkylightMap();
+        
+        
         return chunk;
     }
 
+
+    /*
+     * Dont know
+     */
     @Override
     public void populate(int x, int z) {
         int i = x * 16;
@@ -101,9 +116,17 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         return false;
     }
 
+    /**
+     * 
+     *  Gets possible mobs from our biomes
+     * 
+     *
+     */
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
-        
+    	return null;
+
+    	/*
     	Biome biome = this.worldObj.getBiome(pos);
     	if(biome instanceof ICustomBiome) {
     		return ((ICustomBiome)biome).getSpawnableList(creatureType, pos);	
@@ -112,23 +135,35 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     	
     	//DEFAULT RETURN SPIRIT BIOME MOD. This shouldnt fire...
 		return ModBiomes.SPIRIT_BIOME.getSpawnableList(creatureType, pos);
-
+	
+	    */
     }
-
+    
+    
+    /*
+     * Dont know
+     */
     @Nullable
     @Override
     public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
         return null;
     }
-
+    
+    /*
+     * Dont know
+     */
     @Override
     public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {
         return false;
     }
-
+    
+    /*
+     * Dont know
+     */
     @Override
     public void recreateStructures(Chunk chunkIn, int x, int z) {
 
     }
 
+	
 }
