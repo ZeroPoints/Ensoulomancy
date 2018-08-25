@@ -19,10 +19,18 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModBiomes {
 
+<<<<<<< HEAD
     public static final HallowedBiome HALLOWED_BIOME = new HallowedBiome(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(7.7F).setHeightVariation(0.4F));
     public static final SpiritBiome SPIRIT_BIOME = new SpiritBiome(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(2.5F).setHeightVariation(0.4F));
     public static final ProfaneBiome PROFANE_BIOME = new ProfaneBiome(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(-1.5F).setHeightVariation(0.4F));
     public static final VoidBiome VOID_BIOME = new VoidBiome(new Biome.BiomeProperties("VoidBiome").setBaseHeight(-30F).setHeightVariation(0.0F));
+=======
+    public static final ProfaneBiome PROFANE_BIOME = new ProfaneBiome(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
+    public static final HallowedBiome HALLOWED_BIOME = new HallowedBiome(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
+    public static final SpiritBiome SPIRIT_BIOME = new SpiritBiome(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(1.5F).setHeightVariation(0.5F));
+
+    //public static final RiverStyxBiome RIVERSTYX_BIOME = new RiverStyxBiome(new Biome.BiomeProperties("RiverStyxBiome"));
+>>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
     
     
     /**

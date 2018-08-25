@@ -3,9 +3,12 @@ package com.zeropoints.soulcraft.world.biome;
 import java.util.List;
 import java.util.Random;
 
+<<<<<<< HEAD
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.material.Material;
+=======
+>>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -24,6 +27,7 @@ public interface ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos);
 	
+<<<<<<< HEAD
 	/**
 	 * Max height this biome will cut blocks from
 	 */
@@ -148,6 +152,15 @@ public interface ICustomBiome {
             
         }
 	}
+=======
+	
+
+	
+	
+	public IBlockState getBaseBlock();
+	
+	
+>>>>>>> 0aa22b7d51e31d84cc16166a5c2098af842a2196
 	
 	
 }
