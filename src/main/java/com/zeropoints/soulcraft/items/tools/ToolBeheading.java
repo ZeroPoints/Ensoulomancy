@@ -10,7 +10,7 @@ import com.zeropoints.soulcraft.model.heads.ModelHorseHead;
 import com.zeropoints.soulcraft.model.heads.ModelLlamaHead;
 import com.zeropoints.soulcraft.model.heads.ModelParrotHead;
 import com.zeropoints.soulcraft.model.heads.ModelRabbitHead;
-import com.zeropoints.soulcraft.renderer.tileentity.TileEntitySoulSkullRenderer;
+import com.zeropoints.soulcraft.render.tileentity.TileEntitySoulSkullRenderer;
 import com.zeropoints.soulcraft.util.SoulSkullType;
 
 import net.minecraft.client.Minecraft;

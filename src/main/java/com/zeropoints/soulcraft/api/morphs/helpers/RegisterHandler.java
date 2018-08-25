@@ -153,36 +153,4 @@ public class RegisterHandler {
             }
         }
     }
-
-    /**
-     * Registers blacklist
-     */
-    /*
-    @SubscribeEvent
-    public void onRegisterBlacklist(RegisterBlacklistEvent event) {
-        event.blacklist.add("metamorph.Morph");
-        this.loadBlacklist(event.blacklist, Main.proxy.blacklist);
-    }
-    */
-
-    /**
-     * Load user provided blacklist using the safe way.
-     */
-    /*
-    private void loadBlacklist(Set<String> set, File blacklist) {
-        try {
-            Scanner scanner = new Scanner(new FileInputStream(blacklist), "UTF-8");
-
-            @SuppressWarnings("serial")
-            Type type = new TypeToken<List<String>>() {}.getType();
-            List<String> data = GSON.fromJson(scanner.useDelimiter("\\A").next(), type);
-
-            set.addAll(data);
-            scanner.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }

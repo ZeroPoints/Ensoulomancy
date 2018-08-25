@@ -173,7 +173,7 @@ public class EntityUtils {
             return ((IMorphProvider) entity).getMorph();
         }
         else {
-            IMorphing cap = entity.getCapability(MorphingProvider.MORPHING_CAP, null);
+            IMorphing cap = entity.getCapability(MorphingProvider.MORPHING_CAPABILITY, null);
 
             if (cap != null) {
                 return cap.getCurrentMorph();

@@ -160,7 +160,7 @@ public abstract class AbstractMorph {
         // A sanity check to prevent "healing" health when morphing to and from a mob
         // with essentially zero health
         if (target instanceof EntityPlayer) {
-            IMorphing capability = Morphing.get((EntityPlayer) target);
+            IMorphing capability = Morphing.getCapability((EntityPlayer) target);
             if (capability != null) {
                 // Check if a health ratio makes sense for the old health value
                 if (maxHealth > IMorphing.REASONABLE_HEALTH_VALUE) {

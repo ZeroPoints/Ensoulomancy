@@ -6,21 +6,24 @@ import org.apache.logging.log4j.Level;
 
 import com.zeropoints.soulcraft.api.morphs.MorphManager;
 import com.zeropoints.soulcraft.api.morphs.MorphUtils;
-import com.zeropoints.soulcraft.api.morphs.helpers.MobMorphFactory;
-import com.zeropoints.soulcraft.api.morphs.helpers.PlayerMorphFactory;
 import com.zeropoints.soulcraft.api.morphs.helpers.RegisterHandler;
 import com.zeropoints.soulcraft.api.morphs.models.ModelManager;
+import com.zeropoints.soulcraft.capabilities.ghost.GhostFactory;
+import com.zeropoints.soulcraft.capabilities.ghost.GhostStorage;
+import com.zeropoints.soulcraft.capabilities.ghost.IGhost;
 import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
+import com.zeropoints.soulcraft.capabilities.morphing.MobMorphFactory;
 import com.zeropoints.soulcraft.capabilities.morphing.Morphing;
 import com.zeropoints.soulcraft.capabilities.morphing.MorphingStorage;
+import com.zeropoints.soulcraft.capabilities.morphing.PlayerMorphFactory;
+import com.zeropoints.soulcraft.capabilities.soulpool.ISoulpool;
+import com.zeropoints.soulcraft.capabilities.soulpool.SoulpoolStorage;
+import com.zeropoints.soulcraft.capabilities.soulpool.SoulpoolFactory;
 import com.zeropoints.soulcraft.init.ModBiomes;
 import com.zeropoints.soulcraft.init.ModDimensions;
 import com.zeropoints.soulcraft.init.ModEntities;
 import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.network.Dispatcher;
-import com.zeropoints.soulcraft.player.ISoulpool;
-import com.zeropoints.soulcraft.player.PlayerData;
-import com.zeropoints.soulcraft.player.PlayerDataFactory;
 import com.zeropoints.soulcraft.util.SoulcraftConfig;
 
 import net.minecraft.item.Item;
@@ -67,10 +70,6 @@ public class CommonProxy {
     	MorphManager.INSTANCE.models = this.models;
     	MorphManager.INSTANCE.factories.add(new MobMorphFactory());
     	MorphManager.INSTANCE.factories.add(new PlayerMorphFactory());
-    	
-    	/* Entities */
-    	// class needs to extend entity
-    	//EntityRegistry.registerModEntity(new ResourceLocation("morph"), EntityMorph.class, "Morph", 0 , Main.instance, 64, 3, false);
     
     	/* Configuration */
     	File config = new File(e.getModConfigurationDirectory(), "sc/config.cfg");
@@ -88,8 +87,9 @@ public class CommonProxy {
 		ModBiomes.init();
 		ModEvents.init();
 		
-		CapabilityManager.INSTANCE.register(ISoulpool.class, new PlayerData(), new PlayerDataFactory());
+		CapabilityManager.INSTANCE.register(ISoulpool.class, new SoulpoolStorage(), new SoulpoolFactory());
 		CapabilityManager.INSTANCE.register(IMorphing.class, new MorphingStorage(), Morphing.class);
+		CapabilityManager.INSTANCE.register(IGhost.class, new GhostStorage(), new GhostFactory());
 		
     	/* Register factories */
     	RegisterHandler.registerAbilities(MorphManager.INSTANCE);

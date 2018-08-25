@@ -33,8 +33,8 @@ public class Morphing implements IMorphing {
      */
     private float lastHealthRatio;
 
-    public static IMorphing get(EntityPlayer player) {
-        return player.getCapability(MorphingProvider.MORPHING_CAP, null);
+    public static IMorphing getCapability(EntityPlayer player) {
+        return player.getCapability(MorphingProvider.MORPHING_CAPABILITY, null);
     }
 
     @Override
@@ -56,21 +56,25 @@ public class Morphing implements IMorphing {
     @Override
     public boolean setCurrentMorph(AbstractMorph morph, EntityPlayer player) {
     	if (player != null && !player.world.isRemote) {
-	        /* Poof! */
+	        // Poof! 
 	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
         }
     	
+    	// Back to player
         if (morph == null) {
             this.demorph(player);
             return true;
         }
         
+        // Change from one morph to another
         if (player != null && this.morph != null) {
             this.morph.demorph(player);
         }
 
+        // Set the morph 
         this.setMorph(morph);
 
+        // Morph the player
         if (player != null) {
             this.morph.morph(player);
         }

@@ -49,6 +49,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent e) {
 		super.postInit(e);
+		
+		/* Rendering stuff */
+        this.substitutePlayerRenderers(Minecraft.getMinecraft().getRenderManager());
 	}
 	
 	public void registerItemRenderer(Item item, int meta, String id) {
@@ -71,7 +74,6 @@ public class ClientProxy extends CommonProxy {
      * the compatibility with this mod (already confirmed breaking while 
      * using Metamorph and Blockbuster together).
      */
-	/*
     private void substitutePlayerRenderers(RenderManager manager) {
         Map<String, net.minecraft.client.renderer.entity.RenderPlayer> skins = null;
 
@@ -104,7 +106,6 @@ public class ClientProxy extends CommonProxy {
             Main.log(Level.INFO, "Skin map renderers were successfully replaced with Metamorph substitutes!");
         }
     }
-	*/
     
     
     /**

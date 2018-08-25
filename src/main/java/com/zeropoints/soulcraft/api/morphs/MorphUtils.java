@@ -29,18 +29,6 @@ public class MorphUtils {
     }
 
     /**
-     * Reload blacklist using event
-     */
-    /*
-    public static Set<String> reloadBlacklist() {
-        RegisterBlacklistEvent event = new RegisterBlacklistEvent();
-        MinecraftForge.EVENT_BUS.post(event);
-
-        return event.blacklist;
-    }
-    */
-
-    /**
      * Reload morph settings using event 
      */
     public static Map<String, MorphSettings> reloadMorphSettings() {

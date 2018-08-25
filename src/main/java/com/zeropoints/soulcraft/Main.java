@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod(modid= Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
+@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
 public class Main {
     
 	public static final CreativeTabs SOULCRAFT_TAB = new SoulcraftTab("soulcraft_tab");
@@ -39,7 +39,7 @@ public class Main {
      */
     public static void log(Level level, String message) {
         if (DEBUG) {
-        	if(level == null) {
+        	if (level == null) {
         		level = Level.INFO;
         	}
             LOGGER.log(level, message);

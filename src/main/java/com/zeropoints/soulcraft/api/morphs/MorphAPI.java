@@ -5,7 +5,6 @@ import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
 import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
 import com.zeropoints.soulcraft.capabilities.morphing.Morphing;
 import com.zeropoints.soulcraft.network.Dispatcher;
-import com.zeropoints.soulcraft.network.common.PacketAcquireMorph;
 import com.zeropoints.soulcraft.network.common.PacketMorph;
 import com.zeropoints.soulcraft.network.common.PacketMorphPlayer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +34,7 @@ public class MorphAPI {
      * @return true, if player was morphed successfully
      */
     public static boolean morph(EntityPlayer player, AbstractMorph morph) {
-        IMorphing morphing = Morphing.get(player);
+        IMorphing morphing = Morphing.getCapability(player);
 
         if (morphing == null) {
             return false;

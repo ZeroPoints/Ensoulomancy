@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.zeropoints.soulcraft.api.DefaultSettings;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAbility;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAction;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAttackAbility;
@@ -17,11 +18,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
  * An instance of this class is responsible for storing information about 
  * morph's configurable settings.
  */
-public class MorphSettings {
+public class MorphSettings extends DefaultSettings {
 	
-    /**
-     * Empty morph settings which doesn't have any attributes 
-     */
     public static final MorphSettings DEFAULT = new MorphSettings();
 
     /**
@@ -82,6 +80,7 @@ public class MorphSettings {
         this.hands = setting.hands;
     }
 
+    @Override
     public MorphSettings clone() {
         MorphSettings settings = new MorphSettings();
 
@@ -90,9 +89,7 @@ public class MorphSettings {
         return settings;
     }
 
-    /**
-     * Write morph settings to the network buffer
-     */
+    @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(this.abilities.length);
 
@@ -123,9 +120,7 @@ public class MorphSettings {
         buf.writeBoolean(this.hands);
     }
 
-    /**
-     * Read morph settings from the network buffer 
-     */
+    @Override
     public void fromBytes(ByteBuf buf) {
         List<IAbility> abilities = new ArrayList<IAbility>();
 
@@ -156,21 +151,5 @@ public class MorphSettings {
         this.hostile = buf.readBoolean();
         this.hands = buf.readBoolean();
     }
-
-    /**
-     * Get key of given value in given map 
-     */
-    public static <T> String getKey(Map<String, T> map, T value) {
-        if (value == null) {
-            return null;
-        }
-
-        for (Map.Entry<String, T> entry : map.entrySet()) {
-            if (entry.getValue() == value) {
-                return entry.getKey();
-            }
-        }
-
-        return null;
-    }
+    
 }

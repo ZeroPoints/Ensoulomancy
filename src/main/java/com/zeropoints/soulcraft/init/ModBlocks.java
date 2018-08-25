@@ -7,9 +7,11 @@ import java.util.Set;
 import com.google.common.base.Preconditions;
 
 import com.zeropoints.soulcraft.blocks.BlockSoulSkull;
+import com.zeropoints.soulcraft.tileentity.TileEntitySoulBed;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulSkull;
 import com.zeropoints.soulcraft.util.Reference;
 import com.zeropoints.soulcraft.blocks.BlockBase;
+import com.zeropoints.soulcraft.blocks.BlockSoulBed;
 import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.util.IHasModel;
 
@@ -38,6 +40,10 @@ public class ModBlocks {
 	// Decorations
 	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
 	
+	// Tile Entities
+	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
+	
+	
 	//---------------------------------------------------------------------
 
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
@@ -51,7 +57,7 @@ public class ModBlocks {
 			for (final Block block: BLOCKS) {
 				registry.register(block);
 				
-				if(block instanceof IHasModel) {
+				if (block instanceof IHasModel) {
 					((IHasModel)block).registerModels();	
 				}
 			}
@@ -61,7 +67,6 @@ public class ModBlocks {
 
 		@SubscribeEvent
 		public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
-
 			final IForgeRegistry<Item> registry = event.getRegistry();
 
 			for (final ItemBlock item : ITEM_BLOCKS) {
@@ -72,8 +77,12 @@ public class ModBlocks {
 		}
 	}
 
+	/**
+	 * Register tile entity, will render as its model in the world
+	 */
 	private static void registerTileEntities() {
-		GameRegistry.registerTileEntity(TileEntitySoulSkull.class, TileEntitySoulSkull.resourceLocation);
+		GameRegistry.registerTileEntity(TileEntitySoulSkull.class, new ResourceLocation(TileEntitySoulSkull.resourceLocation));
+		GameRegistry.registerTileEntity(TileEntitySoulBed.class, new ResourceLocation(TileEntitySoulBed.resourceLocation));
 	}
 	
 }

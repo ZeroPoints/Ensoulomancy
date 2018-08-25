@@ -28,8 +28,6 @@ public class MorphingStorage implements IStorage<IMorphing> {
     @Override
     public NBTBase writeNBT(Capability<IMorphing> capability, IMorphing instance, EnumFacing side) {
         NBTTagCompound tag = new NBTTagCompound();
-        NBTTagList acquired = new NBTTagList();
-        NBTTagList favorites = new NBTTagList();
         tag.setTag("lastHealthRatio", new NBTTagFloat(instance.getLastHealthRatio()));
 
         if (instance.getCurrentMorph() != null) {
@@ -54,4 +52,5 @@ public class MorphingStorage implements IStorage<IMorphing> {
             }
         }
     }
+    
 }

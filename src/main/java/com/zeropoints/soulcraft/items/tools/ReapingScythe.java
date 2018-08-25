@@ -51,7 +51,7 @@ public class ReapingScythe extends ToolSword {
         	return false;
         }
         
-        IMorphing capability = Morphing.get(player);
+        IMorphing capability = Morphing.getCapability(player);
         
         // Cannot morph if currently possessing
         if (capability == null || capability.isMorphed()) {
@@ -87,7 +87,7 @@ public class ReapingScythe extends ToolSword {
 			return EnumActionResult.PASS;
 		}
 		
-		IMorphing capability = Morphing.get(player);
+		IMorphing capability = Morphing.getCapability(player);
 		if (capability != null && capability.isMorphed()) {
 			MorphAPI.demorph(player);
 		}
