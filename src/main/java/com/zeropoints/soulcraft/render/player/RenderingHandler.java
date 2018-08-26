@@ -1,6 +1,8 @@
 package com.zeropoints.soulcraft.render.player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.zeropoints.soulcraft.api.morphs.EntityMorph;
 import com.zeropoints.soulcraft.capabilities.ghost.Ghost;
@@ -40,7 +42,8 @@ public class RenderingHandler {
 	
     private RenderManager manager;
     
-    private static ArrayList<RenderPlayerEvent.Pre> renderPlayerQueue = new ArrayList<RenderPlayerEvent.Pre>();
+    //private static ArrayList<RenderPlayerEvent.Pre> renderPlayerQueue = new ArrayList<RenderPlayerEvent.Pre>();
+    private static Map<String,RenderPlayerEvent.Pre> renderPlayerQueue = new HashMap<String,RenderPlayerEvent.Pre>();
     
     public RenderingHandler() {
     	this.manager = Minecraft.getMinecraft().getRenderManager();
@@ -55,6 +58,11 @@ public class RenderingHandler {
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         EntityPlayer player = event.getEntityPlayer();
         
+        if (renderPlayerQueue.containsKey(player.getName())) {
+        	//event.setCanceled(true);
+        	return;
+        }
+        
         IMorphing morph = Morphing.getCapability(player);
 
         // Render morph
@@ -68,7 +76,7 @@ public class RenderingHandler {
         // Render ghost
         if (ghost != null && ghost.renderPlayer(player)) {
         	// This adds the player to a rendering queue so then they get rendered after TESRs (Tile Entity Special Renderer)
-        	renderPlayerQueue.add(event);
+        	renderPlayerQueue.put(player.getName(), event);
         	event.setCanceled(true);
         }
     }
@@ -79,24 +87,9 @@ public class RenderingHandler {
      */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-    	for (RenderPlayerEvent.Pre e : renderPlayerQueue) {
+    	for (RenderPlayerEvent.Pre e : renderPlayerQueue.values()) {
 			EntityPlayer player = e.getEntityPlayer();
-			
-			if (!player.isUser() || this.manager.renderViewEntity == player) {
-	            double d0 = e.getY();
-
-	            if (player.isSneaking()) {
-	                d0 -= 0.125D;
-	            }
-
-	            RenderLivingBase playerRender = (RenderLivingBase)e.getRenderer();
-	            GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F); // Ghost it up
-	            
-	            //this.setModelVisibilities(player);
-	            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
-	            playerRender.doRender(player, e.getX(), d0, e.getZ(), player.rotationYaw, e.getPartialRenderTick());
-	            GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
-	        }
+            e.getRenderer().doRender((AbstractClientPlayer)player, e.getX(), e.getY(), e.getZ(), player.rotationYaw, e.getPartialRenderTick());
     	}
     	
     	// When all 'ghost' players are drawn, clear the queue

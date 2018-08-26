@@ -62,6 +62,7 @@ public class MorphHandler {
      */
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent event) {
+    	
         if (event.phase == Phase.START) {
             return;
         }
@@ -99,7 +100,7 @@ public class MorphHandler {
             }
             
             if (!morph.isMorphed()) {
-                /* Restore default eye height */
+                // Restore default eye height 
                 if (!Main.proxy.config.disable_pov) {
                     player.eyeHeight = player.getDefaultEyeHeight();
                 }

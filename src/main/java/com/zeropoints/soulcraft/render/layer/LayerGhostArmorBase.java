@@ -23,9 +23,6 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
     protected T modelArmor;
     private final RenderLivingBase<?> renderer;
     public float alpha = 1.0F;
-    private float colorR = 1.0F;
-    private float colorG = 1.0F;
-    private float colorB = 1.0F;
     private boolean skipRenderGlint;
     private static final Map<String, ResourceLocation> ARMOR_TEXTURE_RES_MAP = Maps.<String, ResourceLocation>newHashMap();
 
@@ -68,13 +65,19 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
                     float f = (float)(i >> 16 & 255) / 255.0F;
                     float f1 = (float)(i >> 8 & 255) / 255.0F;
                     float f2 = (float)(i & 255) / 255.0F;
-                    GlStateManager.color(this.colorR * f, this.colorG * f1, this.colorB * f2, this.alpha);
+                    GlStateManager.enableBlend();
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, this.alpha);
                     t.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.disableBlend();
                     this.renderer.bindTexture(this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, "overlay"));
                 }
                 
-                GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
+                GlStateManager.enableBlend();
+                GlStateManager.color(1.0F, 1.0F, 1.0F, this.alpha);
                 t.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F); // Reset Colour and alpha here
+                GlStateManager.disableBlend();
                 
                 if (!this.skipRenderGlint && itemstack.hasEffect()) {
                     renderEnchantedGlint(this.renderer, entityLivingBaseIn, t, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale);
@@ -94,16 +97,19 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
     public static void renderEnchantedGlint(RenderLivingBase<?> renderer, EntityLivingBase entityIn, ModelBase model, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         float f = (float)entityIn.ticksExisted + partialTicks;
         renderer.bindTexture(ENCHANTED_ITEM_GLINT_RES);
+        
         Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
+        GlStateManager.enableBlend();
         
         GlStateManager.depthFunc(514);
         GlStateManager.depthMask(false);
-        GlStateManager.disableLighting();
+        //GlStateManager.disableLighting();
         
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
         GlStateManager.color(0.38F, 0.19F, 0.608F, 1.0F);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
         
         for (int i = 0; i < 2; ++i) {
+            
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.scale(0.33333334F, 0.33333334F, 0.33333334F);
@@ -112,16 +118,17 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
             GlStateManager.matrixMode(5888);
             model.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         }
-
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
         GlStateManager.matrixMode(5890);
         GlStateManager.loadIdentity();
         GlStateManager.matrixMode(5888);
-        GlStateManager.enableLighting();
+        
+        //GlStateManager.enableLighting();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.depthMask(true);
         GlStateManager.depthFunc(515);
-        
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableBlend();
         Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
     }
 

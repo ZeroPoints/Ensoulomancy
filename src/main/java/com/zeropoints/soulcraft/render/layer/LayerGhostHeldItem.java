@@ -57,7 +57,7 @@ public class LayerGhostHeldItem implements LayerRenderer<EntityLivingBase> {
             if (entity instanceof EntityPlayer) {
             	IGhost ghost = Ghost.getCapability((EntityPlayer)entity);
             	if (ghost.isGhost()) {
-            		GlStateManager.color(0, 0, 0, 0.5F);
+            		GlStateManager.color(1.0F, 1.0F, 1.0F, 0.5F);
             	}
             }
             

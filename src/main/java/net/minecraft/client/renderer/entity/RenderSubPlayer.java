@@ -49,12 +49,12 @@ public class RenderSubPlayer extends RenderPlayer {
     public RenderSubPlayer(RenderManager renderManager, RenderPlayer original, boolean useSmallArms) {
         super(renderManager, useSmallArms);
         
-        original.layerRenderers.remove(1); // Remove Item Layer Renderer
+        //original.layerRenderers.remove(1); // Remove Item Layer Renderer
         original.layerRenderers.remove(0); // Remove Armor Layer Renderer
         
         // The order of these are important. Items reset the alpha channel 
         original.addLayer(new LayerGhostBipedArmor(this)); // Add Armor Layer Renderer
-        original.addLayer(new LayerGhostHeldItem(this)); // Add Item Layer Renderer
+        //original.addLayer(new LayerGhostHeldItem(this)); // Add Item Layer Renderer
         
         this.original = original;
     }
