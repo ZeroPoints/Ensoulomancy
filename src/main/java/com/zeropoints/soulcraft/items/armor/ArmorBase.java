@@ -15,10 +15,9 @@ public class ArmorBase extends ItemArmor implements IHasModel {
 		
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CreativeTabs.COMBAT);
+		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
-		
 		
 		
 	}

@@ -19,6 +19,7 @@ item.soul_skull.bat.name=Bat Head
 item.reaping_scythe.name=Reaping Scythe
 
 // Armor
+item.halo_helmet.name=Halo
 
 // Entities
 entity.Imp.name=Imp
