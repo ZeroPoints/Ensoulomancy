@@ -27,31 +27,23 @@ public class MorphEvent extends Event {
 	public MorphEvent Post;
 	
     public static class Pre extends MorphEvent {
-		public Pre(EntityPlayer player, AbstractMorph morph, boolean force) {
-			super(player, morph, force);
+		public Pre(EntityPlayer player, AbstractMorph morph) {
+			super(player, morph);
 		}
 	}
     
     public static class Post extends MorphEvent {
-		public Post(EntityPlayer player, AbstractMorph morph, boolean force) {
-			super(player, morph, force);
+		public Post(EntityPlayer player, AbstractMorph morph) {
+			super(player, morph);
 		}
 	}
 
 	public EntityPlayer player;
     public AbstractMorph morph;
-    public boolean force;
 
-    public MorphEvent(EntityPlayer player, AbstractMorph morph, boolean force) {
+    public MorphEvent(EntityPlayer player, AbstractMorph morph) {
         this.player = player;
         this.morph = morph;
-        this.force = force;
     }
 
-    /**
-     * Whether given player is about to demorph
-     */
-    public boolean isDemorphing() {
-        return this.morph == null;
-    }
 }

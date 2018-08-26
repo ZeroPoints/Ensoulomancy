@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.zeropoints.soulcraft.items.tools.ReapingScythe;
 import com.zeropoints.soulcraft.items.tools.ToolSword;
-import com.zeropoints.soulcraft.renderer.player.RenderGhostPlayer;
+import com.zeropoints.soulcraft.render.player.RenderGhostPlayer;
 import com.zeropoints.soulcraft.items.ItemSoulSkull;
 import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.items.*;
@@ -69,7 +69,10 @@ public class ModItems {
 	public static final ItemSoulSkull SOUL_SKULL = new ItemSoulSkull();
 	
 
-	
+	// Block Items
+	public static final ItemSoulBed SOUL_BED = new ItemSoulBed();
+
+
 	//---------------------------------------------------------------------
 	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
@@ -77,8 +80,9 @@ public class ModItems {
 		
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
+
 			// uses fixed array with items to register instead of generated list
-			
+
 			final IForgeRegistry<Item> registry = event.getRegistry();
 						
 			for (final Item item: ITEMS) {

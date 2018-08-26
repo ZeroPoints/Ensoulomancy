@@ -10,10 +10,11 @@ import com.zeropoints.soulcraft.model.heads.ModelHorseHead;
 import com.zeropoints.soulcraft.model.heads.ModelLlamaHead;
 import com.zeropoints.soulcraft.model.heads.ModelParrotHead;
 import com.zeropoints.soulcraft.model.heads.ModelRabbitHead;
-import com.zeropoints.soulcraft.renderer.tileentity.TileEntitySoulSkullRenderer;
+import com.zeropoints.soulcraft.render.tileentity.TileEntitySoulSkullRenderer;
 import com.zeropoints.soulcraft.util.SoulSkullType;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,8 +57,9 @@ public class ToolBeheading {
 	@SubscribeEvent
 	public void onLivingDrops(LivingDropsEvent event) {
 		// Other mobs can behead other than players??
-		if(event.getSource().getTrueSource() instanceof EntityPlayer) {			
-			Item item = ((EntityLivingBase) event.getSource().getTrueSource()).getHeldItem(EnumHand.MAIN_HAND).getItem();
+		Entity source = event.getSource().getTrueSource();
+		if(source instanceof EntityPlayer) {			
+			Item item = ((EntityLivingBase)source).getHeldItem(EnumHand.MAIN_HAND).getItem();
 
 			// Is capable of beheading
 			if(item instanceof ToolSword && ((ToolSword)item).CAN_BEHEAD) {

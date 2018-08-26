@@ -7,6 +7,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 public class ServerHandlerMorph extends ServerMessageHandler<PacketMorph> {
     @Override
     public void run(EntityPlayerMP player, PacketMorph message) {
-        MorphAPI.morph(player, message.morph, false);
+        MorphAPI.morph(player, message.morph);
     }
 }

@@ -52,6 +52,7 @@ public class ModBiomes {
 		BiomeDictionary.addTypes(SPIRIT_BIOME, Type.MAGICAL);
 		BiomeDictionary.addTypes(VOID_BIOME, Type.MAGICAL);
 		
+
 		
 		PurgatoryBiomesList = new Biome[3];
 		PurgatoryBiomesList[0] = PROFANE_BIOME;

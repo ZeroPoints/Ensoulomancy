@@ -2,8 +2,8 @@ package com.zeropoints.soulcraft.api.morphs.helpers.actions;
 
 import javax.annotation.Nullable;
 
-import com.zeropoints.soulcraft.api.EntityUtils;
 import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
+import com.zeropoints.soulcraft.api.morphs.EntityUtils;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAction;
 
 import net.minecraft.entity.Entity;

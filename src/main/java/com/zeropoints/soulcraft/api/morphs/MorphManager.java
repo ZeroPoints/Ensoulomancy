@@ -13,6 +13,7 @@ import com.zeropoints.soulcraft.api.morphs.abilities.IAbility;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAction;
 import com.zeropoints.soulcraft.api.morphs.abilities.IAttackAbility;
 import com.zeropoints.soulcraft.api.morphs.models.ModelManager;
+import com.zeropoints.soulcraft.capabilities.morphing.IMorphFactory;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;

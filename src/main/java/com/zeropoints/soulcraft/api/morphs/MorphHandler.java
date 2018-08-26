@@ -6,24 +6,37 @@ import java.util.List;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.soulcraft.Main;
-import com.zeropoints.soulcraft.api.EntityUtils;
 //import com.zeropoints.soulcraft.api.morphs.events.SpawnGhostEvent;
 import com.zeropoints.soulcraft.api.morphs.AbstractMorph;
+import com.zeropoints.soulcraft.capabilities.ghost.Ghost;
+import com.zeropoints.soulcraft.capabilities.ghost.IGhost;
 import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
 import com.zeropoints.soulcraft.capabilities.morphing.Morphing;
+import com.zeropoints.soulcraft.world.PurgatoryWorldType;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Server event handler
@@ -32,10 +45,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
  * essence, there are few things going on over here:
  * 
  * 1. Update morphs in the player's loop
- * 2. Acquiring morphs from killed entities
- * 3. Grant additional attack effect while morphed (more damage, explosions, 
+ * 2. Grant additional attack effect while morphed (more damage, explosions, 
  *    potion effects, etc.)
- * 4. Cancel attack targeting for hostile morphs 
+ * 3. Cancel attack targeting for hostile morphs 
  */
 public class MorphHandler {
 	
@@ -46,43 +58,57 @@ public class MorphHandler {
     /**
      * When player is morphed, its morphing abilities are executed over here.
      * 
-     * Stuff like gliding, allergies, climbing, swiming and other stuff are 
-     * get applied on the player over here.
+     * Stuff like gliding, allergies, climbing, swiming etc.
      */
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent event) {
+    	
         if (event.phase == Phase.START) {
             return;
         }
 
         EntityPlayer player = event.player;
-        IMorphing capability = Morphing.get(player);
-
+        
         this.runFutureTasks(player);
+        
+        IGhost ghost = Ghost.getCapability(player);
+        
+        try {
+        	ghost.update(player);
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        	
+        	if (!player.world.isRemote) {
+                ghost.deGhost(player);
+            }
+        }
 
+        IMorphing morph = Morphing.getCapability(player);
+        
         // A sanity check to prevent "healing" health when morphing to and from a mob
         // with essentially zero health
         // We have to do it every tick because you never know when another mod could
         // change the max health
-        if (capability != null) {
+        if (morph != null) {
             // If the current health ratio makes sense, store that ratio in the capability
             float maxHealth = player.getMaxHealth();
 
             if (maxHealth > IMorphing.REASONABLE_HEALTH_VALUE) {
                 float healthRatio = player.getHealth() / maxHealth;
-                capability.setLastHealthRatio(healthRatio);
+                morph.setLastHealthRatio(healthRatio);
             }
-        }
-
-        if (capability == null || !capability.isMorphed()) {
-            /* Restore default eye height */
-            if (!Main.proxy.config.disable_pov) {
-                player.eyeHeight = player.getDefaultEyeHeight();
+            
+            if (!morph.isMorphed()) {
+                // Restore default eye height 
+                if (!Main.proxy.config.disable_pov) {
+                    player.eyeHeight = player.getDefaultEyeHeight();
+                }
             }
-        }
+        }        
 
         try {
-            capability.update(player);
+        	morph.update(player);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -91,51 +117,6 @@ public class MorphHandler {
                 MorphAPI.demorph(player);
             }
         }
-    }
-
-    /**
-     * When a player kills an entity, he gains a morph based on the properties 
-     * of this entity.
-     * 
-     * I think I need to implement some mechanism or a callback to map some 
-     * entities with the same name onto different morphs. 
-     */
-    // I will use this event for now to morph the player. 
-    @SubscribeEvent
-    public void onPlayerKillEntity(LivingDeathEvent event) {
-        Entity source = event.getSource().getTrueSource(); // getEntity()
-        Entity target = event.getEntity();
-
-        if (target.world.isRemote || source instanceof FakePlayer) {
-            return;
-        }
-
-        if (!(source instanceof EntityPlayer) || target instanceof EntityPlayer) {
-            return;
-        }
-
-        EntityPlayer player = (EntityPlayer)source;
-        IMorphing capability = Morphing.get(player);
-
-        if (capability == null) {
-            return;
-        }
-
-        String name = MorphManager.INSTANCE.morphNameFromEntity(target);
-
-        if (!MorphManager.INSTANCE.hasMorph(name)) {
-            Main.log(Level.WARN, "Morph by key '" + name + "' doesn't exist!");
-            return;
-        }
-
-        NBTTagCompound tag = new NBTTagCompound();
-
-        tag.setString("Name", name);
-        tag.setTag("EntityData", EntityUtils.stripEntityNBT(target.serializeNBT()));
-
-        AbstractMorph morph = MorphManager.INSTANCE.morphFromNBT(tag);
-        
-        MorphAPI.morph(player, morph, true); 
     }
 
     /**
@@ -152,7 +133,7 @@ public class MorphHandler {
 
         if (source instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) source;
-            IMorphing capability = Morphing.get(player);
+            IMorphing capability = Morphing.getCapability(player);
 
             if (capability == null || !capability.isMorphed()) {
                 return;
@@ -165,21 +146,15 @@ public class MorphHandler {
     /**
      * Another morphing handler.
      * 
-     * This handler is responsible for canceling setting attack target for 
-     * hostile morphs.
+     * This handler is responsible for canceling setting attack target for hostile morphs.
      */
     @SubscribeEvent
     public void onLivingSetAttackTarget(LivingSetAttackTargetEvent event) {
-        if (Main.proxy.config.disable_morph_disguise) {
-            return;
-        }
-
         Entity target = event.getTarget();
         EntityLivingBase source = event.getEntityLiving();
 
         if (target instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) target;
-            IMorphing morphing = Morphing.get(player);
+            IMorphing morphing = Morphing.getCapability((EntityPlayer) target);
 
             if (morphing == null || !morphing.isMorphed()) {
                 return;
@@ -205,4 +180,5 @@ public class MorphHandler {
             FUTURE_TASKS_SERVER.remove(0).run();
         }
     }
+    
 }

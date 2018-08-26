@@ -38,7 +38,7 @@ public class UndeadMorph extends EntityMorph {
         super.updateEntity(target);
 
         if (preventNoise) {
-            this.entity.setItemStackToSlot(EntityEquipmentSlot.HEAD, null);
+            this.entity.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
         }
     }
 

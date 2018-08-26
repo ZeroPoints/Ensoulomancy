@@ -2,7 +2,7 @@ package com.zeropoints.soulcraft.init;
 
 
 import com.zeropoints.soulcraft.Main;
-import com.zeropoints.soulcraft.renderer.entity.mobs.EntityImp;
+import com.zeropoints.soulcraft.render.entity.mobs.EntityImp;
 import com.zeropoints.soulcraft.util.Reference;
 
 import net.minecraft.util.ResourceLocation;

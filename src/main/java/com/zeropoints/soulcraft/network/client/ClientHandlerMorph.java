@@ -11,10 +11,10 @@ public class ClientHandlerMorph extends ClientMessageHandler<PacketMorph> {
     @Override
     @SideOnly(Side.CLIENT)
     public void run(EntityPlayerSP player, PacketMorph message) {
-        IMorphing capability = Morphing.get(player);
+        IMorphing capability = Morphing.getCapability(player);
 
         if (capability != null) {
-            capability.setCurrentMorph(message.morph, player, true);
+            capability.setCurrentMorph(message.morph, player);
         }
     }
 }

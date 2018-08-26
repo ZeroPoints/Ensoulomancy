@@ -1,11 +1,9 @@
 package com.zeropoints.soulcraft.init;
 
 import com.zeropoints.soulcraft.entity.EntityMorph;
-import com.zeropoints.soulcraft.renderer.entity.mobs.*;
-import com.zeropoints.soulcraft.renderer.entity.mobs.RenderImp;
-import com.zeropoints.soulcraft.renderer.player.RenderGhostPlayer;
-import com.zeropoints.soulcraft.renderer.player.RenderMorph;
-import com.zeropoints.soulcraft.renderer.tileentity.TileEntitySoulSkullRenderer;
+import com.zeropoints.soulcraft.render.entity.mobs.*;
+import com.zeropoints.soulcraft.render.player.RenderGhostPlayer;
+import com.zeropoints.soulcraft.render.tileentity.TileEntitySoulSkullRenderer;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulSkull;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -21,10 +19,6 @@ public class ModRenderers {
 		
 		// Mobs
 		RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
-		
-		// Player Possessions
-		RenderingRegistry.registerEntityRenderingHandler(EntityMorph.class, new RenderMorph.RenderFactory());
-		
 	}
 	
 	public static void registerItemRenderer(Item item, int meta, String id) {
