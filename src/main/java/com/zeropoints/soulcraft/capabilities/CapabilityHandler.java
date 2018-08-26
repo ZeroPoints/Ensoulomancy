@@ -20,6 +20,7 @@ import com.zeropoints.soulcraft.capabilities.morphing.MorphingProvider;
 import com.zeropoints.soulcraft.capabilities.soulpool.ISoulpool;
 import com.zeropoints.soulcraft.capabilities.soulpool.Soulpool;
 import com.zeropoints.soulcraft.capabilities.soulpool.SoulpoolProvider;
+import com.zeropoints.soulcraft.items.armor.Halo;
 import com.zeropoints.soulcraft.network.Dispatcher;
 import com.zeropoints.soulcraft.network.common.PacketMorph;
 import com.zeropoints.soulcraft.network.common.PacketSettings;
@@ -31,16 +32,20 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -180,6 +185,110 @@ public class CapabilityHandler {
     private void getCurrentMorph(IMorphing morph, EntityPlayer player) {
         Dispatcher.sendTo(new PacketMorph(morph.getCurrentMorph()), (EntityPlayerMP)player);
     }	
+	
+    
+    
+    
+    
+    
+    
+    
+    
+
+	/**
+	 * Every tick check player data...
+	 * @param event
+	 */
+	@SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+
+		//Gets this current player
+
+        EntityPlayer player = event.player;
+		
+		
+        GrantFlight(player);
+    }
+
+	
+	
+	
+	
+	/**
+	 * Grant flight to player if they have halo
+	 * @param player
+	 */
+	public static void GrantFlight(EntityPlayer player) {
+		
+		boolean hasFlight = false;
+		//Gets players items
+
+		NonNullList<ItemStack> stack = player.inventory.armorInventory;
+		//Find whether the player has a halo on for creative flight
+
+		for(int i = 0; i < stack.size(); i++) {
+			if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
+				
+			}
+			else {
+				hasFlight = true;
+			}
+		}
+		
+		if(!hasFlight) {
+			player.capabilities.allowFlying = false;
+			return;
+		}
+		
+		if (player.world.isRemote) {
+			//GRANT FLIGHT AND SPEED
+			player.capabilities.allowFlying = true;
+			player.capabilities.setFlySpeed(0.05F + (0.05F * 5 * (float)1D));	
+			
+		}
+
+		
+	}
+	
+	
+	/**
+	 * When player damaged do checks if it was flight damage and they have flight gear
+	 * @param event
+	 */
+	@SubscribeEvent
+    public void onPlayerAttacked(LivingAttackEvent event) {
+		
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+
+			//Gets this current player
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+			
+			//Gets players items
+			NonNullList<ItemStack> stack = player.inventory.armorInventory;
+			boolean hasFlight = false;
+
+			//Find whether the player has a halo on for creative flight
+			for(int i = 0; i < stack.size(); i++) {
+				if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
+					
+				}
+				else {
+
+					hasFlight = true;
+				}
+			}
+			
+			//Disable fall damage if player falling
+			if(hasFlight && event.getSource().damageType.equals("fall")) {
+				event.setCanceled(true);
+				return;
+			}
+			
+		}
+		
+	}
+	
 	
 }
 
