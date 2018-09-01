@@ -124,10 +124,9 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
      */
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
-    	return null;
+    	//return null;
 
-    	/*
-    	Biome biome = this.worldObj.getBiome(pos);
+		Biome biome = this.worldObj.getBiome(pos);
     	if(biome instanceof ICustomBiome) {
     		return ((ICustomBiome)biome).getSpawnableList(creatureType, pos);	
 		}
@@ -135,8 +134,10 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     	
     	//DEFAULT RETURN SPIRIT BIOME MOD. This shouldnt fire...
 		return ModBiomes.SPIRIT_BIOME.getSpawnableList(creatureType, pos);
-	
-	    */
+
+    	
+    	//return null;
+	    
     }
     
     

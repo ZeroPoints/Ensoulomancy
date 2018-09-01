@@ -1,6 +1,7 @@
+
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "sc:items/reaping_beans"
+        "layer0": "sc:items/soul_seeds"
     }
 }

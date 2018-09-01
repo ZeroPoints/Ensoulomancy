@@ -1,0 +1,35 @@
+
+
+{
+    "forge_marker": 1,
+    
+    "variants": {
+        "age": {
+            "0": {
+                "model": "sc:pedestal1"
+            },
+            "1": {
+                "model": "sc:pedestal1"
+            },
+            "2": {
+                "model": "sc:pedestal2"
+            },
+            "3": {
+                "model": "sc:pedestal2"
+            },
+            "4": {
+                "model": "sc:pedestal2"
+            },
+            "5": {
+                "model": "sc:pedestal3"
+            },
+            "6": {
+                "model": "sc:pedestal3"
+            },
+            "7": {
+                "model": "sc:pedestal3"
+            }
+        }
+    }
+    
+}

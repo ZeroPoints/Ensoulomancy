@@ -11,7 +11,7 @@ public class SoulcraftTab extends CreativeTabs {
 	}
 
 	public ItemStack getTabIconItem() { 
-		return new ItemStack(ModItems.REAPING_SEEDS);
+		return new ItemStack(ModItems.SOUL_SEEDS);
 	}
 }
 

@@ -9,12 +9,12 @@ import net.minecraft.item.ItemFood;
 import net.minecraftforge.oredict.OreDictionary;
 
 
-public class ReapingBeans extends ItemFood implements IHasModel {
+public class SoulEssence extends ItemFood implements IHasModel {
 
-	public ReapingBeans() {
+	public SoulEssence() {
 		super(3, 0.6f, false);
-		setUnlocalizedName("reaping_beans");
-		setRegistryName("reaping_beans");
+		setUnlocalizedName("soul_essence");
+		setRegistryName("soul_essence");
 		setCreativeTab(Main.SOULCRAFT_TAB);
 		
 		ModItems.ITEMS.add(this);
@@ -23,7 +23,7 @@ public class ReapingBeans extends ItemFood implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "reaping_beans");
+		Main.proxy.registerItemRenderer(this, 0, "soul_essence");
 		
 	}
 	

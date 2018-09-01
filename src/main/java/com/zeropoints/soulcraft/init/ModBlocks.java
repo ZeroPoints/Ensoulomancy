@@ -7,15 +7,20 @@ import java.util.Set;
 import com.google.common.base.Preconditions;
 
 import com.zeropoints.soulcraft.blocks.BlockSoulSkull;
+import com.zeropoints.soulcraft.blocks.PedestalCrop;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulBed;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulSkull;
 import com.zeropoints.soulcraft.util.Reference;
 import com.zeropoints.soulcraft.blocks.BlockBase;
 import com.zeropoints.soulcraft.blocks.BlockSoulBed;
-import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
+import com.zeropoints.soulcraft.blocks.SoulEssenceCrop;
+import com.zeropoints.soulcraft.blocks.SoulEssenceStem;
 import com.zeropoints.soulcraft.util.IHasModel;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPumpkin;
+import net.minecraft.block.BlockStem;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -35,7 +40,10 @@ public class ModBlocks {
 	//---------------------------------------------------------------------
 	
 	// Crops
-	public static final ReapingBeansCrop REAPING_BEANS_CROP = new ReapingBeansCrop();
+	public static final SoulEssenceCrop SOUL_ESSENCE_CROP = new SoulEssenceCrop();
+	public static final PedestalCrop PEDESTAL_CROP = new PedestalCrop();
+	public static final SoulEssenceStem SOUL_ESSENCE_STEM = new SoulEssenceStem();
+	
 	
 	// Decorations
 	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
@@ -43,7 +51,7 @@ public class ModBlocks {
 	// Tile Entities
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
 	
-	
+		
 	//---------------------------------------------------------------------
 
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
@@ -81,6 +89,7 @@ public class ModBlocks {
 	 * Register tile entity, will render as its model in the world
 	 */
 	private static void registerTileEntities() {
+		
 		GameRegistry.registerTileEntity(TileEntitySoulSkull.class, new ResourceLocation(TileEntitySoulSkull.resourceLocation));
 		GameRegistry.registerTileEntity(TileEntitySoulBed.class, new ResourceLocation(TileEntitySoulBed.resourceLocation));
 	}

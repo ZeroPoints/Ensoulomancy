@@ -34,17 +34,14 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	 */
 	public ProfaneBiome(BiomeProperties properties) {
 		super(properties);
-
 		this.setRegistryName("sc", "profane");
-
-
 		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
-
-	    
-	    
+		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
 	}
 
+	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 1, 1, 1)
+			);
 	
 
 	/**
@@ -63,22 +60,23 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
     {
-
-    	if(pos.getY() <= 50) {
-    		return getLocaleSpawn();
+		return getLocaleSpawn(creatureType);
+    	/*
+		if(pos.getY() <= 50) {
+    		
     	}
     	if(pos.getY() > 50 && pos.getY() <= 90) {
     		return getMiddleSpawn();
     	}
 		return null;
-
+*/
     }
 
 
 
 	
 	@Override
-	public List<SpawnListEntry> getMiddleSpawn() {    
+	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
 		return Lists.newArrayList(
 				new SpawnListEntry(net.minecraft.entity.monster.EntityHusk.class, 1, 1, 1)
 				) ;	
@@ -86,10 +84,13 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 
 
 	@Override
-	public List<SpawnListEntry> getLocaleSpawn() {
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 1, 1, 1)
-				) ;	
+	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
+		if(creatureType == EnumCreatureType.MONSTER) {
+    		return localSpawn ;	
+		}
+		else {
+			return null;
+		}
 	}
 
 	

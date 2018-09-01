@@ -10,6 +10,7 @@ import com.zeropoints.soulcraft.util.IHasModel;
 import com.zeropoints.soulcraft.world.PurgatoryTeleporter;
 
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,7 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 
 
-public class ReapingBeansCrop extends BlockCrops {
+public class SoulEssenceStem extends BlockStem {
 
 	// Outline to show when hovered over
 	/*
@@ -35,11 +36,11 @@ public class ReapingBeansCrop extends BlockCrops {
 			};
 	*/
 	
-	public ReapingBeansCrop() {
-		//super();
+	public SoulEssenceStem() {
+		super(Blocks.SOUL_SAND);
 		
-		setUnlocalizedName("reaping_beans_crop");
-		setRegistryName("reaping_beans_crop");
+		setUnlocalizedName("soul_essence_stem");
+		setRegistryName("soul_essence_stem");
 		
 		ModBlocks.BLOCKS.add(this);
 	}
@@ -50,16 +51,16 @@ public class ReapingBeansCrop extends BlockCrops {
         return REAPING_BEANS_AABB[((Integer)state.getValue(AGE)).intValue()];
     }
     */
-	
+	/*
 	@Override
 	protected Item getSeed() {
-		return ModItems.REAPING_SEEDS;
+		return ModItems.SOUL_SEEDS2;
 	}
 	
 	@Override
 	protected Item getCrop() {
-		return ModItems.REAPING_BEANS;
-	}
+		return ModItems.SOUL_ESSENCE2;
+	}*/
 	
 	/*
 	 * This does not actually change the block it can grow on. See @com.zeropoints.soulcraft.items.ReapingSeeds#getPlantType
@@ -99,6 +100,7 @@ public class ReapingBeansCrop extends BlockCrops {
 
 
 	}
+
 	
 	
 	

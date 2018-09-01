@@ -32,16 +32,14 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 	 */
 	public HallowedBiome(BiomeProperties properties) {
 		super(properties);
-
-
 		this.setRegistryName("sc", "hallowed");
-
 		this.topBlock = Blocks.END_STONE.getDefaultState(); 
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
-		
-
 	}
 	
+	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 1, 1, 1)
+			);
 	
 	/**
 	 * Goes through each block from ceiling to floor replacing blocks related to this biome
@@ -58,7 +56,8 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
     {
-
+		return getLocaleSpawn(creatureType);
+    	/*
     	
     	if(pos.getY() > 50 && pos.getY() <= 90) {
     		return getMiddleSpawn();
@@ -67,22 +66,25 @@ public class HallowedBiome extends Biome implements ICustomBiome {
     		return getLocaleSpawn();
     	}
 		return null;
-
+*/
     }
 
 	
 	@Override
-	public List<SpawnListEntry> getMiddleSpawn() {    
+	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
 		return Lists.newArrayList(
 				new SpawnListEntry(net.minecraft.entity.monster.EntitySilverfish.class, 1, 1, 1)
 				) ;	
 	}
 
 	@Override
-	public List<SpawnListEntry> getLocaleSpawn() {
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 1, 1, 1)
-				) ;	
+	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
+		if(creatureType == EnumCreatureType.MONSTER) {
+    		return localSpawn ;	
+		}
+		else {
+			return null;
+		}
 	}
 
 	

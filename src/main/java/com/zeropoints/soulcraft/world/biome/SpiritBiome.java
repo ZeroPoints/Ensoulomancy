@@ -32,14 +32,14 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 	 */
 	public SpiritBiome(BiomeProperties properties) {
 		super(properties);
-
 		this.setRegistryName("sc", "spirit");
-
 		this.topBlock = Blocks.SNOW.getDefaultState(); 
 		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
-
 	}
 	
+	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
+			new SpawnListEntry(net.minecraft.entity.monster.EntityEnderman.class, 1, 1, 1)
+			);
 	
 
 	/**
@@ -58,24 +58,29 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 	 */
 	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
     {
+		return getLocaleSpawn(creatureType);
+    	/*
     	if(pos.getY() > 50 && pos.getY() <= 90) {
     		return getMiddleSpawn();
     	}
     	return null;
+    	*/
     }
 	
 	
 	@Override
-	public List<SpawnListEntry> getMiddleSpawn() {    
+	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
 		return null;
 	}
 
 	@Override
-	public List<SpawnListEntry> getLocaleSpawn() {
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityEnderman.class, 1, 1, 1),
-				new SpawnListEntry(net.minecraft.entity.monster.EntityEndermite.class, 1, 1, 1)
-				) ;	
+	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
+		if(creatureType == EnumCreatureType.MONSTER) {
+    		return localSpawn ;	
+		}
+		else {
+			return null;
+		}
 	}
 
 	

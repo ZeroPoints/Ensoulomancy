@@ -42,12 +42,12 @@ public interface ICustomBiome {
 	/**
 	 * Gets the mobs that will be spawned when this biome is at the middle layer
 	 */
-	public List<Biome.SpawnListEntry> getMiddleSpawn();
+	public List<Biome.SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType);
 
 	/**
 	 * Gets the mobs that will be spawned when this biome is at its natural layer
 	 */
-	public List<Biome.SpawnListEntry> getLocaleSpawn();
+	public List<Biome.SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType);
 	
 	
 	

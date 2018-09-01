@@ -3,8 +3,10 @@
 itemGroup.soulcraft_tab=Soulcraft
 
 // Items
-item.reaping_seeds.name=Reaping Seeds
-item.reaping_beans.name=Reaping Beans
+item.soul_seeds.name=Soul Seeds
+item.soul_essence.name=Soul Essence
+item.soul_seeds_stem.name=Soul Seeds Stem
+item.pedestal_seeds.name=Pedestal Seeds
 item.soul_ingot.name=Soul Ingot
 
 // Heads

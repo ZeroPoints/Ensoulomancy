@@ -1,3 +1,5 @@
+
+
 {
     "forge_marker": 1,
     "defaults": {
@@ -7,44 +9,45 @@
         "age": {
             "0": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/0"
+                    "cross": "sc:blocks/soul_essence/0"
                 }
             },
             "1": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/1"
+                    "cross": "sc:blocks/soul_essence/1"
                 }
             },
             "2": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/2"
+                    "cross": "sc:blocks/soul_essence/2"
                 }
             },
             "3": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/3"
+                    "cross": "sc:blocks/soul_essence/3"
                 }
             },
             "4": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/4"
+                    "cross": "sc:blocks/soul_essence/4"
                 }
             },
             "5": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/5"
+                    "cross": "sc:blocks/soul_essence/5"
                 }
             },
             "6": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/6"
+                    "cross": "sc:blocks/soul_essence/6"
                 }
             },
             "7": {
                 "textures": {
-                    "cross": "sc:blocks/reaping_beans/7"
+                    "cross": "sc:blocks/soul_essence/soul_essence_v4_7"
                 }
             }
         }
     }
+    
 }

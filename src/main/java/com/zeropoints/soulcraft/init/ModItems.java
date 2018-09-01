@@ -7,7 +7,6 @@ import com.zeropoints.soulcraft.items.tools.ReapingScythe;
 import com.zeropoints.soulcraft.items.tools.ToolSword;
 import com.zeropoints.soulcraft.render.player.RenderGhostPlayer;
 import com.zeropoints.soulcraft.items.ItemSoulSkull;
-import com.zeropoints.soulcraft.blocks.ReapingBeansCrop;
 import com.zeropoints.soulcraft.items.*;
 import com.zeropoints.soulcraft.items.armor.ArmorBase;
 import com.zeropoints.soulcraft.items.armor.Halo;
@@ -58,8 +57,11 @@ public class ModItems {
 		
 	
 	// Plants
-	public static final ReapingBeans REAPING_BEANS = new ReapingBeans();
-	public static final ReapingSeeds REAPING_SEEDS = new ReapingSeeds();
+	public static final SoulEssence SOUL_ESSENCE = new SoulEssence();
+	public static final SoulSeeds SOUL_SEEDS = new SoulSeeds();
+
+	public static final SoulSeedsStem SOUL_SEEDS_STEM = new SoulSeedsStem();
+	public static final PedestalSeeds PEDESTAL_SEEDS = new PedestalSeeds();
 
 	// Tools
 	public static final ReapingScythe REAPING_SCYTHE = new ReapingScythe();

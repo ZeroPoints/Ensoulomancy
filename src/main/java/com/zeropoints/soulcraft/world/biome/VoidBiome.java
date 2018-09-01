@@ -81,15 +81,15 @@ public class VoidBiome extends Biome implements ICustomBiome {
 	
 	
 	@Override
-	public List<SpawnListEntry> getMiddleSpawn() {    
-		return Lists.newArrayList() ;	
+	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
+		return null ;	
 	}
 	
 
 	
 	@Override
-	public List<SpawnListEntry> getLocaleSpawn() {
-		return Lists.newArrayList() ;	
+	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
+		return null ;	
 	}
 	
 	
