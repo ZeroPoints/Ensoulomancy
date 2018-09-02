@@ -7,6 +7,7 @@ import java.util.Set;
 import com.google.common.base.Preconditions;
 
 import com.zeropoints.soulcraft.blocks.BlockSoulSkull;
+import com.zeropoints.soulcraft.blocks.ObjCrop;
 import com.zeropoints.soulcraft.blocks.PedestalCrop;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulBed;
 import com.zeropoints.soulcraft.tileentity.TileEntitySoulSkull;
@@ -43,6 +44,7 @@ public class ModBlocks {
 	public static final SoulEssenceCrop SOUL_ESSENCE_CROP = new SoulEssenceCrop();
 	public static final PedestalCrop PEDESTAL_CROP = new PedestalCrop();
 	public static final SoulEssenceStem SOUL_ESSENCE_STEM = new SoulEssenceStem();
+	public static final ObjCrop OBJ_CROP = new ObjCrop();
 	
 	
 	// Decorations

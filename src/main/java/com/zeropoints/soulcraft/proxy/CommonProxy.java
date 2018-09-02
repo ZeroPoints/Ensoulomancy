@@ -24,9 +24,11 @@ import com.zeropoints.soulcraft.init.ModDimensions;
 import com.zeropoints.soulcraft.init.ModEntities;
 import com.zeropoints.soulcraft.init.ModEvents;
 import com.zeropoints.soulcraft.network.Dispatcher;
+import com.zeropoints.soulcraft.util.Reference;
 import com.zeropoints.soulcraft.util.SoulcraftConfig;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -78,6 +80,9 @@ public class CommonProxy {
     	this.forge = new Configuration(config);
     	this.config = new SoulcraftConfig(this.forge);
     	this.morphs = morphs;
+    	
+    	OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
+
     }
 
 

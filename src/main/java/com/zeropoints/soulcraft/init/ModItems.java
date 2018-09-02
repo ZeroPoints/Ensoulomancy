@@ -62,6 +62,7 @@ public class ModItems {
 
 	public static final SoulSeedsStem SOUL_SEEDS_STEM = new SoulSeedsStem();
 	public static final PedestalSeeds PEDESTAL_SEEDS = new PedestalSeeds();
+	public static final ObjSeeds OBJ_SEEDS = new ObjSeeds();
 
 	// Tools
 	public static final ReapingScythe REAPING_SCYTHE = new ReapingScythe();
