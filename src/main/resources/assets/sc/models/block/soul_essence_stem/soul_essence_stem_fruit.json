@@ -1,7 +1,0 @@
-{
-    "parent": "sc:block/stem_base/stem_fruit",
-    "textures": {
-        "stem": "sc:blocks/soul_essence_stem_disconnected",
-        "upperstem": "sc:blocks/soul_essence_stem_connected"
-    }
-}

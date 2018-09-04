@@ -1,0 +1,6 @@
+{
+    "parent": "ensoulomancy:block/stem_base/stem_growth4",
+    "textures": {
+        "stem": "ensoulomancy:blocks/soul_essence_stem_disconnected"
+    }
+}
