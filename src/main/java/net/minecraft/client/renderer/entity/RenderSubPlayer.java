@@ -3,12 +3,12 @@ package net.minecraft.client.renderer.entity;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.zeropoints.soulcraft.capabilities.ghost.Ghost;
-import com.zeropoints.soulcraft.capabilities.ghost.IGhost;
-import com.zeropoints.soulcraft.capabilities.morphing.IMorphing;
-import com.zeropoints.soulcraft.capabilities.morphing.Morphing;
-import com.zeropoints.soulcraft.render.layer.LayerGhostBipedArmor;
-import com.zeropoints.soulcraft.render.layer.LayerGhostHeldItem;
+import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
+import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
+import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+import com.zeropoints.ensoulomancy.render.layer.LayerGhostBipedArmor;
+import com.zeropoints.ensoulomancy.render.layer.LayerGhostHeldItem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

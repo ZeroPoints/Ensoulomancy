@@ -1,0 +1,35 @@
+
+
+{
+    "forge_marker": 1,
+    
+    "variants": {
+        "age": {
+            "0": {
+                "model": "ensoulomancy:pedestal1"
+            },
+            "1": {
+                "model": "ensoulomancy:pedestal1"
+            },
+            "2": {
+                "model": "ensoulomancy:pedestal2"
+            },
+            "3": {
+                "model": "ensoulomancy:pedestal2"
+            },
+            "4": {
+                "model": "ensoulomancy:pedestal2"
+            },
+            "5": {
+                "model": "ensoulomancy:pedestal3"
+            },
+            "6": {
+                "model": "ensoulomancy:pedestal3"
+            },
+            "7": {
+                "model": "ensoulomancy:pedestal3"
+            }
+        }
+    }
+    
+}

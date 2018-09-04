@@ -10453,7 +10453,7 @@ Build 1.5.1-7.7.1.666:
 		MinecraftForge/FML@42f1d8795599e0d1a516a1fdd7488a09b77e4565 Merge pull request #224 from Glought/master
 		MinecraftForge/FML@2dcabe01232b48009acbca6724565598761f561b Add a to string to fmlmodcontainer: should mean less derpy cyclic dependency data
 		MinecraftForge/FML@11ac46daebe901a6012a09ba5f6fe44af5b1be06 Fixing the GameRegistry. Now it is possible to register a Block with a BlockItem using following code: MyBlock myBlock = new MyBlock(); GameRegistry.registerBlock(myBlock, MyBlockItem.class, "myBlock"); where MyBlockItem class has one constructor with signature: public MyBlockItem(int id, Block block)
-		MinecraftForge/FML@c3fda11d100f9db7c32ef212ac37eade3e35d701 Merge pull request #225 from MarcinSc/master
+		MinecraftForge/FML@c3fda11d100f9db7c32ef212ac37eade3e35d701 Merge pull request #225 from Marcinensoulomancy/master
 	Christian: Add forge/FML data to the f3 screen.
 
 Build 1.5.1-7.7.1.665:

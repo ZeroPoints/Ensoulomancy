@@ -1,0 +1,41 @@
+
+// Tabs
+itemGroup.ensoulomancy_tab=Ensoulomancy
+
+// Items
+item.soul_seeds.name=Soul Seeds
+item.soul_essence.name=Soul Essence
+item.soul_seeds_stem.name=Soul Seeds Stem
+item.pedestal_seeds.name=Pedestal Seeds
+item.obj_seeds.name=Obj Seeds
+item.soul_ingot.name=Soul Ingot
+
+// Heads
+item.soul_skull.blaze.name=Blaze Head
+item.soul_skull.cow.name=Cow Head
+item.soul_skull.chicken.name=Chicken Head
+item.soul_skull.bat.name=Bat Head
+
+// Blocks
+
+// Tools
+item.reaping_scythe.name=Reaping Scythe
+
+// Armor
+item.halo_helmet.name=Halo
+
+// Entities
+entity.Imp.name=Imp
+
+// Tile Entities
+tile.soul_skull.name=Tile Skull
+
+//World
+generator.PURGATORY=Purgatory
+generator.PURGATORY.info=Bridge between worlds.
+
+//New stuff for new stuffy
+
+
+
+
