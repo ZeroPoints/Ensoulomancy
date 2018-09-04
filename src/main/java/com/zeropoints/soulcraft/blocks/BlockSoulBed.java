@@ -1,5 +1,7 @@
 package com.zeropoints.soulcraft.blocks;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
@@ -23,6 +25,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -47,6 +50,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -140,8 +144,13 @@ public class BlockSoulBed extends BlockBed {
         	player.dismountRidingEntity();
         }
 
-        //player.spawnShoulderEntities();
-        //player.setSize(0.2F, 0.2F);
+    	// Not sure what this does. Will test
+    	try {
+    		ReflectionHelper.findMethod(EntityPlayer.class, "spawnShoulderEntities", "func_192030_dh").invoke(player);
+		} 
+    	catch (Exception e) {
+			e.printStackTrace();
+		}
         
         final IBlockState state = player.world.isBlockLoaded(bedLocation) ? player.world.getBlockState(bedLocation) : null;
         final boolean isBed = state != null && state.getBlock() == ModBlocks.SOUL_BED;
@@ -164,7 +173,7 @@ public class BlockSoulBed extends BlockBed {
         player.motionZ = 0.0D;
     	
     	ghost.sleep(bedLocation);
-        
+    	
         return EntityPlayer.SleepResult.OK;
     }
     

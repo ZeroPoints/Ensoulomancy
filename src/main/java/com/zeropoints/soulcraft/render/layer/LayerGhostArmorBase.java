@@ -1,6 +1,9 @@
 package com.zeropoints.soulcraft.render.layer;
 
 import com.google.common.collect.Maps;
+import com.zeropoints.soulcraft.capabilities.ghost.Ghost;
+import com.zeropoints.soulcraft.capabilities.ghost.IGhost;
+
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -8,6 +11,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -22,7 +26,7 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
     protected T modelLeggings;
     protected T modelArmor;
     private final RenderLivingBase<?> renderer;
-    public float alpha = 1.0F;
+    private float alpha = 1.0F;
     private boolean skipRenderGlint;
     private static final Map<String, ResourceLocation> ARMOR_TEXTURE_RES_MAP = Maps.<String, ResourceLocation>newHashMap();
 
@@ -31,11 +35,22 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
         this.initArmor();
     }
 
-    public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.CHEST);
-        this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.LEGS);
-        this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.FEET);
-        this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.HEAD);
+    public void doRenderLayer(EntityLivingBase entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    	// Only render the armor with alpha if the player is currently a ghost.
+    	if (entity instanceof EntityPlayer) {
+    		IGhost ghost = Ghost.getCapability((EntityPlayer)entity);
+    		if (ghost.isGhost()) {
+    			this.alpha = 0.5F;
+    		}
+    		else {
+    			this.alpha = 1.0F;
+    		}
+    	}
+    	
+        this.renderArmorLayer(entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.CHEST);
+        this.renderArmorLayer(entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.LEGS);
+        this.renderArmorLayer(entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.FEET);
+        this.renderArmorLayer(entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.HEAD);
     }
 
     public boolean shouldCombineTextures() {
@@ -57,7 +72,11 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
                 boolean flag = this.isLegSlot(slotIn);
                 this.renderer.bindTexture(this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, null));
                 
-                GlStateManager.disableCull();
+                if (this.alpha != 1.0F) {
+	                GlStateManager.enableBlend();
+	                GlStateManager.disableLighting();
+	                GlStateManager.color(1.0F, 1.0F, 1.0F, this.alpha);
+                }
                 
                 // Allow this for anything, not only cloth
                 if (itemarmor.hasOverlay(itemstack)) {
@@ -65,22 +84,20 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
                     float f = (float)(i >> 16 & 255) / 255.0F;
                     float f1 = (float)(i >> 8 & 255) / 255.0F;
                     float f2 = (float)(i & 255) / 255.0F;
-                    GlStateManager.enableBlend();
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, this.alpha);
                     t.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.disableBlend();
                     this.renderer.bindTexture(this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, "overlay"));
                 }
                 
-                GlStateManager.enableBlend();
-                GlStateManager.color(1.0F, 1.0F, 1.0F, this.alpha);
                 t.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F); // Reset Colour and alpha here
-                GlStateManager.disableBlend();
                 
                 if (!this.skipRenderGlint && itemstack.hasEffect()) {
                     renderEnchantedGlint(this.renderer, entityLivingBaseIn, t, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale);
+                }
+                
+                if (this.alpha != 1.0F) {
+	                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F); // Reset Colour and alpha here
+	                GlStateManager.enableLighting();
+	                GlStateManager.disableBlend();
                 }
             }
         }
@@ -97,19 +114,16 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
     public static void renderEnchantedGlint(RenderLivingBase<?> renderer, EntityLivingBase entityIn, ModelBase model, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         float f = (float)entityIn.ticksExisted + partialTicks;
         renderer.bindTexture(ENCHANTED_ITEM_GLINT_RES);
-        
         Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
-        GlStateManager.enableBlend();
         
+        GlStateManager.enableBlend();
+        GlStateManager.disableLighting();
         GlStateManager.depthFunc(514);
         GlStateManager.depthMask(false);
-        //GlStateManager.disableLighting();
-        
         GlStateManager.color(0.38F, 0.19F, 0.608F, 1.0F);
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
         
         for (int i = 0; i < 2; ++i) {
-            
             GlStateManager.matrixMode(5890);
             GlStateManager.loadIdentity();
             GlStateManager.scale(0.33333334F, 0.33333334F, 0.33333334F);
@@ -123,13 +137,15 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
         GlStateManager.loadIdentity();
         GlStateManager.matrixMode(5888);
         
-        //GlStateManager.enableLighting();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.depthMask(true);
         GlStateManager.depthFunc(515);
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.enableLighting();
         GlStateManager.disableBlend();
+        
         Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
+        
     }
 
     protected abstract void initArmor();

@@ -7,11 +7,13 @@ import org.apache.logging.log4j.Level;
 
 import com.zeropoints.soulcraft.Main;
 import com.zeropoints.soulcraft.api.ghost.GhostSettings;
+import com.zeropoints.soulcraft.api.ghost.GuiSoulSleepMP;
 import com.zeropoints.soulcraft.network.Dispatcher;
 import com.zeropoints.soulcraft.network.common.PacketGhost;
 import com.zeropoints.soulcraft.world.PurgatoryWorldType;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -75,7 +77,17 @@ public class Ghost implements IGhost {
 		return this.isGhost;
 	}
 
+	/**
+	 * 
+	 */
 	private void becomeGhost(EntityPlayer player) {
+		this.becomeGhost(player, false);
+	}
+	
+	/**
+	 * 
+	 */
+	private void becomeGhost(EntityPlayer player, boolean immediate) {
 		if (player != null && !player.world.isRemote) {
 	        // Poof!
 	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.PORTAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
@@ -113,10 +125,10 @@ public class Ghost implements IGhost {
 			}
 			
 			// Render player if they see themself or visible to another player
-			/*if (this.visible || Minecraft.getMinecraft().player == player) {
+			if (this.visible || Minecraft.getMinecraft().player == player) {
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F);
 				return false;
-			}*/
+			}
 			
 			return true;
 		}
@@ -129,11 +141,23 @@ public class Ghost implements IGhost {
 	 */
 	@Override
 	public void sleep(BlockPos bedPosition) {
-		this.isSleeping = true;
-		this.sleepTimer = 0;
+		//this.isSleeping = true;
+		//this.sleepTimer = 0;
 		
 		// Set position for this bed so when player leaves ghost form they appear there
 		this.bedPosition = bedPosition; 
+		
+		// Show the GUI to sleep or leave the bed.
+		// This GUI will appear when you die or leave ghost form? TODO: discuss this with chu
+		Minecraft.getMinecraft().displayGuiScreen(new GuiSoulSleepMP());
+	}
+	
+	@Override
+	public void stopSleeping() {
+		this.isSleeping = false;
+		this.sleepTimer = 0;
+		
+		Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 	}
 
 	/**
@@ -145,11 +169,11 @@ public class Ghost implements IGhost {
 		if (player != null && !player.world.isRemote && !isGhost && isSleeping) {
 			
 			// Leave bed if sneaky
-			if (player.isSneaking()) {
+			/*if (player.isSneaking()) {
 				this.isSleeping = false;
 				player.sendMessage(new TextComponentString("Cancelled Sleeping")); 
 				return;
-			}
+			}*/
 			
 			++this.sleepTimer;
 			

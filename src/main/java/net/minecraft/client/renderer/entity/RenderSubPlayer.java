@@ -49,12 +49,8 @@ public class RenderSubPlayer extends RenderPlayer {
     public RenderSubPlayer(RenderManager renderManager, RenderPlayer original, boolean useSmallArms) {
         super(renderManager, useSmallArms);
         
-        //original.layerRenderers.remove(1); // Remove Item Layer Renderer
         original.layerRenderers.remove(0); // Remove Armor Layer Renderer
-        
-        // The order of these are important. Items reset the alpha channel 
         original.addLayer(new LayerGhostBipedArmor(this)); // Add Armor Layer Renderer
-        //original.addLayer(new LayerGhostHeldItem(this)); // Add Item Layer Renderer
         
         this.original = original;
     }
@@ -72,12 +68,6 @@ public class RenderSubPlayer extends RenderPlayer {
             }
         }
         
-        IGhost ghost = Ghost.getCapability(clientPlayer);
-        
-        if (ghost != null && ghost.isGhost()) {
-        	GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F);
-        }
-
         this.original.renderLeftArm(clientPlayer);
     }
 
@@ -121,6 +111,7 @@ public class RenderSubPlayer extends RenderPlayer {
         modelplayer.bipedRightArmwear.rotateAngleX = 0.0F;
         modelplayer.bipedRightArmwear.render(0.0625F);
         GlStateManager.disableBlend();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         return true;
     }
 

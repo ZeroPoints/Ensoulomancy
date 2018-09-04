@@ -20,6 +20,7 @@ import com.zeropoints.soulcraft.capabilities.morphing.MorphingProvider;
 import com.zeropoints.soulcraft.capabilities.soulpool.ISoulpool;
 import com.zeropoints.soulcraft.capabilities.soulpool.Soulpool;
 import com.zeropoints.soulcraft.capabilities.soulpool.SoulpoolProvider;
+import com.zeropoints.soulcraft.items.armor.ArmorBase;
 import com.zeropoints.soulcraft.items.armor.Halo;
 import com.zeropoints.soulcraft.network.Dispatcher;
 import com.zeropoints.soulcraft.network.common.PacketMorph;
@@ -43,6 +44,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
+import net.minecraftforge.event.entity.player.PlayerEvent.StopTracking;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -188,105 +190,57 @@ public class CapabilityHandler {
 	
     
     
-    
-    
-    
-    
-    
-    
 
 	/**
 	 * Every tick check player data...
-	 * @param event
 	 */
 	@SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-
-		//Gets this current player
-
-        EntityPlayer player = event.player;
-		
-		
-        GrantFlight(player);
+        GrantFlight(event.player);
     }
 
-	
-	
-	
-	
 	/**
 	 * Grant flight to player if they have halo
-	 * @param player
 	 */
-	public static void GrantFlight(EntityPlayer player) {
+	private static void GrantFlight(EntityPlayer player) {
+		boolean hasFlight = hasFlight(player);
 		
-		boolean hasFlight = false;
-		//Gets players items
-
-		NonNullList<ItemStack> stack = player.inventory.armorInventory;
-		//Find whether the player has a halo on for creative flight
-
-		for(int i = 0; i < stack.size(); i++) {
-			if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
-				
-			}
-			else {
-				hasFlight = true;
-			}
-		}
-		
-		if(!hasFlight) {
-			player.capabilities.allowFlying = false;
-			return;
-		}
-		
-		if (player.world.isRemote) {
+		if (hasFlight && player.world.isRemote) {
 			//GRANT FLIGHT AND SPEED
 			player.capabilities.allowFlying = true;
 			player.capabilities.setFlySpeed(0.05F + (0.05F * 5 * (float)1D));	
-			
 		}
-
-		
 	}
 	
+	/**
+	 * Determines if a flying item is in the player's inventory
+	 */
+	private static boolean hasFlight(EntityPlayer player) {
+		// Find whether the player has a halo on for creative flight
+		for (ItemStack itemStack : player.inventory.armorInventory) {
+			if (!itemStack.isEmpty() && itemStack.getItem() instanceof ArmorBase && ((ArmorBase)itemStack.getItem()).GRANTS_FLIGHT) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	/**
 	 * When player damaged do checks if it was flight damage and they have flight gear
-	 * @param event
 	 */
 	@SubscribeEvent
     public void onPlayerAttacked(LivingAttackEvent event) {
-		
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-
-			//Gets this current player
+		if (event.getEntityLiving() instanceof EntityPlayer) {
+			// Gets this current player
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-
 			
-			//Gets players items
-			NonNullList<ItemStack> stack = player.inventory.armorInventory;
-			boolean hasFlight = false;
-
-			//Find whether the player has a halo on for creative flight
-			for(int i = 0; i < stack.size(); i++) {
-				if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
-					
-				}
-				else {
-
-					hasFlight = true;
-				}
-			}
-			
-			//Disable fall damage if player falling
-			if(hasFlight && event.getSource().damageType.equals("fall")) {
+			// Disable fall damage if player falling
+			if (event.getSource().damageType.equals("fall") && hasFlight(player)) {
 				event.setCanceled(true);
 				return;
 			}
-			
 		}
-		
 	}
 	
 	

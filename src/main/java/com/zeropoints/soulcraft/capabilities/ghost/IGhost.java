@@ -33,6 +33,9 @@ public interface IGhost {
 	/** Force animation in bed before turning into a ghost */
 	public void sleep(BlockPos bedPosition);
 	
+	/** The player cancels the sleep event */
+	public void stopSleeping();
+	
 	/** Update the player */
     public void update(EntityPlayer player);
     
