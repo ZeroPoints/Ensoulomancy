@@ -2,6 +2,8 @@ package com.zeropoints.ensoulomancy.render.entity.mobs;
 
 import javax.annotation.Nullable;
 
+import com.zeropoints.ensoulomancy.util.IEntity;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,8 +27,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-public class EntityImp extends EntityLiving {
+public class EntityImp extends EntityLiving implements IEntity {
 
 	private int homeCheckTimer;
 	private int attackTimer;
@@ -34,6 +37,11 @@ public class EntityImp extends EntityLiving {
 	public EntityImp(World world) {
 		super(world);
 		this.setSize(0.5F, 0.9F);
+	}
+	
+	@Override
+	public void RegisterEntityRenderer() {
+		RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
 	}
 	
 	protected void initEntityAI() {
@@ -119,5 +127,7 @@ public class EntityImp extends EntityLiving {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 	}
+
+	
 	
 }

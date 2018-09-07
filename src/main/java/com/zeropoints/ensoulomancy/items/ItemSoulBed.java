@@ -44,10 +44,14 @@ public class ItemSoulBed extends Item implements IHasModel {
         this.setCreativeTab(Main.ENSOULOMANCY_TAB);
         this.setMaxDamage(0);
         
-        this.setTileEntityItemStackRenderer(new TileEntityItemSoulBedStackRenderer());
-        
 		ModItems.ITEMS.add(this);
     }
+    
+    @Override
+	public void registerModels() {
+    	this.setTileEntityItemStackRenderer(new TileEntityItemSoulBedStackRenderer());
+		ModRenderers.registerRenderer(this, 0, name);
+	}
     
     /**
      * Called when a Block is right-clicked with this Item
@@ -99,10 +103,5 @@ public class ItemSoulBed extends Item implements IHasModel {
         }
         return EnumActionResult.FAIL;
     }
-
-	@Override
-	public void registerModels() {
-		ModRenderers.registerItemRenderer(this, 0, Reference.MOD_ID + ":" + name + "#inventory");
-	}
-
+    
 }

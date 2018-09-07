@@ -45,13 +45,9 @@ public class ModBlocks {
 	public static final SoulEssenceStem SOUL_ESSENCE_STEM = new SoulEssenceStem();
 	public static final ObjCrop OBJ_CROP = new ObjCrop();
 	
-	
-	// Decorations
-	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
-	
 	// Tile Entities
+	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
-	
 		
 	//---------------------------------------------------------------------
 
@@ -66,9 +62,9 @@ public class ModBlocks {
 			for (final Block block: BLOCKS) {
 				registry.register(block);
 				
-				if (block instanceof IHasModel) {
+				/*if (block instanceof IHasModel) {
 					((IHasModel)block).registerModels();	
-				}
+				}*/
 			}
 			
 			registerTileEntities();
@@ -90,7 +86,6 @@ public class ModBlocks {
 	 * Register tile entity, will render as its model in the world
 	 */
 	private static void registerTileEntities() {
-		
 		GameRegistry.registerTileEntity(TileEntitySoulSkull.class, new ResourceLocation(TileEntitySoulSkull.resourceLocation));
 		GameRegistry.registerTileEntity(TileEntitySoulBed.class, new ResourceLocation(TileEntitySoulBed.resourceLocation));
 	}

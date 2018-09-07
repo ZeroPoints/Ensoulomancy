@@ -36,7 +36,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         
-        ModRenderers.register(); // client-side only
+        //ModRenderers.register(); // client-side only
     }
 	
 	@Override

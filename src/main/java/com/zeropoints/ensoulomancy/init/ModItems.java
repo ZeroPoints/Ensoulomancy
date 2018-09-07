@@ -38,23 +38,14 @@ public class ModItems {
 	
 	//---------------------------------------------------------------------
 	
-
-		
 	// Materials
 	//DONT PUT ITEMS THAT USE MATERIALS BEFORE THESE MATERIALS
 	public static final ToolMaterial MATERIAL_SOUL_INGOT = EnumHelper.addToolMaterial("material_soul_ingot", 2, 250, 6.0F, 5.0F, 10);
 	public static final ArmorMaterial ARMOR_MATERIAL_HALO = EnumHelper.addArmorMaterial("armor_material_halo", Reference.MOD_ID + ":halo", 10, new int[] {4,7,9,4}, 10,SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.0F);
-	
-	
-	
-	
-	
 
 	// Armor
 	public static final Halo HALO_HELMET = new Halo();
-		
-		
-	
+
 	// Plants
 	public static final SoulEssence SOUL_ESSENCE = new SoulEssence();
 	public static final SoulSeeds SOUL_SEEDS = new SoulSeeds();
@@ -70,7 +61,6 @@ public class ModItems {
 	public static final SoulIngot SOUL_INGOT = new SoulIngot();
 	public static final ItemSoulSkull SOUL_SKULL = new ItemSoulSkull();
 	
-
 	// Block Items
 	public static final ItemSoulBed SOUL_BED = new ItemSoulBed();
 
@@ -84,16 +74,15 @@ public class ModItems {
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 
 			// uses fixed array with items to register instead of generated list
-
 			final IForgeRegistry<Item> registry = event.getRegistry();
 						
 			for (final Item item: ITEMS) {
 				registry.register(item);
 				
 				// Only when item has IHasModel implemented do we want to force 'generic' render
-				if(item instanceof IHasModel) {
+				/*if (item instanceof IHasModel) {
 					((IHasModel)item).registerModels();	
-				}
+				}*/
 			}
 		}
 		

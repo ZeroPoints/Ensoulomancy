@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
+import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleep;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
@@ -74,19 +75,7 @@ public class BlockSoulBed extends BlockBed {
      */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-    	
-    	// If that player is currently a ghost, immeadiately deghost the player client and server-side
-    	IGhost ghost = Ghost.getCapability(playerIn);
-        if (ghost != null && ghost.isGhost()) {
-        	ghost.deGhost(playerIn);
-        	return true;
-        }
-    	
-        // Don't make the server do anything until timer for sleep is up
-        if (world.isRemote) {
-            return true;
-        }
-        
+
         // If the block clicked isn't the head piece, change it to be so
         if (state.getValue(PART) != BlockSoulBed.EnumPartType.HEAD) {
             pos = pos.offset((EnumFacing)state.getValue(FACING));
@@ -144,36 +133,8 @@ public class BlockSoulBed extends BlockBed {
         	player.dismountRidingEntity();
         }
 
-    	// Not sure what this does. Will test
-    	try {
-    		ReflectionHelper.findMethod(EntityPlayer.class, "spawnShoulderEntities", "func_192030_dh").invoke(player);
-		} 
-    	catch (Exception e) {
-			e.printStackTrace();
-		}
+        Minecraft.getMinecraft().displayGuiScreen(new GuiSoulSleep(bedLocation));
         
-        final IBlockState state = player.world.isBlockLoaded(bedLocation) ? player.world.getBlockState(bedLocation) : null;
-        final boolean isBed = state != null && state.getBlock() == ModBlocks.SOUL_BED;
-        final EnumFacing enumfacing = isBed && state.getBlock() instanceof BlockHorizontal ? (EnumFacing)state.getValue(BlockHorizontal.FACING) : null;
-        
-        float f1 = 0.5F;
-        float f2 = 0.5F;
-        
-        if (enumfacing != null) {
-            f1 = 0.5F + (float)enumfacing.getFrontOffsetX() * 0.4F;
-            f2 = 0.5F + (float)enumfacing.getFrontOffsetZ() * 0.4F;            
-            player.renderOffsetX = -1.8F * (float)enumfacing.getFrontOffsetX();
-            player.renderOffsetZ = -1.8F * (float)enumfacing.getFrontOffsetZ();
-        }
-        
-        player.setPosition(bedLocation.getX() + f1, bedLocation.getY() + 0.6875F, bedLocation.getZ() + f2);
-
-        player.motionX = 0.0D;
-        player.motionY = 0.0D;
-        player.motionZ = 0.0D;
-    	
-    	ghost.sleep(bedLocation);
-    	
         return EntityPlayer.SleepResult.OK;
     }
     

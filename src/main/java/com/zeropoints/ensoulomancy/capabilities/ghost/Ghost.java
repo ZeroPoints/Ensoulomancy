@@ -5,22 +5,27 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Level;
 
-import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleepMP;
+import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleep;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 import com.zeropoints.ensoulomancy.network.common.PacketGhost;
 import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
 
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -80,23 +85,15 @@ public class Ghost implements IGhost {
 	/**
 	 * 
 	 */
-	private void becomeGhost(EntityPlayer player) {
-		this.becomeGhost(player, false);
-	}
-	
-	/**
-	 * 
-	 */
-	private void becomeGhost(EntityPlayer player, boolean immediate) {
-		if (player != null && !player.world.isRemote) {
-	        // Poof!
-	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.PORTAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
-        }
-		
+	@Override
+	public void becomeGhost(EntityPlayer player) {
 		// Put SP cost here?
 		this.isGhost = true;
 		
-		player.sendMessage(new TextComponentString("Is a Ghost")); 
+		if (player != null && !player.world.isRemote) {
+	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.PORTAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
+	        player.sendMessage(new TextComponentString("Is a Ghost")); 
+        }
 	}
 
 	@Override
@@ -104,7 +101,7 @@ public class Ghost implements IGhost {
 		this.isSleeping = false;
 		this.isGhost = false;
 		
-		if (!player.world.isRemote) {
+		if (player != null && !player.world.isRemote) {
 	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.PORTAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
 			player.sendMessage(new TextComponentString("Not a Ghost"));
 		}
@@ -136,56 +133,109 @@ public class Ghost implements IGhost {
 		return false;
 	}
 	
-	/**
-	 * Set variables when player sleeds in bed
-	 */
 	@Override
-	public void sleep(BlockPos bedPosition) {
-		//this.isSleeping = true;
-		//this.sleepTimer = 0;
+	public void sleep(EntityPlayer player, BlockPos bedPosition) {
+		// Set position for this bed so when player leaves ghost form they appear there ???
+		this.bedPosition = bedPosition;
 		
-		// Set position for this bed so when player leaves ghost form they appear there
-		this.bedPosition = bedPosition; 
+		// Not sure what this does. Will test
+    	try {
+    		ReflectionHelper.findMethod(EntityPlayer.class, "spawnShoulderEntities", "func_192030_dh").invoke(player);
+		} 
+    	catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		// Show the GUI to sleep or leave the bed.
-		// This GUI will appear when you die or leave ghost form? TODO: discuss this with chu
-		Minecraft.getMinecraft().displayGuiScreen(new GuiSoulSleepMP());
+		// This code teleports the player to the bed and locks views?
+		final IBlockState state = player.world.isBlockLoaded(bedPosition) ? player.world.getBlockState(bedPosition) : null;
+        final boolean isBed = state != null && state.getBlock() == ModBlocks.SOUL_BED;
+        final EnumFacing enumfacing = isBed && state.getBlock() instanceof BlockHorizontal ? (EnumFacing)state.getValue(BlockHorizontal.FACING) : null;
+        
+        float f1 = 0.5F;
+        float f2 = 0.5F;
+        
+        if (enumfacing != null) {
+            f1 = 0.5F + (float)enumfacing.getFrontOffsetX() * 0.4F;
+            f2 = 0.5F + (float)enumfacing.getFrontOffsetZ() * 0.4F;            
+            player.renderOffsetX = -1.8F * (float)enumfacing.getFrontOffsetX();
+            player.renderOffsetZ = -1.8F * (float)enumfacing.getFrontOffsetZ();
+        }
+        
+        player.setPosition(bedPosition.getX() + f1, bedPosition.getY() + 0.6875F, bedPosition.getZ() + f2);
+
+        player.motionX = 0.0D;
+        player.motionY = 0.0D;
+        player.motionZ = 0.0D;
+		
+        // Start the sleeping animations in the update function now
+		if (!player.world.isRemote) {
+			return;
+		}
+		
+		this.isSleeping = true;
+		this.sleepTimer = 0;
 	}
 	
+	/*
+	@SideOnly(Side.CLIENT)
+    public boolean tryStartCameraFlight() {
+        if (cameraFlightActive || !isClientCloseEnough()) {
+            return false;
+        }
+
+        Vector3 offset = new Vector3(this).add(0, 6, 0);
+        ClientCameraFlightHelper.CameraFlightBuilder builder = ClientCameraFlightHelper.builder(offset.clone().add(4, 0, 4), new Vector3(this).add(0.5, 0.5, 0.5));
+        builder.addCircularPoints(offset, ClientCameraFlightHelper.DynamicRadiusGetter.dyanmicIncrease( 5,  0.025), 200, 2);
+        builder.addCircularPoints(offset, ClientCameraFlightHelper.DynamicRadiusGetter.dyanmicIncrease(10, -0.01) , 200, 2);
+        builder.setTickDelegate(createFloatDelegate(new Vector3(this).add(0.5F, 1.2F, 0.5F)));
+        builder.setStopDelegate(createAttunementDelegate());
+
+        OrbitalPropertiesAttunement att = new OrbitalPropertiesAttunement(this, true);
+        OrbitalEffectController ctrl = EffectHandler.getInstance().orbital(att, att, null);
+        ctrl.setOrbitAxis(Vector3.RotAxis.Y_AXIS).setOrbitRadius(3).setTicksPerRotation(80).setOffset(new Vector3(this).add(0.5, 0.5, 0.5));
+
+        ctrl = EffectHandler.getInstance().orbital(att, att, null);
+        ctrl.setOrbitAxis(Vector3.RotAxis.Y_AXIS).setOrbitRadius(3)
+                .setTicksPerRotation(80).setTickOffset(40).setOffset(new Vector3(this).add(0.5, 0.5, 0.5));
+
+        this.clientActiveCameraFlight = builder.finishAndStart();
+        this.cameraFlightActive = true;
+        return true;
+    }
+	*/
+	
+	
 	@Override
-	public void stopSleeping() {
+	public void stopSleeping(EntityPlayer player) {
 		this.isSleeping = false;
 		this.sleepTimer = 0;
 		
+		//if (player.world.isRemote) {
 		Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
+		//}
 	}
 
-	/**
-	 * Update function that constantly runs onPlayerTick event
-	 * Handles the player sleeping in a bed to become a ghost
-	 */
 	@Override
 	public void update(EntityPlayer player) {
-		if (player != null && !player.world.isRemote && !isGhost && isSleeping) {
-			
-			// Leave bed if sneaky
-			/*if (player.isSneaking()) {
-				this.isSleeping = false;
-				player.sendMessage(new TextComponentString("Cancelled Sleeping")); 
-				return;
-			}*/
-			
+		if (player == null) {
+			return;
+		}
+		
+		// Client-side sleep, will make pretty particles for that player only
+		if (player.world.isRemote && !isGhost && isSleeping) {
 			++this.sleepTimer;
 			
 			// After 100 ticks, player will become ghost
 			if (this.sleepTimer >= 100) {
+				// TODO: I can insert different animations and things based on the sleepTimer variable
+				
 				this.sleepTimer = 0;
 				this.isSleeping = false;
 				
 				this.becomeGhost(player);
 				
-				// Send data to client
-				Dispatcher.sendTo(new PacketGhost(this.getSettings()), (EntityPlayerMP) player);
+				// Send data to server
+				Dispatcher.sendToServer(new PacketGhost(this.getSettings()));
 			}
 		}
 	}

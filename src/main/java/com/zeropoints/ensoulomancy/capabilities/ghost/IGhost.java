@@ -23,6 +23,9 @@ public interface IGhost {
 	/** Change player to normal */
 	public void deGhost(EntityPlayer player);
 	
+	/** Turn ethereal! */
+	public void becomeGhost(EntityPlayer player);
+	
     /** Get the soul bed position */
     public BlockPos getBedPosition();
     
@@ -31,12 +34,12 @@ public interface IGhost {
     public boolean renderPlayer(EntityPlayer player);
 	
 	/** Force animation in bed before turning into a ghost */
-	public void sleep(BlockPos bedPosition);
+	void sleep(EntityPlayer player, BlockPos bedPosition);
 	
 	/** The player cancels the sleep event */
-	public void stopSleeping();
+	public void stopSleeping(EntityPlayer player);
 	
-	/** Update the player */
+	/** Update the player per tick */
     public void update(EntityPlayer player);
-    
+
 }

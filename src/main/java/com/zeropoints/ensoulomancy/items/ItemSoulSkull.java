@@ -25,6 +25,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulSkullStackRenderer;
 import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
@@ -54,16 +56,17 @@ public class ItemSoulSkull extends Item implements IHasModel {
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         
-        this.setTileEntityItemStackRenderer(new TileEntityItemSoulSkullStackRenderer());
-        
 		ModItems.ITEMS.add(this);
     }
     
     @Override
 	public void registerModels() {
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoulSkull.class, new TileEntitySoulSkullRenderer());
+    	this.setTileEntityItemStackRenderer(new TileEntityItemSoulSkullStackRenderer());
+    	
     	// This makes sure we use the right custom item renderer for the skull type
-		for(int i = 0; i < TileEntitySoulSkullRenderer.SoulSkullTypes.length; ++i) {
-			ModRenderers.registerItemRenderer(this, i, Reference.MOD_ID + ":" + name + "_" + TileEntitySoulSkullRenderer.SoulSkullTypes[i].name + "#inventory");
+		for (int i = 0; i < TileEntitySoulSkullRenderer.SoulSkullTypes.length; ++i) {
+			ModRenderers.registerRenderer(ModItems.SOUL_SKULL, i, "soul_skull." + TileEntitySoulSkullRenderer.SoulSkullTypes[i].name);
 		}
 	}
 
