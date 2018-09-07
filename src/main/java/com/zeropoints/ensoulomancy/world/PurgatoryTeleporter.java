@@ -2,6 +2,10 @@ package com.zeropoints.ensoulomancy.world;
 
 import javax.annotation.Nullable;
 
+import com.zeropoints.ensoulomancy.Main;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,6 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 
 public class PurgatoryTeleporter extends Teleporter {
 
@@ -48,6 +53,40 @@ public class PurgatoryTeleporter extends Teleporter {
 	            throw new IllegalArgumentException("Dimension: "+dimensionId+" doesn't exist!");
 	        }
 	
+	        //Get ground of dim
+	        BlockPos pos = new BlockPos(x, y, z);
+	        IBlockState bs = worldServer.getBlockState(pos);
+
+	        Biome bi = worldServer.getBiome(pos);
+	        if(bi.getBiomeName() == "VoidBiome") {
+	        	Main.LogMesssage("VOID TELEPORTED");
+	        	
+	        	worldServer.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+	        	y++;
+	        }
+	        else {
+		        	
+		        boolean foundSurface = false;
+		        for(int i = 256; i > 0; i--) {
+		        	
+			        pos = new BlockPos(x, i, z);
+		        	bs = worldServer.getBlockState(pos);
+		        	
+		        	
+		        	
+		        	if(bs.getMaterial() != Material.AIR) {
+		        		foundSurface = true;
+		        	}
+		        	else {
+		        		if(foundSurface) {
+		        			y = i + 3;
+		        			break;
+		        		}
+		        	}
+		        }
+	        }
+	        
+	        
 	        worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(entityPlayerMP, dimensionId, new PurgatoryTeleporter(worldServer, x, y, z));
 	        entity.setPositionAndUpdate(x, y, z);
 	        if (oldDimension == 1) {
