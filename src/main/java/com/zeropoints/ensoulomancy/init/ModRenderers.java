@@ -38,7 +38,6 @@ public class ModRenderers {
     public static void onModelRegister(ModelRegistryEvent event) {
     	// Items
     	for (final Item item: ModItems.ITEMS) {
-			// Only when item has IHasModel implemented do we want to force 'generic' render
 			if (item instanceof IHasModel) {
 				((IHasModel)item).registerModels();	
 			}
@@ -46,7 +45,6 @@ public class ModRenderers {
     	
     	// Blocks
     	for (final Block block: ModBlocks.BLOCKS) {
-    		// Only when block has IHasModel implemented do we want to force 'generic' render
     		if (block instanceof IHasModel) {
     			((IHasModel)block).registerModels();
     		}
@@ -62,13 +60,13 @@ public class ModRenderers {
     	RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
     }
 
-    public static void registerRenderer(Item item, int meta, String name) {
-        ModelResourceLocation resource = new ModelResourceLocation(Reference.MOD_ID + ":" + name, "inventory");
+    public static void registerRenderer(Item item, int meta) {
+        ModelResourceLocation resource = new ModelResourceLocation(item.getRegistryName(), "inventory");
         ModelLoader.setCustomModelResourceLocation(item, meta, resource);
     }
 
-    public static void registerRenderer(Block block, int meta, String name) {
-        registerRenderer(Item.getItemFromBlock(block), meta, name);
+    public static void registerRenderer(Block block, int meta) {
+        registerRenderer(Item.getItemFromBlock(block), meta);
     }
     
 }

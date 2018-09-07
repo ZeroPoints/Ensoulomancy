@@ -66,7 +66,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     	
     	// This makes sure we use the right custom item renderer for the skull type
 		for (int i = 0; i < TileEntitySoulSkullRenderer.SoulSkullTypes.length; ++i) {
-			ModRenderers.registerRenderer(ModItems.SOUL_SKULL, i, "soul_skull." + TileEntitySoulSkullRenderer.SoulSkullTypes[i].name);
+			ModRenderers.registerRenderer(this, i);
 		}
 	}
 

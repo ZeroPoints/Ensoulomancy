@@ -50,7 +50,7 @@ public class ItemSoulBed extends Item implements IHasModel {
     @Override
 	public void registerModels() {
     	this.setTileEntityItemStackRenderer(new TileEntityItemSoulBedStackRenderer());
-		ModRenderers.registerRenderer(this, 0, name);
+		ModRenderers.registerRenderer(this, 0);
 	}
     
     /**

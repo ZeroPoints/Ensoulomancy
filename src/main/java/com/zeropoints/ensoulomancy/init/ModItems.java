@@ -78,11 +78,6 @@ public class ModItems {
 						
 			for (final Item item: ITEMS) {
 				registry.register(item);
-				
-				// Only when item has IHasModel implemented do we want to force 'generic' render
-				/*if (item instanceof IHasModel) {
-					((IHasModel)item).registerModels();	
-				}*/
 			}
 		}
 		

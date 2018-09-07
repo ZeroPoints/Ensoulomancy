@@ -41,7 +41,7 @@ public class ToolSword extends ItemSword implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "invenory");
+		Main.proxy.registerItemRenderer(this, 0, "inventory");
 	}
 	
 }
