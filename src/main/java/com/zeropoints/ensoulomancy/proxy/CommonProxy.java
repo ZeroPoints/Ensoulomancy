@@ -81,8 +81,7 @@ public class CommonProxy {
     	this.config = new EnsoulomancyConfig(this.forge);
     	this.morphs = morphs;
     	
-    	OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
-
+    	
     }
 
 

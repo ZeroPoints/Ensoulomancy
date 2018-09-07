@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Level;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModEvents;
 import com.zeropoints.ensoulomancy.init.ModRenderers;
+import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -19,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.GameType;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -36,6 +38,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
+
         ModRenderers.register(); // client-side only
     }
 	
