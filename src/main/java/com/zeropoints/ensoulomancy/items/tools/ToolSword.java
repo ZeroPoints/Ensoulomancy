@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemSword;
 
 public class ToolSword extends ItemSword implements IHasModel {
@@ -17,9 +17,6 @@ public class ToolSword extends ItemSword implements IHasModel {
 	protected Boolean CAN_BEHEAD = false;
 	protected float HEAD_DROP_CHANCE = 0.0F;
 	
-	/*
-	 * 
-	 */
 	public ToolSword(String name, ToolMaterial material) {
 		super(material);
 		
@@ -41,7 +38,7 @@ public class ToolSword extends ItemSword implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "inventory");
+		ModRenderers.registerRenderer(this, 0, "inventory");
 	}
 	
 }

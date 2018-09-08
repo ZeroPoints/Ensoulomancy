@@ -4,7 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelGuardianHead extends ModelHeadBase {
     public ModelRenderer Nook_TS;
     public ModelRenderer Nook_TN;

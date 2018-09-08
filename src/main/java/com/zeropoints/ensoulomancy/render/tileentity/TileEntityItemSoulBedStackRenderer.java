@@ -21,12 +21,16 @@ public class TileEntityItemSoulBedStackRenderer extends TileEntityItemStackRende
 	
 	@Override 
 	public void renderByItem(ItemStack stack) {
-		Item item = stack.getItem();
+		this.renderByItem(stack, 0);
+	}
+	
+	@Override
+	public void renderByItem(ItemStack stack, float partialTicks) {
+        Item item = stack.getItem();
         
         if (item == ModItems.SOUL_BED) {
-        	this.bed.setItemValues(stack);
-            TileEntityRendererDispatcher.instance.render(this.bed, 0.0D, 0.0D, 0.0D, 0.0F);
+        	TileEntityRendererDispatcher.instance.render(this.bed, 0.0D, 0.0D, 0.0D, 0.0F);
         }
-	}
+    }
 	
 }

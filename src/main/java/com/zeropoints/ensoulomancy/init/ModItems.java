@@ -3,33 +3,26 @@ package com.zeropoints.ensoulomancy.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zeropoints.ensoulomancy.items.*;
-import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
+import com.zeropoints.ensoulomancy.items.ItemSoulBed;
+import com.zeropoints.ensoulomancy.items.ItemSoulSkull;
+import com.zeropoints.ensoulomancy.items.ObjSeeds;
+import com.zeropoints.ensoulomancy.items.PedestalSeeds;
+import com.zeropoints.ensoulomancy.items.SoulEssence;
+import com.zeropoints.ensoulomancy.items.SoulIngot;
+import com.zeropoints.ensoulomancy.items.SoulSeeds;
+import com.zeropoints.ensoulomancy.items.SoulSeedsStem;
 import com.zeropoints.ensoulomancy.items.armor.Halo;
 import com.zeropoints.ensoulomancy.items.tools.ReapingScythe;
-import com.zeropoints.ensoulomancy.items.tools.ToolSword;
-import com.zeropoints.ensoulomancy.render.player.RenderGhostPlayer;
-import com.zeropoints.ensoulomancy.util.IHasModel;
 import com.zeropoints.ensoulomancy.util.Reference;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemSword;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModItems {

@@ -1,29 +1,15 @@
 package com.zeropoints.ensoulomancy.init;
 
-import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
-import com.zeropoints.ensoulomancy.items.ItemSoulSkull;
 import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
 import com.zeropoints.ensoulomancy.render.entity.mobs.RenderImp;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulSkullStackRenderer;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
-import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
-import com.zeropoints.ensoulomancy.util.IEntity;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -60,13 +46,13 @@ public class ModRenderers {
     	RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
     }
 
-    public static void registerRenderer(Item item, int meta) {
-        ModelResourceLocation resource = new ModelResourceLocation(item.getRegistryName(), "inventory");
+    public static void registerRenderer(Item item, int meta, String id) {
+        ModelResourceLocation resource = new ModelResourceLocation(item.getRegistryName(), id);
         ModelLoader.setCustomModelResourceLocation(item, meta, resource);
     }
 
-    public static void registerRenderer(Block block, int meta) {
-        registerRenderer(Item.getItemFromBlock(block), meta);
+    public static void registerRenderer(Block block, int meta, String id) {
+        registerRenderer(Item.getItemFromBlock(block), meta, id);
     }
     
 }

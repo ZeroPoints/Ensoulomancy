@@ -129,6 +129,11 @@ public class MorphManager {
      */
     public AbstractMorph morphFromNBT(NBTTagCompound tag) {
         String name = tag.getString("Name");
+        
+        // How does this happen?
+        if (name.equals("")) {
+        	return null;
+        }
 
         for (int i = this.factories.size() - 1; i >= 0; i--) {
             if (this.factories.get(i).hasMorph(name)) {

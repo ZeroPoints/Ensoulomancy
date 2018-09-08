@@ -71,7 +71,7 @@ public class CommonProxy {
     	/* Attaching model manager and morph factories to the morph manager */
     	MorphManager.INSTANCE.models = this.models;
     	MorphManager.INSTANCE.factories.add(new MobMorphFactory());
-    	MorphManager.INSTANCE.factories.add(new PlayerMorphFactory());
+    	//MorphManager.INSTANCE.factories.add(new PlayerMorphFactory()); // Ignore player morphing for now. Future feature
     
     	/* Configuration */
     	File config = new File(e.getModConfigurationDirectory(), "ensoulomancy/config.cfg");
@@ -80,9 +80,6 @@ public class CommonProxy {
     	this.forge = new Configuration(config);
     	this.config = new EnsoulomancyConfig(this.forge);
     	this.morphs = morphs;
-    	
-    	OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
-
     }
 
 
@@ -108,10 +105,6 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent e) {
     	
-    }
-    
-    public void registerItemRenderer(Item item, int meta, String id) {	
-
     }
     
     public String localize(String unlocalized, Object... args) {

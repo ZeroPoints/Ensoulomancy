@@ -1,17 +1,10 @@
 package com.zeropoints.ensoulomancy.init;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.google.common.collect.Lists;
-import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
 import com.zeropoints.ensoulomancy.world.biome.HallowedBiome;
 import com.zeropoints.ensoulomancy.world.biome.ProfaneBiome;
 import com.zeropoints.ensoulomancy.world.biome.SpiritBiome;
 import com.zeropoints.ensoulomancy.world.biome.VoidBiome;
 
-import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;

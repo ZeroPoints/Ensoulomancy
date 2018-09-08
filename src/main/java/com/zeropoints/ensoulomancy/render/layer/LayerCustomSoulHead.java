@@ -56,7 +56,7 @@ public class LayerCustomSoulHead implements LayerRenderer<EntityLivingBase> {
 
             if (item == ModItems.SOUL_SKULL) {
                 float f2 = 1.1875F;
-                GlStateManager.scale(1.1875F, -1.1875F, -1.1875F);
+                //GlStateManager.scale(1.1875F, -1.1875F, -1.1875F);
 
                 if (flag) {
                     GlStateManager.translate(0.0F, 0.0625F, 0.0F);

@@ -8,7 +8,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelSlimeHead extends ModelHeadBase {
     public ModelRenderer Mouth;
     public ModelRenderer LeftEye;

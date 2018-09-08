@@ -1,15 +1,10 @@
 package com.zeropoints.ensoulomancy.init;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
 import com.zeropoints.ensoulomancy.util.Reference;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 

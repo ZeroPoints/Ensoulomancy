@@ -2,6 +2,7 @@ package com.zeropoints.ensoulomancy.items.armor;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +25,7 @@ public class ArmorBase extends ItemArmor implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "inventory");
+		ModRenderers.registerRenderer(this, 0, "inventory");
 	}
 	
 }

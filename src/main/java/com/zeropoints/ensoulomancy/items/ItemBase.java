@@ -2,18 +2,17 @@ package com.zeropoints.ensoulomancy.items;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemBase extends Item implements IHasModel {
 
 	public ItemBase(String name) {
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CreativeTabs.MATERIALS);
+		setCreativeTab(Main.ENSOULOMANCY_TAB);
 		
 		ModItems.ITEMS.add(this);
 	}
@@ -21,7 +20,7 @@ public class ItemBase extends Item implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "inventory");
+		ModRenderers.registerRenderer(this, 0, "inventory");
 	}
 	
 }

@@ -4,7 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelPolarBearHead extends ModelHeadBase {
     public ModelRenderer Nose;
     public ModelRenderer RightEar;

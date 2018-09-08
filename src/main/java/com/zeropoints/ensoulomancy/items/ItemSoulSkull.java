@@ -1,14 +1,19 @@
 package com.zeropoints.ensoulomancy.items;
 
+import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
+import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
+import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulSkullStackRenderer;
+import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
+import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
+import com.zeropoints.ensoulomancy.util.IHasModel;
+import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,22 +31,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
-import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.init.ModItems;
-import com.zeropoints.ensoulomancy.init.ModRenderers;
-import com.zeropoints.ensoulomancy.init.ModRenderers;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulSkullStackRenderer;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
-import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
-import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.util.Reference;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSoulSkull extends Item implements IHasModel {
 	
@@ -60,13 +51,14 @@ public class ItemSoulSkull extends Item implements IHasModel {
     }
     
     @Override
+    @SideOnly(Side.CLIENT)
 	public void registerModels() {
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoulSkull.class, new TileEntitySoulSkullRenderer());
     	this.setTileEntityItemStackRenderer(new TileEntityItemSoulSkullStackRenderer());
     	
     	// This makes sure we use the right custom item renderer for the skull type
-		for (int i = 0; i < TileEntitySoulSkullRenderer.SoulSkullTypes.length; ++i) {
-			ModRenderers.registerRenderer(this, i);
+		for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
+			ModRenderers.registerRenderer(this, i, "inventory");
 		}
 	}
 
@@ -137,7 +129,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (this.isInCreativeTab(tab)) {
-            for (int i = 0; i < TileEntitySoulSkullRenderer.SoulSkullTypes.length; ++i) {
+        	for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
                 items.add(new ItemStack(this, 1, i));
             }
         }
@@ -159,7 +151,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         int i = stack.getMetadata();
-        return this.getUnlocalizedName() + "." + TileEntitySoulSkullRenderer.SoulSkullTypes[i].name;
+        return this.getUnlocalizedName() + "." + SkullRegistryHelper.SoulSkullTypes[i].name;
     }
 
     @Override
