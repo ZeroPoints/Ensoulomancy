@@ -16,10 +16,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraft.entity.player.EntityPlayer;
 
 
@@ -95,12 +98,23 @@ public class SoulEssenceStem extends BlockStem {
 
 		//Not sure if this is needed
 		//entity.timeUntilPortal = 10;
+		/*
+		EntityPlayerMP player = (EntityPlayerMP)entity;
+		MinecraftServer server = player.getEntityWorld().getMinecraftServer();
+        WorldServer worldServer = server.getWorld(133780085);
+		
+		world.getMinecraftServer().getPlayerList().transferPlayerToDimension(player, 133780085, 
+				(ITeleporter)new PurgatoryTeleporter(worldServer, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ()));
+				*/
 		
 		PurgatoryTeleporter.teleportToDimension(entity, dim, entity.getPosition().getX(), entity.getPosition().getY(), entity.getPosition().getZ());
 
 
 	}
 
+	
+	
+	
 	
 	
 	
