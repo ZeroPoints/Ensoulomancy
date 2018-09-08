@@ -12,9 +12,12 @@ import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ClientHandlerSettings extends ClientMessageHandler<PacketSettings> {
     @Override
+    @SideOnly(Side.CLIENT)
     public void run(EntityPlayerSP player, PacketSettings message) {
     	if (message.morphSettings != null) {
     		MorphManager.INSTANCE.setActiveSettings(message.morphSettings);    		
