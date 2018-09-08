@@ -81,8 +81,7 @@ public class CapabilityHandler {
 		
 		EntityPlayer player = event.player; 
 		Map<String,MorphSettings> morphSettings = new HashMap<String,MorphSettings>();
-		GhostSettings ghostSettings = null;
-		boolean sendSettingsFlag = false;
+		GhostSettings ghostSettings = new GhostSettings(); // A default of null was crashing the dispatcher sometimes
 		
 		// Soulpool
 		ISoulpool soulpool = Soulpool.getCapability(player); 
@@ -105,24 +104,22 @@ public class CapabilityHandler {
             	morph.getCurrentMorph().morph(player);
             }
 
-            sendSettingsFlag = true;
             morphSettings = MorphManager.INSTANCE.activeSettings;
         }
         
         
         // Ghost
     	IGhost ghost = Ghost.getCapability(player);
-    	if (ghost != null && ghost.isGhost()) {
-    		player.sendMessage(new TextComponentString("You are a ghost"));
-    		
-    		sendSettingsFlag = true;
+    	if (ghost != null) {
+	    	if (ghost.isGhost()) {
+	    		player.sendMessage(new TextComponentString("You are a ghost"));
+	    	}
+	    	
     		ghostSettings = ghost.getSettings();
     	}
     	
     	// Send settings to client
-    	if (sendSettingsFlag) {
-    		Dispatcher.sendTo(new PacketSettings(morphSettings, ghostSettings), (EntityPlayerMP) player);
-    	}
+		Dispatcher.sendTo(new PacketSettings(morphSettings, ghostSettings), (EntityPlayerMP) player);
 	} 
 	
 	/**
