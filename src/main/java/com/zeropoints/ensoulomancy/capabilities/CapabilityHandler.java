@@ -193,7 +193,10 @@ public class CapabilityHandler {
 	@SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!hasFlight(event.player)) {
-			event.player.capabilities.allowFlying = false;
+			if (!event.player.isCreative()) {
+				event.player.capabilities.allowFlying = false;
+			}
+			event.player.capabilities.setFlySpeed(0.05F);	
 			return;
 		}
 		
