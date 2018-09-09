@@ -1,5 +1,7 @@
 package com.zeropoints.ensoulomancy;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
 import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
+import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
 import com.zeropoints.ensoulomancy.init.ModEntities;
 import com.zeropoints.ensoulomancy.proxy.CommonProxy;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
@@ -33,6 +36,7 @@ public class Main {
 	
     public static boolean DEBUG = true;
     public static Logger LOGGER;
+    
     
     /**
      * Log out the message if in DEBUG mode.
@@ -67,6 +71,8 @@ public class Main {
         new ConfigurationHandler();
         
 		proxy.preInit(e);
+		
+
     }
 	
 	@EventHandler
