@@ -1,10 +1,12 @@
-package com.zeropoints.ensoulomancy.render.entity.mobs;
+package com.zeropoints.ensoulomancy.entity.profane;
 
 import javax.annotation.Nullable;
 
 import com.zeropoints.ensoulomancy.entity.ai.EntityAIFindItem;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.items.tools.ReapingScythe;
+import com.zeropoints.ensoulomancy.render.entity.mobs.RenderImp;
+import com.zeropoints.ensoulomancy.render.entity.mobs.RenderImp.RenderFactory;
 import com.zeropoints.ensoulomancy.util.IEntity;
 
 import net.minecraft.block.Block;
@@ -17,7 +19,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWaterFlying;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
@@ -27,6 +29,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
@@ -42,18 +45,12 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class EntityImp extends EntityMob implements IEntity {
 
-	private int homeCheckTimer;
-	private int attackTimer;
-	
-	public boolean isFlying = false;
+	public static final DataParameter<Boolean> flying = EntityDataManager.<Boolean>createKey(EntityImp.class, DataSerializers.BOOLEAN);
 	
 	public EntityImp(World world) {
 		super(world);
 		this.setSize(0.5F, 0.9F);
 		this.setCanPickUpLoot(true);
-		
-		// Give it a weapon! Don't think it would render it though
-		//this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.REAPING_SCYTHE));
 	}
 	
 	@Override
@@ -61,26 +58,21 @@ public class EntityImp extends EntityMob implements IEntity {
 		RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
 	}
 	
+	protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(flying, true);
+    }
+	
 	@Override
 	protected void initEntityAI() {
 		this.tasks.addTask(0, new EntityAIPanic(this, 2.0D));
 		this.tasks.addTask(2, new EntityAIFindItem(this, 1.3D));
 		this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(4, new EntityAIWanderAvoidWater(this, 1.0D));
+		this.tasks.addTask(4, new EntityAIWanderAvoidWaterFlying(this, 1.0D));
 		
-		// The imps attack each other if they are too close, weird
-		//this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.3D, false));
-		//this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class, false));
-	}
-	
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-	}
-	
-	@Override
-	protected void updateAITasks() {
-		this.isFlying = true;
+		// The imps attack each other if they walk into each other
+		this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.3D, false));
+		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class, false));
 	}
 	
 	@Override
@@ -89,42 +81,16 @@ public class EntityImp extends EntityMob implements IEntity {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(5.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
-		//this.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(1.0D);
 	}
 	
-	@Override
-	protected int decreaseAirSupply(int air) {
-		return air;
-	}
-	
-	@Override
+	/*@Override
 	protected void collideWithEntity(Entity entity) {
+		// 1 in 20 chance they will attack mob they are next to
 		if (entity instanceof IMob && !(entity instanceof EntityCreeper) && this.getRNG().nextInt(20) == 0) {
 			this.setAttackTarget((EntityLivingBase)entity);
 		}
 		super.collideWithEntity(entity);
-	}
-	
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		
-		/*
-		if(this.attackTimer > 0) {
-			--this.attackTimer;
-		}
-		
-		if(this.motionX * this.motionX + this.motionZ * this.motionZ > 2.500000277905201) {
-			int i = MathHelper.floor(this.posX);
-			int j = MathHelper.floor(this.posY - 0.20000000298023224D);
-			int k = MathHelper.floor(this.posZ);
-			IBlockState iblockstate = this.world.getBlockState(new BlockPos(i,j,k));
-			if(iblockstate.getMaterial() != Material.AIR) {
-				//this.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, this.posX + ((double)this.rand.nextFloat() - 0.5D) * (double)this.width, yCoord, zCoord, xSpeed, ySpeed, zSpeed, parameters);
-			}
-		}
-		*/
-	}
+	}*/
 	
 	/*
 	public boolean canAttackClass(Class <? extends EntityLivingbase> cls) {
@@ -156,11 +122,6 @@ public class EntityImp extends EntityMob implements IEntity {
 	@Override
 	protected ResourceLocation getLootTable() {
 		return LootTableList.ENTITIES_BAT;
-	}
-	
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
 	}
 	
 }

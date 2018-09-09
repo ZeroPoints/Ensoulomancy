@@ -1,6 +1,6 @@
 package com.zeropoints.ensoulomancy.model.profane;
 
-import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
+import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -162,7 +162,7 @@ public class ModelImp extends ModelBiped {
         this.bipedHead.rotateAngleY = netbipedHeadYaw * 0.017453292F;
         this.bipedHead.rotateAngleZ = 0.0F;
         
-        if (imp.isFlying) { // TODO: this doesn't actually ever hit. Have to figure out why
+        if (imp.getDataManager().get(imp.flying)) { // TODO: this doesn't actually ever hit. Have to figure out why
         	// Body Swing
     		this.bipedBody.rotateAngleX = ((float)Math.PI / 4F) + MathHelper.cos(ageInTicks * 0.1F) * 0.15F;
             this.bipedBody.rotateAngleY = 0.0F;

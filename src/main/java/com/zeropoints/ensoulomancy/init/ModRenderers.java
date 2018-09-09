@@ -1,7 +1,8 @@
 package com.zeropoints.ensoulomancy.init;
 
-import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
-import com.zeropoints.ensoulomancy.render.entity.mobs.RenderImp;
+import com.zeropoints.ensoulomancy.entity.hallowed.*;
+import com.zeropoints.ensoulomancy.entity.profane.*;
+import com.zeropoints.ensoulomancy.render.entity.mobs.*;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -43,6 +44,7 @@ public class ModRenderers {
         	}
         }*/
     	
+    	RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, new RenderPixie.RenderFactory());
     	RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
     }
 
