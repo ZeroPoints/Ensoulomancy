@@ -19,23 +19,25 @@ import net.minecraftforge.fml.relauncher.Side;
 @SideOnly(Side.CLIENT)
 public class RenderPixie extends RenderBiped<EntityPixie> {
 	
-	private static final ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie.png");
+	private static final ResourceLocation PIXIE_PINK = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_pink.png");
+	private static final ResourceLocation PIXIE_BLUE = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_blue.png");
+	private static final ResourceLocation PIXIE_GREEN = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_green.png");
 	
 	public RenderPixie(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelPixie(), 0.2F);
 	}
 	
-	@Override
-	public void transformHeldFull3DItemLayer() {
-        //GlStateManager.translate(0.0F, 0.1875F, 0.0F);
-    }
-	
 	protected ResourceLocation getEntityTexture(EntityPixie entity) {
-		return TEXTURES;
+		switch(entity.getVariant()) {
+			default:
+			case 0: return PIXIE_PINK;
+			case 1: return PIXIE_BLUE;
+			case 2: return PIXIE_GREEN;
+		}
 	}
 	
     protected void preRenderCallback(EntityPixie entitylivingbaseIn, float partialTickTime) {
-        GlStateManager.scale(0.7F, 0.7F, 0.7F);
+        GlStateManager.scale(0.6F, 0.6F, 0.6F);
     }
 	
 	/**
@@ -45,7 +47,7 @@ public class RenderPixie extends RenderBiped<EntityPixie> {
      */
     public static class RenderFactory implements IRenderFactory<EntityPixie> {
         @Override
-        public Render<? super EntityPixie> createRenderFor(RenderManager manager) {
+        public Render<EntityPixie> createRenderFor(RenderManager manager) {
             return new RenderPixie(manager);
         }
     }

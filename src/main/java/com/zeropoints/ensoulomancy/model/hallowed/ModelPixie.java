@@ -4,26 +4,28 @@ import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelParrot;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Pixie - ChickenMobile
  * Created using Tabula 7.0.0
  */
 public class ModelPixie extends ModelBiped {
-    //public ModelRenderer bipedBody;
     public ModelRenderer LeftWing;
     public ModelRenderer RightWing;
-    //public ModelRenderer bipedLeftArm; // Biped arm already exists, for holding items etc
-    //public ModelRenderer bipedRightArm;
-    //public ModelRenderer Head;
-    //public ModelRenderer bipedLeftLeg;
-    //public ModelRenderer bipedRightLeg;
     public ModelRenderer Pants;
     public ModelRenderer LeftWingBottom;
     public ModelRenderer RightWingBottom;
+    
+    private ModelPixie.State state = ModelPixie.State.STANDING;
 
     public ModelPixie() {
         this.textureWidth = 64;
@@ -39,7 +41,7 @@ public class ModelPixie extends ModelBiped {
         this.bipedLeftLeg.setRotationPoint(1.2F, 8.0F, 0.0F);
         this.bipedLeftLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 10, 2, 0.0F);
         this.bipedBody = new ModelRenderer(this, 0, 12);
-        this.bipedBody.setRotationPoint(0.0F, 6.0F, -4.0F);
+        this.bipedBody.setRotationPoint(0.0F, 6.0F, 0.0F);
         this.bipedBody.addBox(-2.5F, 0.0F, -2.0F, 5, 7, 4, 0.0F);
         this.bipedLeftArm = new ModelRenderer(this, 18, 12);
         this.bipedLeftArm.mirror = true;
@@ -82,8 +84,8 @@ public class ModelPixie extends ModelBiped {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        this.bipedBody.render(f5);
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch, float scale) { 
+        this.bipedBody.render(scale);
     }
     
     @Override
@@ -91,45 +93,83 @@ public class ModelPixie extends ModelBiped {
     	this.bipedHead.rotateAngleX = bipedHeadPitch * 0.017453292F;
         this.bipedHead.rotateAngleY = netbipedHeadYaw * 0.017453292F;
         this.bipedHead.rotateAngleZ = 0.0F;
-               
-        if (entityIn.getDataManager().get(EntityPixie.flying)) {
-        	// Legs
-        	this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-            
-            // Arms
-            this.bipedLeftArm.rotateAngleX = this.bipedRightLeg.rotateAngleX * 0.6F - 1.0F;
-            this.bipedRightArm.rotateAngleX = this.bipedLeftLeg.rotateAngleX * 0.6F - 1.0F;
-            
-            // Wings
-            //this.LeftWing.rotateAngleY = -0.6F;
-            //this.RightWing.rotateAngleY = -this.LeftWing.rotateAngleY;
-        }
-        else {
-        	// Leg Swing
-            this.bipedLeftLeg.rotateAngleX = MathHelper.sin(ageInTicks / 10) * 0.6F;
-            this.bipedRightLeg.rotateAngleX = MathHelper.cos(ageInTicks / 15) * 0.6F;
-        	
-        	// Arm Swing
-        	
+
+        if (this.state == ModelPixie.State.FLYING) {
         	// Body Swing
-     		//this.bipedBody.rotateAngleX = ((float)Math.PI / 8F) + MathHelper.cos(ageInTicks * 0.1F) * 0.05F;
-     		//this.bipedBody.rotateAngleY = 0.0F;
+        	this.bipedBody.rotateAngleX = 0.2F + MathHelper.cos(ageInTicks * 0.1F) * 0.05F;
+     		this.bipedBody.rotateAngleY = 0.0F;
+        	
+     		// Leg Swing
+            this.bipedLeftLeg.rotateAngleX = MathHelper.sin(ageInTicks / 10) * 0.3F;
+            this.bipedRightLeg.rotateAngleX = MathHelper.cos(ageInTicks / 15) * 0.3F;
             
-            // Wings
+            // Arm Swing
+            this.bipedLeftArm.rotateAngleX = MathHelper.sin(ageInTicks / 8) * 0.3F - 0.4F;
+            this.bipedRightArm.rotateAngleX = MathHelper.cos(ageInTicks / 12) * 0.3F - 0.4F;
+     		
+        	// Wings
             float speed = 0.75F;
             float magnitude = 0.2F;
             
-            this.RightWing.rotateAngleY = MathHelper.cos(ageInTicks * speed) * (float)Math.PI * magnitude + 0.6F * limbSwingAmount;
-            this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
-            this.RightWing.rotateAngleX = MathHelper.sin(ageInTicks * speed) * (float)Math.PI * magnitude / 3 * limbSwingAmount;
+            this.RightWing.rotateAngleX = MathHelper.sin(ageInTicks * speed) * (float)Math.PI * magnitude / 3;
+            this.RightWing.rotateAngleY = MathHelper.cos(ageInTicks * speed) * (float)Math.PI * magnitude + 0.6F;
             this.LeftWing.rotateAngleX = this.RightWing.rotateAngleX;
+            this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
             
-            this.RightWingBottom.rotateAngleY = MathHelper.cos(ageInTicks * speed + 0.3F) * (float)Math.PI * magnitude + 0.8F * limbSwingAmount;
-            this.LeftWingBottom.rotateAngleY = -this.RightWingBottom.rotateAngleY;
-            this.RightWingBottom.rotateAngleX = MathHelper.sin(ageInTicks * speed) * (float)Math.PI * magnitude / 2 * limbSwingAmount;
+            this.RightWingBottom.rotateAngleX = MathHelper.sin(ageInTicks * speed) * (float)Math.PI * magnitude / 2;
+            this.RightWingBottom.rotateAngleY = MathHelper.cos(ageInTicks * speed + 0.3F) * (float)Math.PI * magnitude + 0.8F;
             this.LeftWingBottom.rotateAngleX = this.RightWingBottom.rotateAngleX;
+            this.LeftWingBottom.rotateAngleY = -this.RightWingBottom.rotateAngleY;
         }
+        else { 
+        	// Leg Swing
+        	this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+            this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+            
+            // Arm Swing
+            this.bipedLeftArm.rotateAngleX = this.bipedRightLeg.rotateAngleX * 0.4F;
+            this.bipedRightArm.rotateAngleX = this.bipedLeftLeg.rotateAngleX * 0.4F;
+        	
+        	// Reset rotations
+        	this.bipedBody.rotateAngleX = 0.0F;
+        	this.bipedBody.rotateAngleY = 0.0F;
+        	
+        	this.RightWing.rotateAngleX = 0.52F;
+        	this.RightWing.rotateAngleY = 0.4F;
+        	this.LeftWing.rotateAngleX = 0.52F;
+        	this.LeftWing.rotateAngleY = -0.4F;
+        	
+        	this.RightWingBottom.rotateAngleX = 0.26F;
+        	this.RightWingBottom.rotateAngleY = 0.6F;
+        	this.LeftWingBottom.rotateAngleX = 0.26F;
+        	this.LeftWingBottom.rotateAngleY = -0.6F;
+        }
+    }
+    
+    @Override
+    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    	if (!entitylivingbaseIn.onGround) {
+    		this.state = ModelPixie.State.FLYING;
+    		return;
+    	}
+    	this.state = ModelPixie.State.STANDING;
+    }
+    
+    @Override
+    public void postRenderArm(float scale, EnumHandSide side) {
+        this.postRender(this.getArmForSide(side), scale);
+    }
+    
+    /**
+     * This changes the position and angles for when the item render layer is drawn
+     * For now I hackily changed the numbers to be in the correct position. 
+     */
+    private void postRender(ModelRenderer mr, float scale) {
+        GlStateManager.translate(mr.rotationPointX * scale, 5 * scale, 2 * scale);
+
+        if (mr.rotateAngleZ != 0.0F) GlStateManager.rotate(mr.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+        if (mr.rotateAngleY != 0.0F) GlStateManager.rotate(mr.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+        if (mr.rotateAngleX != 0.0F) GlStateManager.rotate(mr.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
     }
 
     /**
@@ -140,4 +180,11 @@ public class ModelPixie extends ModelBiped {
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
+    
+    @SideOnly(Side.CLIENT)
+    static enum State {
+        FLYING,
+        STANDING
+    }
+    
 }
