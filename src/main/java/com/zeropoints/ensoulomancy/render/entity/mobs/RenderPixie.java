@@ -22,6 +22,7 @@ public class RenderPixie extends RenderBiped<EntityPixie> {
 	private static final ResourceLocation PIXIE_PINK = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_pink.png");
 	private static final ResourceLocation PIXIE_BLUE = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_blue.png");
 	private static final ResourceLocation PIXIE_GREEN = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_green.png");
+	private static final ResourceLocation PIXIE_BARBARIAN = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_barbarian.png");
 	
 	public RenderPixie(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelPixie(), 0.2F);
@@ -33,6 +34,7 @@ public class RenderPixie extends RenderBiped<EntityPixie> {
 			case 0: return PIXIE_PINK;
 			case 1: return PIXIE_BLUE;
 			case 2: return PIXIE_GREEN;
+			case 3: return PIXIE_BARBARIAN;
 		}
 	}
 	

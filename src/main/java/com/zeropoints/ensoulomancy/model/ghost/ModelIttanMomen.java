@@ -77,10 +77,6 @@ public class ModelIttanMomen extends ModelBase {
     
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch, float scaleFactor, Entity entityIn) {
-    	//this.Head.rotateAngleX = bipedHeadPitch * 0.017453292F;
-        //this.Head.rotateAngleY = netbipedHeadYaw * 0.017453292F;
-        this.Head.rotateAngleZ = 0.0F;
-
         if (this.state == ModelIttanMomen.State.FLYING) {
         	// Rainicorn it up!!!
         	int counter = 0;
@@ -91,10 +87,10 @@ public class ModelIttanMomen extends ModelBase {
         	this.Head.rotateAngleZ = -1.2F + MathHelper.sin(sinP - 1.0F) * 0.4F;
         	
         	// Body Swing
-        	this.Segment1.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.5F - fPI - 5.0F;
+        	this.Segment1.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.6F - fPI - 5.0F;
      		this.Segment2.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.5F - fPI;
      		this.Segment3.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.6F - fPI;
-     		this.Segment4.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.75F - fPI;
+     		this.Segment4.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.7F - fPI;
      		this.Segment5.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.8F - fPI;
      		this.Segment6.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.8F - fPI;
      		this.Segment7.rotateAngleZ = MathHelper.sin(sinP + ++counter / pi7) * 0.8F - fPI;
@@ -102,6 +98,7 @@ public class ModelIttanMomen extends ModelBase {
         }
         
     	// Folded cube state
+        this.Head.rotateAngleZ = 0.0F;
     	this.Segment1.rotateAngleZ = 0.0F;
     	this.Segment2.rotateAngleZ = 0.0F;
     	this.Segment3.rotateAngleZ = 0.0F;

@@ -59,7 +59,7 @@ public class EntityPixie extends EntityCreature implements IEntity {
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        this.setVariant(this.rand.nextInt(3)); // Variant 4 is only obtained special
+        this.setVariant(this.rand.nextInt(4)); // Variant 4 is only obtained special
         return super.onInitialSpawn(difficulty, livingdata);
     }
 	

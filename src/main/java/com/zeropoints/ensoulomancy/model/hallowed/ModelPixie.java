@@ -24,6 +24,7 @@ public class ModelPixie extends ModelBiped {
     public ModelRenderer Pants;
     public ModelRenderer LeftWingBottom;
     public ModelRenderer RightWingBottom;
+    public ModelRenderer Skull;
     
     private ModelPixie.State state = ModelPixie.State.STANDING;
 
@@ -71,6 +72,9 @@ public class ModelPixie extends ModelBiped {
         this.bipedRightLeg = new ModelRenderer(this, 18, 12);
         this.bipedRightLeg.setRotationPoint(-1.2F, 8.0F, 0.0F);
         this.bipedRightLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 10, 2, 0.0F);
+        this.Skull = new ModelRenderer(this, 26, 0);
+        this.Skull.setRotationPoint(0.0F, -3.0F, -2.0F);
+        this.Skull.addBox(-3.5F, -3.5F, -3.5F, 7, 7, 9, 0.0F);
         this.bipedBody.addChild(this.Pants);
         this.bipedBody.addChild(this.bipedHead);
         this.bipedBody.addChild(this.bipedLeftLeg);
@@ -81,10 +85,11 @@ public class ModelPixie extends ModelBiped {
         this.bipedBody.addChild(this.RightWing);
         this.bipedBody.addChild(this.bipedRightArm);
         this.bipedBody.addChild(this.bipedRightLeg);
+        this.bipedHead.addChild(this.Skull);
     }
 
     @Override
-    public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch, float scale) { 
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch, float scale) {
         this.bipedBody.render(scale);
     }
     
