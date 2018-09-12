@@ -1,5 +1,6 @@
 package com.zeropoints.ensoulomancy.init;
 
+import com.zeropoints.ensoulomancy.entity.ghost.*;
 import com.zeropoints.ensoulomancy.entity.hallowed.*;
 import com.zeropoints.ensoulomancy.entity.profane.*;
 import com.zeropoints.ensoulomancy.render.entity.mobs.*;
@@ -46,6 +47,7 @@ public class ModRenderers {
     	
     	RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, new RenderPixie.RenderFactory());
     	RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
+    	RenderingRegistry.registerEntityRenderingHandler(EntityIttanMomen.class, new RenderIttanMomen.RenderFactory());
     }
 
     public static void registerRenderer(Item item, int meta, String id) {
