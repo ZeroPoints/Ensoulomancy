@@ -1,0 +1,25 @@
+
+
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "SSS",
+        "SSS",
+        "SSS"
+    ],
+    
+    "key":
+    {
+        "S":
+        {
+            "item": "ensoulomancy:soul_essence"
+        }
+    },
+    
+    "result":
+    {
+        "item": "ensoulomancy:mystical_block"
+    }
+}

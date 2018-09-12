@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
 import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
-import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
 import com.zeropoints.ensoulomancy.init.ModEntities;
 import com.zeropoints.ensoulomancy.proxy.CommonProxy;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;

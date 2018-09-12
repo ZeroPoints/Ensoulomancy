@@ -3,7 +3,9 @@ package com.zeropoints.ensoulomancy.blocks;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
+import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,15 +20,17 @@ public class BlockBase extends Block implements IHasModel {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(Main.ENSOULOMANCY_TAB);
-		
+
 		ModBlocks.BLOCKS.add(this);
-		ModItems.ITEMS.add(new ItemBlock(this).setRegistryName(getRegistryName()));
+		thisItem = new ItemBlock(this).setRegistryName(getRegistryName());
+		ModItems.ITEMS.add(thisItem);
 	}
 	
+	private Item thisItem = null;
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+		Main.proxy.registerItemRenderer(thisItem, 0, "inventory");
 	}
 	
 }

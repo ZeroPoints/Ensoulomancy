@@ -9,7 +9,8 @@ import com.zeropoints.ensoulomancy.blocks.BlockBase;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
-import com.zeropoints.ensoulomancy.blocks.MysticalBlockPortal;
+//import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
+///import com.zeropoints.ensoulomancy.blocks.MysticalBlockPortal;
 import com.zeropoints.ensoulomancy.blocks.ObjCrop;
 import com.zeropoints.ensoulomancy.blocks.PedestalCrop;
 import com.zeropoints.ensoulomancy.blocks.SoulEssenceCrop;
@@ -55,8 +56,8 @@ public class ModBlocks {
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
 	
 
-	public static Block frame = new MysticalBlock(Material.CLAY);
-	public static MysticalBlockPortal portal = new MysticalBlockPortal();
+	public static MysticalBlock frame = new MysticalBlock(Material.SAND);
+	//public static MysticalBlockPortal portal = new MysticalBlockPortal();
 	
 	//---------------------------------------------------------------------
 
