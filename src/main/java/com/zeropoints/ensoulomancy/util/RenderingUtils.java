@@ -1,10 +1,3 @@
-/*******************************************************************************
- * HellFirePvP / Astral Sorcery 2018
- *
- * All rights reserved.
- * The source code is available on github: https://github.com/HellFirePvP/AstralSorcery
- * For further details, see the License file there.
- ******************************************************************************/
 
 package com.zeropoints.ensoulomancy.util;
 
@@ -155,61 +148,6 @@ public class RenderingUtils {
             }
         }
     }
-
-    /*public static void renderLightRayEffects(double x, double y, double z, Color effectColor, long seed, long continuousTick, int dstJump, float scale, int countFancy, int countNormal) {
-        rand.setSeed(seed);
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-
-        int fancy_count = !FMLClientHandler.instance().getClient().gameSettings.fancyGraphics ? countNormal : countFancy;
-
-        Tessellator tes = Tessellator.getInstance();
-        BufferBuilder vb = tes.getBuffer();
-
-        RenderHelper.disableStandardItemLighting();
-        float f1 = continuousTick / 400.0F;
-        float f2 = 0.4F;
-
-        GlStateManager.disableTexture2D();
-        GlStateManager.shadeModel(GL11.GL_SMOOTH);
-        GlStateManager.enableBlend();
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        //GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-        GlStateManager.disableAlpha();
-        GlStateManager.depthMask(false);
-        GlStateManager.pushMatrix();
-        for (int i = 0; i < fancy_count; i++) {
-            GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(rand.nextFloat() * 360.0F + f1 * 360.0F, 0.0F, 0.0F, 1.0F);
-            vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-            float fa = rand.nextFloat() * 20.0F + 5.0F + f2 * 10.0F;
-            float f4 = rand.nextFloat() * 2.0F + 1.0F + f2 * 2.0F;
-            fa /= 30.0F / (Math.min(dstJump, 10 * scale) / 10.0F);
-            f4 /= 30.0F / (Math.min(dstJump, 10 * scale) / 10.0F);
-            vb.pos(0, 0, 0).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), (int) (255.0F * (1.0F - f2))).endVertex();
-            vb.pos(-0.7D * f4, fa,   -0.5F * f4).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-            vb.pos( 0.7D * f4, fa,   -0.5F * f4).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-            vb.pos( 0.0D,      fa,    1.0F * f4).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-            vb.pos(-0.7D * f4, fa,   -0.5F * f4).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-            tes.draw();
-        }
-        GlStateManager.popMatrix();
-        GlStateManager.depthMask(true);
-        Blending.DEFAULT.applyStateManager();
-        Blending.DEFAULT.apply();
-        GlStateManager.disableBlend();
-        GlStateManager.shadeModel(GL11.GL_FLAT);
-        GlStateManager.color(1F, 1F, 1F, 1F);
-        GlStateManager.enableTexture2D();
-        GlStateManager.enableAlpha();
-        RenderHelper.enableStandardItemLighting();
-
-        GlStateManager.popMatrix();
-    }*/
 
     static {
         Field attempt;
