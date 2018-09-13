@@ -1,10 +1,3 @@
-/*******************************************************************************
- * HellFirePvP / Astral Sorcery 2018
- *
- * All rights reserved.
- * The source code is available on github: https://github.com/HellFirePvP/AstralSorcery
- * For further details, see the License file there.
- ******************************************************************************/
 
 package com.zeropoints.ensoulomancy.util;
 
@@ -18,13 +11,6 @@ import net.minecraft.util.math.Vec3i;
 
 import java.util.Random;
 
-/**
- * This class is part of the Astral Sorcery Mod
- * The complete source code for this mod can be found on github.
- * Class: Vector3
- * Created by HellFirePvP
- * Date: 17.11.2015 / 18:40
- */
 public class Vector3 {
 
     private static final Random RAND = new Random();
