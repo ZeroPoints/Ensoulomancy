@@ -1,10 +1,3 @@
-/*******************************************************************************
- * HellFirePvP / Astral Sorcery 2018
- *
- * All rights reserved.
- * The source code is available on github: https://github.com/HellFirePvP/AstralSorcery
- * For further details, see the License file there.
- ******************************************************************************/
 
 package com.zeropoints.ensoulomancy.render.player;
 
@@ -20,13 +13,6 @@ import com.zeropoints.ensoulomancy.util.Vector3;
 
 import java.util.LinkedList;
 
-/**
- * This class is part of the Astral Sorcery Mod
- * The complete source code for this mod can be found on github.
- * Class: ClientCameraFlightHelper
- * Created by HellFirePvP
- * Date: 15.12.2016 / 22:19
- */
 public class ClientCameraFlightHelper {
 
     public static CameraFlightBuilder builder(Vector3 start, Vector3 cameraFocus) {
