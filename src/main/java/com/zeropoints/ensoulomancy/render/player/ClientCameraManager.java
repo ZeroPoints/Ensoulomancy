@@ -1,11 +1,3 @@
-/*******************************************************************************
- * HellFirePvP / Astral Sorcery 2018
- *
- * All rights reserved.
- * The source code is available on github: https://github.com/HellFirePvP/AstralSorcery
- * For further details, see the License file there.
- ******************************************************************************/
-
 package com.zeropoints.ensoulomancy.render.player;
 
 import net.minecraft.client.Minecraft;
@@ -32,13 +24,6 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.TreeSet;
 
-/**
- * This class is part of the Astral Sorcery Mod
- * The complete source code for this mod can be found on github.
- * Class: ClientCameraManager
- * Created by HellFirePvP
- * Date: 13.12.2016 / 00:10
- */
 public class ClientCameraManager implements ITickHandler {
 
     private static final ClientCameraManager instance = new ClientCameraManager();
