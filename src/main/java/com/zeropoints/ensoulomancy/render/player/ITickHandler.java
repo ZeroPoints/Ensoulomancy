@@ -1,10 +1,3 @@
-/*******************************************************************************
- * HellFirePvP / Astral Sorcery 2018
- *
- * All rights reserved.
- * The source code is available on github: https://github.com/HellFirePvP/AstralSorcery
- * For further details, see the License file there.
- ******************************************************************************/
 
 package com.zeropoints.ensoulomancy.render.player;
 
@@ -12,13 +5,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.EnumSet;
 
-/**
- * This class is part of the Astral Sorcery Mod
- * The complete source code for this mod can be found on github.
- * Class: ITickHandler
- * Created by HellFirePvP
- * Date: 04.08.2016 / 11:21
- */
 public interface ITickHandler {
 
     public void tick(TickEvent.Type type, Object... context);
