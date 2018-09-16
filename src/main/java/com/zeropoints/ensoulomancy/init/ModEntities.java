@@ -16,6 +16,10 @@ public class ModEntities {
 	
 	public static void init() {
 		int id = 0;
+		
+		// Fake player corpse entity
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":player_corpse"), EntityIttanMomen.class, "PlayerCorpse", id++, Main.instance, 0, 1, false);
+		
 		// Hallowed
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":pixie"), EntityPixie.class, "Pixie", id++, Main.instance, 64, 1, true, 0xC1A2D0, 0xE5D5D9);
 		// Profane

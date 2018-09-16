@@ -20,10 +20,12 @@ import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -43,14 +45,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderingHandler {
 	
     private RenderManager manager;
+    private static int cameraRenderCounter = 0;
     
-    //private static ArrayList<RenderPlayerEvent.Pre> renderPlayerQueue = new ArrayList<RenderPlayerEvent.Pre>();
-    private static Map<String,RenderPlayerEvent.Pre> renderPlayerQueue = new HashMap<String,RenderPlayerEvent.Pre>();
+    //private static Map<String,RenderPlayerEvent.Pre> renderPlayerQueue = new HashMap<String,RenderPlayerEvent.Pre>();
     
     public RenderingHandler() {
     	this.manager = Minecraft.getMinecraft().getRenderManager();
     }
-
+    
+    /**
+     * Attaches to the update Camera event
+     * If camera is not default player's change it. 
+     * Executed actions are likely to be all client-side
+     */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void updateCamera(RenderHandEvent event) {
+    	if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityCamera) {
+    		EntityCamera cameraEntity = (EntityCamera)Minecraft.getMinecraft().getRenderViewEntity();
+    		
+    		// Reset viewing entity back to player as past event rendering time
+    		if (cameraRenderCounter > cameraEntity.getTicksActive()) {
+    			Minecraft.getMinecraft().setRenderViewEntity(Minecraft.getMinecraft().player);
+    			cameraEntity.onStopped(); 
+    			cameraEntity.setDead(); // Remove this entity
+    			cameraRenderCounter = 0;
+    			return;
+    		}
+    		
+    		cameraRenderCounter++;
+    		event.setCanceled(true); // Don't actually render the hand when camera is active. 
+    	}
+    }
+    
     /**
      * Render player hook
      * 
@@ -60,9 +86,9 @@ public class RenderingHandler {
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         EntityPlayer player = event.getEntityPlayer();
         
-        if (renderPlayerQueue.containsKey(player.getName())) {
-        	return;
-        }
+        //if (renderPlayerQueue.containsKey(player.getName())) {
+        //	return;
+        //}
         
         IMorphing morph = Morphing.getCapability(player);
 

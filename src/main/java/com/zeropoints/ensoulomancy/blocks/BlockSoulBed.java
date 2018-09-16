@@ -10,9 +10,11 @@ import com.google.common.base.Predicate;
 import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleep;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
+import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
+import com.zeropoints.ensoulomancy.util.CameraRenderHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -48,6 +50,8 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -56,6 +60,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import net.minecraft.client.renderer.entity.RenderPlayer;
 
 public class BlockSoulBed extends BlockBed {
 	
@@ -63,23 +68,24 @@ public class BlockSoulBed extends BlockBed {
         super();
         //ModBlocks.BLOCKS.add(this);
     }
-
+    
      // Called when the block is right clicked by a player.
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-        // If the block clicked isn't the head piece, change it to be so
+    	facing = (EnumFacing)state.getValue(FACING);
+    	
+    	// If the block clicked isn't the head piece, change it to be so
         if (state.getValue(PART) != BlockBed.EnumPartType.HEAD) {
-            pos = pos.offset((EnumFacing)state.getValue(FACING));
+            pos = pos.offset(facing);
             state = world.getBlockState(pos);
 
             if (state.getBlock() != this) {
                 return true;
             }
         }
-
-        // 
-        EntityPlayer.SleepResult entityplayer$sleepresult = trySleep(pos, playerIn);
+    	
+        EntityPlayer.SleepResult entityplayer$sleepresult = trySleep(pos, player, state);
 
         // If the result is anything but OK, display a message to the player
         String message;
@@ -99,8 +105,8 @@ public class BlockSoulBed extends BlockBed {
         		message = "tile.bed.notPossibleHere";
             	break;
         }
-            
-        playerIn.sendStatusMessage(new TextComponentTranslation(message, new Object[0]), true);
+        
+        player.sendStatusMessage(new TextComponentTranslation(message, new Object[0]), true);
         return true;
     }
     
@@ -108,7 +114,7 @@ public class BlockSoulBed extends BlockBed {
      * Custom method for spirit bed interactivity
      * This should only be called client-side
      */
-    private EntityPlayer.SleepResult trySleep(BlockPos bedLocation, EntityPlayer player){
+    private EntityPlayer.SleepResult trySleep(BlockPos bedLocation, EntityPlayer player, IBlockState state){
     	
     	IGhost ghost = Ghost.getCapability(player);
     	
@@ -116,9 +122,13 @@ public class BlockSoulBed extends BlockBed {
             return EntityPlayer.SleepResult.OTHER_PROBLEM;
         }
         
-        EntityPlayer sleepingPlayer = getPlayerInSoulBed(player.world, bedLocation);
-        if (sleepingPlayer != null) {
-        	return EntityPlayer.SleepResult.NOT_POSSIBLE_NOW;
+        if (((Boolean)state.getValue(OCCUPIED)).booleanValue()) {
+            if (getPlayerInSoulBed(player.world, bedLocation) != null) {
+            	return EntityPlayer.SleepResult.NOT_POSSIBLE_NOW;
+            }
+
+            state = state.withProperty(OCCUPIED, Boolean.valueOf(false));
+            player.world.setBlockState(bedLocation, state, 4);
         }
 		
     	if (player.isRiding()) {
@@ -203,4 +213,6 @@ public class BlockSoulBed extends BlockBed {
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntitySoulBed();
     }
+
+    
 }
