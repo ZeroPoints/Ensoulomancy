@@ -29,7 +29,8 @@ public class RenderEntityPlayerCorpse extends RenderLivingBase<EntityPlayerCorps
 	}
 	
 	protected void preRenderCallback(EntityPlayerCorpse entity, float partialTickTime) {
-		// Should get the rotates from the entity passed in
+		// This rotates the entity so it is laying down at height for a bed. 
+		// Might need to do this in a state somwhere else if we want to re-use the fake player render model
         GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
         GlStateManager.rotate(-90.0F, 1, 0, 0);
         GlStateManager.translate(0, 1.5F, -0.2F);

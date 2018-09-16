@@ -1,6 +1,6 @@
 package com.zeropoints.ensoulomancy.util;
 
-import com.zeropoints.ensoulomancy.render.player.EntityCamera;
+import com.zeropoints.ensoulomancy.entity.EntityCamera;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;

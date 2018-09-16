@@ -9,6 +9,8 @@ import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
 import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+import com.zeropoints.ensoulomancy.entity.EntityCamera;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -103,6 +105,7 @@ public class RenderingHandler {
         // Render ghost
         if (ghost != null && ghost.renderPlayer(player)) {
         	// This adds the player to a rendering queue so then they get rendered after TESRs (Tile Entity Special Renderer)
+        	// This causes extreme rendering bugs. Undo for now
         	/*renderPlayerQueue.put(player.getName(), event);
         	event.setCanceled(true);*/
         }

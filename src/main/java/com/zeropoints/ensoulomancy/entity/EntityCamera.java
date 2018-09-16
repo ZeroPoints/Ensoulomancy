@@ -1,4 +1,4 @@
-package com.zeropoints.ensoulomancy.render.player;
+package com.zeropoints.ensoulomancy.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
