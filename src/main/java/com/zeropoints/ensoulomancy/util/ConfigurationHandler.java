@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 import com.zeropoints.ensoulomancy.world.PurgatoryWorldProvider;
 
 public class ConfigurationHandler {
@@ -26,6 +27,8 @@ public class ConfigurationHandler {
     
     public static String defaultBiome = "minecraft:ice_mountains";
 
+    
+    public static PurgatoryTeleporter PURGATORY_TELEPORTER = null;
     
     
     public ConfigurationHandler() {

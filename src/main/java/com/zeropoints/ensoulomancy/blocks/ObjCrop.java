@@ -9,7 +9,6 @@ import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
 import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;

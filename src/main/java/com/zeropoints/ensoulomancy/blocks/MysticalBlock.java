@@ -1,7 +1,10 @@
 package com.zeropoints.ensoulomancy.blocks;
 
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.blocks.counter.TileEntityCounter;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
+import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
@@ -10,27 +13,38 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.w3c.dom.events.Event;
+
+
+//public class MysticalBlock extends BlockTileEntity<PortalTileEntity>  {
 
 
 public class MysticalBlock extends BlockBase  {
 
 	public MysticalBlock(Material materialIn) {
 		super("mystical_block", materialIn);
-		// TODO Auto-generated constructor stub
 
 	}
 
@@ -44,213 +58,89 @@ public class MysticalBlock extends BlockBase  {
             return true;
         }
 
-        
-        Map<BlockPos, IBlockState> blockFrameCache = new HashMap<BlockPos, IBlockState>();
-        int i = 0;
-        for(int x = -6; x <= 6; x++) {
-        	for(int y = -6; y <= 6; y++) {
-        		for(int z = -6; z <= 6; z++) {
-                	
-                	BlockPos bp = new BlockPos(pos.getX()+x, pos.getY()+y, pos.getZ()+z);
-                	
-                	IBlockState bs = worldIn.getBlockState(bp);
-                	
-                	
-                	if(bs.getBlock().getRegistryName() == Blocks.WOOL.getRegistryName() || bs.getBlock().getRegistryName() == this.getRegistryName() ) {
-                		blockFrameCache.put(bp, bs);
-                		i++;
-                	}
-                }
-            }
-        }
-        
-    	Main.LogMesssage("Found Portal Blocks: " + i);
-        for(Map.Entry<BlockPos, IBlockState> entry: blockFrameCache.entrySet()) {
-        	worldIn.setBlockState(new BlockPos(entry.getKey().getX(), entry.getKey().getY()+13, entry.getKey().getZ()), entry.getValue());
-        }
-        
+		teleportToDimension(playerIn, pos);
+		
         return true;
 	}
 
 	
+
 	
+	public void teleportToDimension(Entity entity, BlockPos blockPos) {
+		if (entity instanceof EntityPlayerMP) {
+			
+			int oldDimension = entity.dimension;
+			int newDimension = entity.dimension;
+			
+			if(oldDimension == 0) {
+				newDimension = ConfigurationHandler.dimensionId;
+				
+			}
+			else {
+				newDimension = 0;
+			}
+			
+	        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) entity;
+	        MinecraftServer server = entity.getEntityWorld().getMinecraftServer();
+	        WorldServer overworldServer = server.getWorld(0);
+	        WorldServer purgatoryServer = server.getWorld(ConfigurationHandler.dimensionId);
+	        //entity.addExperienceLevel(0);
+	        
+	        int x = entityPlayerMP.getPosition().getX(); 
+			int y = entityPlayerMP.getPosition().getY(); 
+			int z = entityPlayerMP.getPosition().getZ(); 
+			
 	
+	        if (purgatoryServer == null || purgatoryServer.getMinecraftServer() == null){ //Dimension doesn't exist
+	            throw new IllegalArgumentException("Dimension: "+newDimension+" doesn't exist!");
+	        }
 	
-	
-/*
-    public boolean trySpawnPortal (World worldIn, BlockPos pos) {
+	        boolean foundTeleporter = false;
+	        
+	        if(ConfigurationHandler.PURGATORY_TELEPORTER == null) {
+	        	ConfigurationHandler.PURGATORY_TELEPORTER = new PurgatoryTeleporter(overworldServer, purgatoryServer);
+	        	purgatoryServer.customTeleporters.add(ConfigurationHandler.PURGATORY_TELEPORTER);
+	        	foundTeleporter = true;
+	        }
+	        
+	        /*
+			for (final Teleporter item : purgatoryServer.customTeleporters) {
 
-        FrameBuilder frameBuilder = new FrameBuilder(worldIn, pos, EnumFacing.Axis.X);
+				if(item instanceof PurgatoryTeleporter) {
+					
+					pt = (PurgatoryTeleporter) item;
+				}
+	        }
+	        
+			
+			if(!foundTeleporter) {
+				
+				pt = 
+				
+			}*/
+	        
+			
+	        ConfigurationHandler.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos);
+			
+			
+	        //Test both below for server problems...SP both work
+	        entity.changeDimension(newDimension, ConfigurationHandler.PURGATORY_TELEPORTER);
+	        
 
-        if (frameBuilder.isValid() && frameBuilder.portalBlockCount == 0) {
-
-            frameBuilder.placePortalBlocks();
-            return true;
-        }
-
-        else {
-
-            frameBuilder = new FrameBuilder(worldIn, pos, EnumFacing.Axis.Z);
-
-            if (frameBuilder.isValid() && frameBuilder.portalBlockCount == 0) {
-
-                frameBuilder.placePortalBlocks();
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    */
-	
-	
-	
-
-
-    public static class FrameBuilder {
-        private final World world;
-        private final EnumFacing.Axis axis;
-        private final EnumFacing rightDir;
-        private final EnumFacing leftDir;
-        private int portalBlockCount;
-        private BlockPos bottomLeft;
-        private int height;
-        private int width;
-
-        public FrameBuilder (World worldIn, BlockPos position, EnumFacing.Axis axis) {
-
-            this.world = worldIn;
-            this.axis = axis;
-
-            if (axis == EnumFacing.Axis.X) {
-                this.leftDir = EnumFacing.EAST;
-                this.rightDir = EnumFacing.WEST;
-            }
-            else {
-                this.leftDir = EnumFacing.NORTH;
-                this.rightDir = EnumFacing.SOUTH;
-            }
-
-            for (final BlockPos blockpos = position; position.getY() > blockpos.getY() - 21 && position.getY() > 0 && this.isEmptyBlock(worldIn.getBlockState(position.down())); position = position.down()) {
-                ;
-            }
-
-            final int i = this.getDistanceUntilEdge(position, this.leftDir) - 1;
-
-            if (i >= 0) {
-                this.bottomLeft = position.offset(this.leftDir, i);
-                this.width = this.getDistanceUntilEdge(this.bottomLeft, this.rightDir);
-
-                if (this.width < 2 || this.width > 21) {
-                    this.bottomLeft = null;
-                    this.width = 0;
-                }
-            }
-
-            if (this.bottomLeft != null) {
-                this.height = this.calculatePortalHeight();
-            }
-        }
-
-        protected int getDistanceUntilEdge (BlockPos p_180120_1_, EnumFacing p_180120_2_) {
-
-            int i;
-
-            for (i = 0; i < 22; ++i) {
-                final BlockPos blockpos = p_180120_1_.offset(p_180120_2_, i);
-
-                if (!this.isEmptyBlock(this.world.getBlockState(blockpos)) || this.world.getBlockState(blockpos.down()).getBlock() != Blocks.OBSIDIAN) {
-                    break;
-                }
-            }
-
-            final Block block = this.world.getBlockState(p_180120_1_.offset(p_180120_2_, i)).getBlock();
-            return block == Blocks.OBSIDIAN ? i : 0;
-        }
-
-        public int getHeight () {
-
-            return this.height;
-        }
-
-        public int getWidth () {
-
-            return this.width;
-        }
-
-        protected int calculatePortalHeight () {
-
-            label56 :
-
-            for (this.height = 0; this.height < 21; ++this.height) {
-                for (int i = 0; i < this.width; ++i) {
-                    final BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i).up(this.height);
-                    Block block = this.world.getBlockState(blockpos).getBlock();
-
-                    if (!this.isEmptyBlock(this.world.getBlockState(blockpos))) {
-                        break label56;
-                    }
-
-                    if (block == Blocks.PORTAL) {
-                        ++this.portalBlockCount;
-                    }
-
-                    if (i == 0) {
-                        block = this.world.getBlockState(blockpos.offset(this.leftDir)).getBlock();
-
-                        if (block != Blocks.OBSIDIAN) {
-                            break label56;
-                        }
-                    }
-                    else if (i == this.width - 1) {
-                        block = this.world.getBlockState(blockpos.offset(this.rightDir)).getBlock();
-
-                        if (block != Blocks.OBSIDIAN) {
-                            break label56;
-                        }
-                    }
-                }
-            }
-
-            for (int j = 0; j < this.width; ++j) {
-                if (this.world.getBlockState(this.bottomLeft.offset(this.rightDir, j).up(this.height)).getBlock() != Blocks.OBSIDIAN) {
-                    this.height = 0;
-                    break;
-                }
-            }
-
-            if (this.height <= 21 && this.height >= 3) {
-                return this.height;
-            }
-            else {
-                this.bottomLeft = null;
-                this.width = 0;
-                this.height = 0;
-                return 0;
-            }
-        }
-
-        protected boolean isEmptyBlock (IBlockState blockIn) {
-
-            return blockIn.getMaterial() == Material.AIR || blockIn.getBlock() == Blocks.FIRE || blockIn.getBlock() == Blocks.PORTAL;
-        }
-
-        public boolean isValid () {
-
-            return this.bottomLeft != null && this.width >= 2 && this.width <= 21 && this.height >= 3 && this.height <= 21;
-        }
-
-        public void placePortalBlocks () {
-
-            for (int i = 0; i < this.width; ++i) {
-                final BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i);
-
-                for (int j = 0; j < this.height; ++j) {
-                    this.world.setBlockState(blockpos.up(j), Blocks.PORTAL.getDefaultState().withProperty(BlockPortal.AXIS, this.axis), 2);
-                }
-            }
-        }
+	         //Also is this owserver or pwserver...hmmm
+	        /*
+	         overworldServer.getMinecraftServer().getPlayerList()
+	        		.transferPlayerToDimension(entityPlayerMP, newDimension, ConfigurationHandler.PURGATORY_TELEPORTER);
+			*/
+	        
+	        
+	        
+	        
+		}
     }
 	
+	
+	
+	
+
 }

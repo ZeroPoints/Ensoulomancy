@@ -49,6 +49,10 @@ public class Main {
         }
     }
 
+    public static void log(String message) {
+    	log(null, message);
+    } 
+    
     public static void LogMesssage(String message) {
     	log(null, message);
     } 

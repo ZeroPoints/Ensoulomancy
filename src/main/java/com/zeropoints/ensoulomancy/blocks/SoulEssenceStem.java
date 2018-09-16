@@ -7,7 +7,6 @@ import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
 import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockStem;
@@ -107,7 +106,7 @@ public class SoulEssenceStem extends BlockStem {
 				(ITeleporter)new PurgatoryTeleporter(worldServer, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ()));
 				*/
 		
-		PurgatoryTeleporter.teleportToDimension(entity, dim, entity.getPosition().getX(), entity.getPosition().getY(), entity.getPosition().getZ());
+		//PurgatoryTeleporter.teleportToDimension(entity, dim, entity.getPosition().getX(), entity.getPosition().getY(), entity.getPosition().getZ());
 
 
 	}

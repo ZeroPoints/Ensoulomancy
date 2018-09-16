@@ -18,7 +18,7 @@ import com.zeropoints.ensoulomancy.blocks.BlockTileEntity;
 public class BlockCounter extends BlockTileEntity<TileEntityCounter> {
 
 	public BlockCounter() {
-		super(Material.ROCK, "counter");
+		super("counter", Material.ROCK);
 		// TODO Auto-generated constructor stub
 	}
 

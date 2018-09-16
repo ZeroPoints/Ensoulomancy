@@ -56,7 +56,7 @@ public class ModBlocks {
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
 	
 
-	public static MysticalBlock frame = new MysticalBlock(Material.SAND);
+	public static MysticalBlock MYSTICAL_BLOCK = new MysticalBlock(Material.SAND);
 	//public static MysticalBlockPortal portal = new MysticalBlockPortal();
 	
 	//---------------------------------------------------------------------
