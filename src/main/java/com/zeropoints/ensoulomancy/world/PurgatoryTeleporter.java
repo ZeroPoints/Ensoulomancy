@@ -83,18 +83,12 @@ public class PurgatoryTeleporter extends Teleporter {
         long l = ChunkPos.asLong(senderBlockPos.getX(), senderBlockPos.getY());
 		double surfaceY = senderBlockPos.getY();
 
-		
 		PortalMapping pm ;
 		if(blockMappingCache.containsKey(l)) {
 			pm = blockMappingCache.get(l);
-			
+			//Maybe double check that the blockstate in server still exists???
 		}
 		else {
-			
-			//PROBLEMS.. Server restart cache is empty.
-			//RECHECK CHUNK QUICKLY FOR PORTAL CONTROL BLOCK. OTHERWISE YES MAKE PORTAL.
-			//TODO: Test chunk first for restart when cache is empty
-			
 			
 			//Make Portal blockpos identical to receiver
 			BlockPos receiverControllerBlockPos = new BlockPos(senderBlockPos);
@@ -111,15 +105,20 @@ public class PurgatoryTeleporter extends Teleporter {
 				targetServer = OverWorldServer;
 	        }
 			
-			//placeholder var
+			//placeholder var dunno if java get any optimisation for reusing vars
 			IBlockState bs;
 			
-	        
+	        boolean portalFound = false;
 	        Biome bi = targetServer.getBiome(receiverControllerBlockPos);
 	        
 	        if(bi.getBiomeName() == "VoidBiome") {
 	        	Main.LogMesssage("VOID Selected");
-	        	
+	        	//Should be 1 to 1
+	        	//If portal already exists but not in cache from restart then dont build a new one
+	        	bs = targetServer.getBlockState(receiverControllerBlockPos);
+	        	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
+	        		portalFound = true;
+	        	}
 	        }
 	        else {
 	        	//Find safe block on land if biome is available
@@ -127,40 +126,56 @@ public class PurgatoryTeleporter extends Teleporter {
 		        for(int i = 256; i > 0; i--) {		        	
 		        	receiverControllerBlockPos = new BlockPos(receiverControllerBlockPos.getX(), i, receiverControllerBlockPos.getZ());
 		        	bs = targetServer.getBlockState(receiverControllerBlockPos);
+		        	
+		        	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
+		        		//We have already defined controller block in this realm.
+		        		//So we know we dont need to recreate portal.
+		        		//but we do need to add the block to cache
+		        		portalFound = true;
+		        		Main.log("Existing Portal Found");
+		        		break;
+		        	}
 		        	//Change this...MMM can land on structures or on other stuff its not meant to?
-		        	if(bs.getMaterial() != Material.AIR) {
+		        	if(bs.getMaterial() != Material.AIR ) {
 		        		surfaceY = i;
 		        		break;
 		        	}
 		        }
 	        }
 	        
-			
-			//Block Formation from previous world to build in new world
-			Map<BlockPos, IBlockState> blockFrameCache = new HashMap<BlockPos, IBlockState>();
-	        for(int x = -6; x <= 6; x++) {
-	        	for(int y = -6; y <= 6; y++) {
+			if(!portalFound) {
+				//Block Formation from previous world to build in new world
+				boolean flag = false;
+				Map<BlockPos, IBlockState> blockFrameCache = new HashMap<BlockPos, IBlockState>();
+		        for(int x = -6; x <= 6; x++) {
 	        		for(int z = -6; z <= 6; z++) {
-	                	
-	                	BlockPos bp = new BlockPos(senderBlockPos.getX()+x, senderBlockPos.getY()+y, senderBlockPos.getZ()+z);
-	                	
-	                	bs = oldServer.getBlockState(bp);
-	                	
-	                	if(bs.getBlock().getRegistryName() == Blocks.WOOL.getRegistryName() || 
-	                			bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName() ) {
-	                		blockFrameCache.put(bp, bs);
-	                	}
-	                }
-	            }
-	        }
-		        
-
-			Main.LogMesssage("Found Portal Blocks: " + blockFrameCache.size());
-			for(Map.Entry<BlockPos, IBlockState> entry: blockFrameCache.entrySet()) {
-				targetServer.setBlockState(new BlockPos(entry.getKey().getX(), surfaceY + entry.getKey().getY() - senderBlockPos.getY(), entry.getKey().getZ()), entry.getValue());
-	        }
-			
-
+	        			flag = false;
+	        			//Go from top down. If x wool found between portal  block and non floor then offset surface value
+	        			for(int y = 6; y >= -6; y--) {
+		                	
+		                	BlockPos bp = new BlockPos(senderBlockPos.getX()+x, senderBlockPos.getY()+y, senderBlockPos.getZ()+z);
+		                	bs = oldServer.getBlockState(bp);
+		                	
+		                	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
+		                		blockFrameCache.put(bp, bs);
+		                		flag = true;
+		                	}
+		                	else if(bs.getBlock().getRegistryName() == Blocks.WOOL.getRegistryName() ) {
+		                		if(flag) {
+		                			//surfaceY++;
+		                		}
+		                		blockFrameCache.put(bp, bs);
+		                	}
+		                }
+		            }
+		        } 
+	
+				Main.LogMesssage("Found Portal Blocks: " + blockFrameCache.size());
+				//Build new portal in otherworld
+				for(Map.Entry<BlockPos, IBlockState> entry: blockFrameCache.entrySet()) {
+					targetServer.setBlockState(new BlockPos(entry.getKey().getX(), surfaceY + entry.getKey().getY() - senderBlockPos.getY(), entry.getKey().getZ()), entry.getValue());
+		        }
+			}
 
 			//Did we build successfully..
         	if(targetServer.getBlockState(receiverControllerBlockPos).getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
@@ -179,7 +194,6 @@ public class PurgatoryTeleporter extends Teleporter {
 	        }
         	
         	blockMappingCache.put(l, pm);
-        	
 		}
 		
 		
