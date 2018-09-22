@@ -9,13 +9,14 @@ import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
 import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -60,7 +61,6 @@ public class RenderingHandler {
         EntityPlayer player = event.getEntityPlayer();
         
         if (renderPlayerQueue.containsKey(player.getName())) {
-        	//event.setCanceled(true);
         	return;
         }
         
@@ -77,8 +77,8 @@ public class RenderingHandler {
         // Render ghost
         if (ghost != null && ghost.renderPlayer(player)) {
         	// This adds the player to a rendering queue so then they get rendered after TESRs (Tile Entity Special Renderer)
-        	renderPlayerQueue.put(player.getName(), event);
-        	event.setCanceled(true);
+        	/*renderPlayerQueue.put(player.getName(), event);
+        	event.setCanceled(true);*/
         }
     }
     
@@ -86,7 +86,7 @@ public class RenderingHandler {
      * This renders after every other entity has rendered. 
      * By doing this we make sure TESRs get blended properly with transparent entities.
      */
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    /*@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRenderWorldLast(RenderWorldLastEvent event) {
     	for (RenderPlayerEvent.Pre e : renderPlayerQueue.values()) {
 			EntityPlayer player = e.getEntityPlayer();
@@ -95,7 +95,7 @@ public class RenderingHandler {
     	
     	// When all 'ghost' players are drawn, clear the queue
     	renderPlayerQueue.clear();
-    }
+    }*/
 
     /**
      * On name render, simply render the name of the user, instead of the name of the entity.

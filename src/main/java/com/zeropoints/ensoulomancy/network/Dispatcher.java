@@ -4,13 +4,13 @@ import com.zeropoints.ensoulomancy.network.client.ClientHandlerGhost;
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorph;
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorphPlayer;
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerSettings;
-import com.zeropoints.ensoulomancy.network.common.PacketAcquireMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketAction;
 import com.zeropoints.ensoulomancy.network.common.PacketGhost;
 import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketMorphPlayer;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 import com.zeropoints.ensoulomancy.network.server.ServerHandlerAction;
+import com.zeropoints.ensoulomancy.network.server.ServerHandlerGhost;
 import com.zeropoints.ensoulomancy.network.server.ServerHandlerMorph;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -71,6 +71,7 @@ public class Dispatcher {
         
         /* Ghost */
         register(PacketGhost.class, ClientHandlerGhost.class, Side.CLIENT);
+        register(PacketGhost.class, ServerHandlerGhost.class, Side.SERVER);
     }
 
     private static <REQ extends IMessage, REPLY extends IMessage> void register(Class<REQ> message, Class<? extends IMessageHandler<REQ, REPLY>> handler, Side side) {

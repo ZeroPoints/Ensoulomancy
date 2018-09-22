@@ -9,7 +9,6 @@ import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
@@ -30,7 +29,7 @@ public class BlockBase extends Block implements IHasModel {
 	
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(thisItem, 0, "inventory");
+		ModRenderers.registerRenderer(this, 0, "inventory");
 	}
 	
 }

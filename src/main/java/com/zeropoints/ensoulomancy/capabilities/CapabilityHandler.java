@@ -20,6 +20,7 @@ import com.zeropoints.ensoulomancy.capabilities.morphing.MorphingProvider;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.ISoulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.Soulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.SoulpoolProvider;
+import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
 import com.zeropoints.ensoulomancy.items.armor.Halo;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 import com.zeropoints.ensoulomancy.network.common.PacketMorph;
@@ -30,8 +31,10 @@ import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -78,8 +81,7 @@ public class CapabilityHandler {
 		
 		EntityPlayer player = event.player; 
 		Map<String,MorphSettings> morphSettings = new HashMap<String,MorphSettings>();
-		GhostSettings ghostSettings = null;
-		boolean sendSettingsFlag = false;
+		GhostSettings ghostSettings = new GhostSettings(); // A default of null was crashing the dispatcher sometimes
 		
 		// Soulpool
 		ISoulpool soulpool = Soulpool.getCapability(player); 
@@ -102,24 +104,22 @@ public class CapabilityHandler {
             	morph.getCurrentMorph().morph(player);
             }
 
-            sendSettingsFlag = true;
             morphSettings = MorphManager.INSTANCE.activeSettings;
         }
         
         
         // Ghost
     	IGhost ghost = Ghost.getCapability(player);
-    	if (ghost != null && ghost.isGhost()) {
-    		player.sendMessage(new TextComponentString("You are a ghost"));
-    		
-    		sendSettingsFlag = true;
+    	if (ghost != null) {
+	    	if (ghost.isGhost()) {
+	    		player.sendMessage(new TextComponentString("You are a ghost"));
+	    	}
+	    	
     		ghostSettings = ghost.getSettings();
     	}
     	
     	// Send settings to client
-    	if (sendSettingsFlag) {
-    		Dispatcher.sendTo(new PacketSettings(morphSettings, ghostSettings), (EntityPlayerMP) player);
-    	}
+		Dispatcher.sendTo(new PacketSettings(morphSettings, ghostSettings), (EntityPlayerMP) player);
 	} 
 	
 	/**
@@ -186,107 +186,55 @@ public class CapabilityHandler {
         Dispatcher.sendTo(new PacketMorph(morph.getCurrentMorph()), (EntityPlayerMP)player);
     }	
 	
-    
-    
-    
-    
-    
-    
-    
-    
 
 	/**
 	 * Every tick check player data...
-	 * @param event
 	 */
 	@SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-
-		//Gets this current player
-
-        EntityPlayer player = event.player;
-		
-		
-        GrantFlight(player);
-    }
-
-	
-	
-	
-	
-	/**
-	 * Grant flight to player if they have halo
-	 * @param player
-	 */
-	public static void GrantFlight(EntityPlayer player) {
-		
-		boolean hasFlight = false;
-		//Gets players items
-
-		NonNullList<ItemStack> stack = player.inventory.armorInventory;
-		//Find whether the player has a halo on for creative flight
-
-		for(int i = 0; i < stack.size(); i++) {
-			if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
-				
+		if (!hasFlight(event.player)) {
+			if (!event.player.isCreative()) {
+				event.player.capabilities.allowFlying = false;
 			}
-			else {
-				hasFlight = true;
-			}
-		}
-		
-		if(!hasFlight) {
-			player.capabilities.allowFlying = false;
+			event.player.capabilities.setFlySpeed(0.05F);	
 			return;
 		}
 		
-		if (player.world.isRemote) {
-			//GRANT FLIGHT AND SPEED
-			player.capabilities.allowFlying = true;
-			player.capabilities.setFlySpeed(0.05F + (0.05F * 5 * (float)1D));	
-			
+		if (event.player.world.isRemote) {
+			event.player.capabilities.allowFlying = true;
+			event.player.capabilities.setFlySpeed(0.05F + (0.05F * 5 * (float)1D));	
 		}
+    }
 
+	
+	private static boolean hasFlight(EntityPlayer player) {
+		// Gets players currently worn items
+		NonNullList<ItemStack> armorInventory = player.inventory.armorInventory;
+
+		// Find whether the player has a halo on for creative flight
+		for (ItemStack itemStack : armorInventory) {
+			if (!itemStack.isEmpty() && itemStack.getItem() instanceof ArmorBase && ((ArmorBase)itemStack.getItem()).GRANTS_FLIGHT) {
+				return true;
+			}
+		}
 		
+		return false;
 	}
 	
 	
 	/**
 	 * When player damaged do checks if it was flight damage and they have flight gear
-	 * @param event
 	 */
 	@SubscribeEvent
     public void onPlayerAttacked(LivingAttackEvent event) {
+		EntityLivingBase player = event.getEntityLiving();
 		
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-
-			//Gets this current player
-			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-
-			
-			//Gets players items
-			NonNullList<ItemStack> stack = player.inventory.armorInventory;
-			boolean hasFlight = false;
-
-			//Find whether the player has a halo on for creative flight
-			for(int i = 0; i < stack.size(); i++) {
-				if(stack.get(i).isEmpty() || !(stack.get(i).getItem() instanceof Halo)) {
-					
-				}
-				else {
-
-					hasFlight = true;
-				}
-			}
-			
+		if (player instanceof EntityPlayer) {
 			//Disable fall damage if player falling
-			if(hasFlight && event.getSource().damageType.equals("fall")) {
+			if (event.getSource().damageType.equals("fall") && hasFlight((EntityPlayer)player)) {
 				event.setCanceled(true);
-				return;
 			}
-			
 		}
-		
 	}
 	
 	

@@ -4,7 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelSilverfishHead extends ModelHeadBase {
     public ModelRenderer Dots;
     public ModelRenderer Body;

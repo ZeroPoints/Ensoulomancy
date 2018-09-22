@@ -4,7 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelMagmaCubeHead extends ModelHeadBase {
 	public ModelRenderer Slice_1;
     public ModelRenderer Slice_2;

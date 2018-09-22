@@ -4,7 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-
+//@SideOnly(Side.CLIENT)
 public class ModelParrotHead extends ModelHeadBase {
     public ModelRenderer HeadTop;
     public ModelRenderer LowerBeak;

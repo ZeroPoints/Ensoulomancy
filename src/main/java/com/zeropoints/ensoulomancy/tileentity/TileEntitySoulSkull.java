@@ -11,7 +11,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

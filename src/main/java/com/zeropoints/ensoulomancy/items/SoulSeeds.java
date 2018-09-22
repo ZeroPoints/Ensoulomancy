@@ -4,15 +4,12 @@ package com.zeropoints.ensoulomancy.items;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -22,17 +19,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.oredict.OreDictionary;
 
 
 public class SoulSeeds extends Item implements IHasModel, IPlantable { 
 
+	private static final String name = "soul_seeds";
+	
 	public SoulSeeds() {
 		super();
 		
-		setUnlocalizedName("soul_seeds");
-		setRegistryName("soul_seeds");
-		
+		setUnlocalizedName(name);
+		setRegistryName(name);
 		setCreativeTab(Main.ENSOULOMANCY_TAB);
 		
 		ModItems.ITEMS.add(this);	
@@ -41,7 +38,7 @@ public class SoulSeeds extends Item implements IHasModel, IPlantable {
 	 
 	@Override
 	public void registerModels() {
-		Main.proxy.registerItemRenderer(this, 0, "reaping_seeds");
+		ModRenderers.registerRenderer(this, 0, "reaping_seeds");
 	}
 
 

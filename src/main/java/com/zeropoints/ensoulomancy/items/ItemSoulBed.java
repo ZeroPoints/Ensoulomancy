@@ -1,5 +1,15 @@
 package com.zeropoints.ensoulomancy.items;
 
+import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
+import com.zeropoints.ensoulomancy.init.ModItems;
+import com.zeropoints.ensoulomancy.init.ModRenderers;
+import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulBedStackRenderer;
+import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulBedRenderer;
+import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
+import com.zeropoints.ensoulomancy.util.IHasModel;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -8,34 +18,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
-import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.init.ModItems;
-import com.zeropoints.ensoulomancy.init.ModRenderers;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulBedStackRenderer;
-import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
-import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.util.Reference;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSoulBed extends Item implements IHasModel {
 	
-    private final String name = "soul_bed"; 
+    private static final String name = "soul_bed"; 
 
     public ItemSoulBed() {
     	super();
@@ -44,19 +40,23 @@ public class ItemSoulBed extends Item implements IHasModel {
         this.setCreativeTab(Main.ENSOULOMANCY_TAB);
         this.setMaxDamage(0);
         
-        this.setTileEntityItemStackRenderer(new TileEntityItemSoulBedStackRenderer());
-        
 		ModItems.ITEMS.add(this);
     }
     
-    /**
-     * Called when a Block is right-clicked with this Item
-     * This essentially just makes sure the block can be placed here. 
-     */
+    @Override
+    @SideOnly(Side.CLIENT)
+	public void registerModels() {
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoulBed.class, new TileEntitySoulBedRenderer());
+    	this.setTileEntityItemStackRenderer(new TileEntityItemSoulBedStackRenderer());
+		ModRenderers.registerRenderer(this, 0, "inventory");
+	}
+    
+    @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return EnumActionResult.SUCCESS;
         }
+        
         if (facing != EnumFacing.UP) {
             return EnumActionResult.FAIL;
         }
@@ -99,10 +99,5 @@ public class ItemSoulBed extends Item implements IHasModel {
         }
         return EnumActionResult.FAIL;
     }
-
-	@Override
-	public void registerModels() {
-		ModRenderers.registerItemRenderer(this, 0, Reference.MOD_ID + ":" + name + "#inventory");
-	}
-
+    
 }

@@ -11,8 +11,6 @@ import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
 import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.init.ModItems;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,17 +24,16 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class ReapingScythe extends ToolSword {
 
-	public static final String NAME = "reaping_scythe";
-	
-	protected Boolean CAN_BEHEAD = true;
-	protected float HEAD_DROP_CHANCE = 0.5F;
+	private static final String name = "reaping_scythe";
 	
 	public ReapingScythe() {
-		super(NAME, ModItems.MATERIAL_SOUL_INGOT);
+		super(name, ModItems.MATERIAL_SOUL_INGOT);
+		this.CAN_BEHEAD = true;
+		this.HEAD_DROP_CHANCE = 0.5F;
 	}
 	
 	@Override
-	protected void registerAbilities(){
+	protected void registerAbilities() {
 		this.Abilities.put("POSSESS", true);
 	}
 	

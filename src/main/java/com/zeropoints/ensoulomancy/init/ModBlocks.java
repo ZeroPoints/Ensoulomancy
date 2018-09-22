@@ -1,11 +1,9 @@
 package com.zeropoints.ensoulomancy.init;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
 import com.google.common.base.Preconditions;
-import com.zeropoints.ensoulomancy.blocks.BlockBase;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
@@ -17,15 +15,10 @@ import com.zeropoints.ensoulomancy.blocks.SoulEssenceCrop;
 import com.zeropoints.ensoulomancy.blocks.SoulEssenceStem;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
-import com.zeropoints.ensoulomancy.util.IHasModel;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPumpkin;
-import net.minecraft.block.BlockStem;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -48,12 +41,10 @@ public class ModBlocks {
 	public static final SoulEssenceStem SOUL_ESSENCE_STEM = new SoulEssenceStem();
 	public static final ObjCrop OBJ_CROP = new ObjCrop();
 	
-	
-	// Decorations
-	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
-	
 	// Tile Entities
+	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
+
 	
 
 	public static MysticalBlock MYSTICAL_BLOCK = new MysticalBlock(Material.SAND);
@@ -71,10 +62,6 @@ public class ModBlocks {
 
 			for (final Block block: BLOCKS) {
 				registry.register(block);
-				
-				if (block instanceof IHasModel) {
-					((IHasModel)block).registerModels();	
-				}
 			}
 			
 			registerTileEntities();
@@ -96,7 +83,6 @@ public class ModBlocks {
 	 * Register tile entity, will render as its model in the world
 	 */
 	private static void registerTileEntities() {
-		
 		GameRegistry.registerTileEntity(TileEntitySoulSkull.class, new ResourceLocation(TileEntitySoulSkull.resourceLocation));
 		GameRegistry.registerTileEntity(TileEntitySoulBed.class, new ResourceLocation(TileEntitySoulBed.resourceLocation));
 	}

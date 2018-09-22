@@ -1,12 +1,18 @@
 package com.zeropoints.ensoulomancy.render.tileentity;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.Level;
+
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 import com.zeropoints.ensoulomancy.model.heads.*;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
 import com.zeropoints.ensoulomancy.util.SoulSkullType;
+import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -25,87 +31,43 @@ public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileE
 	//TODO: Merge simple models into one, e.g. blaze, spider
 	
 	// Shared models
+	private static final ModelHeadBase modelCatHead = new ModelCatHead();
 	private static final ModelHeadBase modelCowHead = new ModelCowHead();
 	private static final ModelHeadBase modelGuardianHead = new ModelGuardianHead();
 	private static final ModelHeadBase modelHorseHead = new ModelHorseHead();
 	private static final ModelHeadBase modelIllagerHead = new ModelIllagerHead();
-	private static final ModelHeadBase modelParrotHead = new ModelParrotHead();
-	private static final ModelHeadBase modelCatHead = new ModelCatHead();
 	private static final ModelHeadBase modelLlamaHead = new ModelLlamaHead();
+	private static final ModelHeadBase modelParrotHead = new ModelParrotHead();
 	private static final ModelHeadBase modelRabbitHead = new ModelRabbitHead();
 	private static final ModelHeadBase modelSpiderHead = new ModelSpiderHead();
-	
-	public static final SoulSkullType[] SoulSkullTypes = {
-			new SoulSkullType("Bat", "textures/entity/bat", new ModelBatHead()),
-			new SoulSkullType("Blaze", "textures/entity/blaze", new ModelBlazeHead()),
-			new SoulSkullType("Chicken", "textures/entity/chicken", new ModelChickenHead()),
-			new SoulSkullType("Cow", "textures/entity/cow/cow", modelCowHead),
-			new SoulSkullType("MushroomCow", "textures/entity/cow/mooshroom", modelCowHead),
-			new SoulSkullType("Enderman", "textures/entity/enderman/enderman", new ModelEndermanHead()),
-			new SoulSkullType("Endermite", "textures/entity/endermite", new ModelEnderMiteHead()),
-			new SoulSkullType("Ghast", "textures/entity/ghast/ghast", new ModelGhastHead()),
-			new SoulSkullType("Guardian", "textures/entity/guardian", modelGuardianHead),
-			new SoulSkullType("GuardianElder", "textures/entity/guardian_elder", modelGuardianHead),
-			new SoulSkullType("Horse.horse_white", "textures/entity/horse/horse_white", modelHorseHead),
-			new SoulSkullType("Horse.horse_creamy", "textures/entity/horse/horse_creamy", modelHorseHead),
-			new SoulSkullType("Horse.horse_chestnut", "textures/entity/horse/horse_chestnut", modelHorseHead),
-			new SoulSkullType("Horse.horse_black", "textures/entity/horse/horse_black", modelHorseHead),
-			new SoulSkullType("Horse.horse_gray", "textures/entity/horse/horse_gray", modelHorseHead),
-			new SoulSkullType("Horse.horse_darkbrown", "textures/entity/horse/horse_darkbrown", modelHorseHead),
-			new SoulSkullType("Donkey", "textures/entity/horse/donkey", modelHorseHead),
-			new SoulSkullType("Mule", "textures/entity/horse/mule", modelHorseHead),
-			new SoulSkullType("SkeletonHorse", "textures/entity/horse/horse_skeleton", modelHorseHead),
-			new SoulSkullType("ZombieHorse", "textures/entity/horse/horse_zombie", modelHorseHead),
-			new SoulSkullType("Husk", "textures/entity/zombie/husk", new ModelZombieHead()),
-			new SoulSkullType("EvokerIllager", "textures/entity/illager/evoker", modelIllagerHead),
-			new SoulSkullType("VindicatorIllager", "textures/entity/illager/vindicator", modelIllagerHead),
-			new SoulSkullType("LavaSlime", "textures/entity/slime/magmacube", new ModelMagmaCubeHead()),
-			new SoulSkullType("Llama.default", "textures/entity/llama/llama", modelLlamaHead),
-			new SoulSkullType("Llama.llama_brown", "textures/entity/llama/llama_brown", modelLlamaHead),
-			new SoulSkullType("Llama.llama_creamy", "textures/entity/llama/llama_creamy", modelLlamaHead),
-			new SoulSkullType("Llama.llama_gray", "textures/entity/llama/llama_gray", modelLlamaHead),
-			new SoulSkullType("Llama.llama_white", "textures/entity/llama/llama_white", modelLlamaHead),
-			new SoulSkullType("Ozelot.ocelot", "textures/entity/cat/ocelot", modelCatHead),
-			new SoulSkullType("Ozelot.black", "textures/entity/cat/black", modelCatHead),
-			new SoulSkullType("Ozelot.red", "textures/entity/cat/red", modelCatHead),
-			new SoulSkullType("Ozelot.siamese", "textures/entity/cat/siamese", modelCatHead),
-			new SoulSkullType("Parrot.parrot_blue", "textures/entity/parrot/parrot_blue", modelParrotHead),
-			new SoulSkullType("Parrot.parrot_green", "textures/entity/parrot/parrot_green", modelParrotHead),
-			new SoulSkullType("Parrot.parrot_grey", "textures/entity/parrot/parrot_grey", modelParrotHead),
-			new SoulSkullType("Parrot.parrot_red_blue", "textures/entity/parrot/parrot_red_blue", modelParrotHead),
-			new SoulSkullType("Parrot.parrot_yellow_blue", "textures/entity/parrot/parrot_yellow_blue", modelParrotHead),
-			new SoulSkullType("Pig", "textures/entity/pig/pig", new ModelPigHead()),
-			new SoulSkullType("PigZombie", "textures/entity/zombie_pigman", new ModelZombiePigHead()),
-			new SoulSkullType("PolarBear", "textures/entity/bear/polarbear", new ModelPolarBearHead()),
-			new SoulSkullType("Rabbit.black", "textures/entity/rabbit/black", modelRabbitHead),
-			new SoulSkullType("Rabbit.brown", "textures/entity/rabbit/brown", modelRabbitHead),
-			new SoulSkullType("Rabbit.caerbannog", "textures/entity/rabbit/caerbannog", modelRabbitHead),
-			new SoulSkullType("Rabbit.gold", "textures/entity/rabbit/gold", modelRabbitHead),
-			new SoulSkullType("Rabbit.toast", "textures/entity/rabbit/toast", modelRabbitHead),
-			new SoulSkullType("Rabbit.white", "textures/entity/rabbit/white", modelRabbitHead),
-			new SoulSkullType("Rabbit.white_splotched", "textures/entity/rabbit/white_splotched", modelRabbitHead),
-			new SoulSkullType("Sheep", "textures/entity/sheep/sheep", new ModelSheepHead()),
-			new SoulSkullType("Shulker", "textures/entity/shulker/shulker_black", new ModelShulkerHead()),
-			new SoulSkullType("Silverfish", "textures/entity/silverfish", new ModelSilverfishHead()),
-			new SoulSkullType("Slime", "textures/entity/slime/slime", new ModelSlimeHead()),
-			new SoulSkullType("SnowMan", "textures/entity/snowman", new ModelSnowManHead()),
-			new SoulSkullType("Spider", "textures/entity/spider/spider", modelSpiderHead),
-			new SoulSkullType("CaveSpider", "textures/entity/spider/cave_spider", modelSpiderHead),
-			new SoulSkullType("Squid", "textures/entity/squid", new ModelSquidHead()),
-			new SoulSkullType("Stray", "textures/entity/skeleton/stray", new ModelSkeletonHead()),
-			new SoulSkullType("Vex", "textures/entity/illager/vex", new ModelVexHead()),
-			new SoulSkullType("VillagerGolem", "textures/entity/iron_golem", new ModelIronGolemHead()),
-			new SoulSkullType("Villager", "textures/entity/iron_golem", new ModelVillagerHead()),
-			new SoulSkullType("Witch", "textures/entity/witch", new ModelWitchHead()),
-			new SoulSkullType("Wolf", "textures/entity/wolf/wolf", new ModelWolfHead()),
-	};
-	public static final Map<String,Integer> SoulSkullTypeMap = new HashMap<String,Integer>();
 	
 	// put each of our models into a hashmap to retrieve easily through a name
 	// models with sub-types will be classified under the same SoulSkullType
 	static {
-		for(int i = 0; i < SoulSkullTypes.length; ++i) {
-			SoulSkullTypeMap.put(SoulSkullTypes[i].entityname, i); // Name is the localizedname of the entity. Minecraft entity names are camel-case
+		for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
+			SoulSkullType skullType = SkullRegistryHelper.SoulSkullTypes[i];
+			switch (skullType.headClass.getName()) {
+				case "ModelCatHead":      skullType.model = modelCatHead;		break;
+				case "ModelCowHead":      skullType.model = modelCowHead;		break;
+				case "ModelGuardianHead": skullType.model = modelGuardianHead;	break;
+				case "ModelHorseHead":    skullType.model = modelHorseHead;		break;
+				case "ModelIllagerHead":  skullType.model = modelIllagerHead;	break;
+				case "ModelLlamaHead":    skullType.model = modelLlamaHead;		break;
+				case "ModelParrotHead":   skullType.model = modelParrotHead;	break;
+				case "ModelRabbitHead":   skullType.model = modelRabbitHead;	break;
+				case "ModelSpiderHead":   skullType.model = modelSpiderHead;	break;
+				default: 
+					Constructor<?> cons = skullType.headClass.getConstructors()[0];
+					ModelHeadBase headModel = null;
+					try {
+						headModel = (ModelHeadBase)cons.newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+						Main.log(Level.ERROR, "Model for Soul Skull cannot be null!");
+					}
+					skullType.model = headModel;
+					break;
+			}
 		}
 	}
 
@@ -122,10 +84,10 @@ public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileE
     }
 
     public void renderSkull(float x, float y, float z, EnumFacing facing, float rotationIn, int skullType, int destroyStage) {
-    	if(skullType >= SoulSkullTypes.length) {
+    	if (skullType >= SkullRegistryHelper.SoulSkullTypes.length) {
     		skullType = 0;
     	}
-    	SoulSkullType soulSkull = SoulSkullTypes[skullType];
+    	SoulSkullType soulSkull = SkullRegistryHelper.SoulSkullTypes[skullType];
         ModelHeadBase modelbase = soulSkull.model;
 
         if (destroyStage >= 0) {

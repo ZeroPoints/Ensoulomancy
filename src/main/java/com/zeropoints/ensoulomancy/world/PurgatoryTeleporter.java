@@ -113,18 +113,26 @@ public class PurgatoryTeleporter extends Teleporter {
 	private Boolean ShiftEntityY(Entity entity, int targetDim, PortalMapping pm) {
 	
 		int surfaceY;
+
+		Main.log("OW Block:" + pm.OverWorldBlock.getY());
+		Main.log("PG Block:" + pm.PurgatoryBlock.getY());
 		if(targetDim == ConfigurationHandler.dimensionId) {
 			//get difference
-			double offset = pm.OverWorldBlock.getY() - entity.posY;
+			double offset = entity.posY - pm.OverWorldBlock.getY();
+
+			Main.log("offset Y:" + offset);
+
 			surfaceY = (int) (pm.PurgatoryBlock.getY() + offset);
         }
         else {
 
-			double offset = pm.PurgatoryBlock.getY() - entity.posY;
+			double offset = entity.posY - pm.PurgatoryBlock.getY();
+			Main.log("offset Y:" + offset);
 			surfaceY = (int) (pm.OverWorldBlock.getY() + offset);
         }
 		
-		entity.posY = surfaceY + 3;
+		entity.posY = surfaceY;
+		Main.log("Player new Y:" + entity.posY);
 		
 		return true;
 	}

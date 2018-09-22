@@ -7,9 +7,9 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * Soulcraft config class
+ * ensoulomancy config class
  * 
- * Intance of this class is responsible for storing configuration for Soulcraft mod.
+ * Intance of this class is responsible for storing configuration for ensoulomancy mod.
  */
 public class EnsoulomancyConfig {
     /* Config options */

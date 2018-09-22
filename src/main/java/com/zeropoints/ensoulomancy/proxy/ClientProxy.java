@@ -38,9 +38,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         
-        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
-
-        ModRenderers.register(); // client-side only
+        //ModRenderers.register(); // client-side only
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID); // client-side only
     }
 	
 	@Override
@@ -57,10 +56,6 @@ public class ClientProxy extends CommonProxy {
 		/* Rendering stuff */
         this.substitutePlayerRenderers(Minecraft.getMinecraft().getRenderManager());
 	}
-	
-	public void registerItemRenderer(Item item, int meta, String id) {
-    	ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
-    }
 	
 	@Override
 	public String localize(String unlocalized, Object... args) {

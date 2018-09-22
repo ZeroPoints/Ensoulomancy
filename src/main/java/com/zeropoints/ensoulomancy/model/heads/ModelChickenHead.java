@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
+//@SideOnly(Side.CLIENT)
 public class ModelChickenHead extends ModelHeadBase {
     public ModelRenderer Beak;
     public ModelRenderer Red;

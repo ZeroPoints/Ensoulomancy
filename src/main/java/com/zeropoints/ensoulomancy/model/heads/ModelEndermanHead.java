@@ -4,10 +4,7 @@ import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 
 import net.minecraft.client.model.ModelRenderer;
 
-/**
- * ModelEnderman - Either Mojang or a mod author
- * Created using Tabula 7.0.0
- */
+//@SideOnly(Side.CLIENT)
 public class ModelEndermanHead extends ModelHeadBase {
     public ModelRenderer Jaw;
 

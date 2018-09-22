@@ -14,7 +14,6 @@ public class LayerGhostBipedArmor extends LayerGhostArmorBase<ModelBiped> {
 	
     public LayerGhostBipedArmor(RenderLivingBase<?> rendererIn) {
         super(rendererIn);
-        this.alpha = 0.5F;
     }
 
     protected void initArmor() {

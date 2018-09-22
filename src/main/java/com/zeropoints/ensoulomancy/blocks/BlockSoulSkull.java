@@ -50,8 +50,8 @@ public class BlockSoulSkull extends BlockContainer {
     public BlockSoulSkull() {
         super(Material.CIRCUITS);
         this.setDefaultState(this.blockState.getBaseState()
-        		.withProperty(FACING, EnumFacing.NORTH)
-        		.withProperty(NODROP, Boolean.valueOf(false)));
+    		.withProperty(FACING, EnumFacing.NORTH)
+    		.withProperty(NODROP, Boolean.valueOf(false)));
         
         this.setHardness(1.0F);
         this.setSoundType(SoundType.STONE);
