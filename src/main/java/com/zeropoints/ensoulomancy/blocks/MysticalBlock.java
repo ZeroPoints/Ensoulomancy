@@ -86,47 +86,25 @@ public class MysticalBlock extends BlockBase  {
 	        WorldServer purgatoryServer = server.getWorld(ConfigurationHandler.dimensionId);
 	        //entity.addExperienceLevel(0);
 	        
-	        int x = entityPlayerMP.getPosition().getX(); 
-			int y = entityPlayerMP.getPosition().getY(); 
-			int z = entityPlayerMP.getPosition().getZ(); 
-			
 	
 	        if (purgatoryServer == null || purgatoryServer.getMinecraftServer() == null){ //Dimension doesn't exist
 	            throw new IllegalArgumentException("Dimension: "+newDimension+" doesn't exist!");
 	        }
 	
-	        boolean foundTeleporter = false;
 	        
 	        if(ConfigurationHandler.PURGATORY_TELEPORTER == null) {
 	        	ConfigurationHandler.PURGATORY_TELEPORTER = new PurgatoryTeleporter(overworldServer, purgatoryServer);
 	        	purgatoryServer.customTeleporters.add(ConfigurationHandler.PURGATORY_TELEPORTER);
-	        	foundTeleporter = true;
 	        }
-	        
-	        /*
-			for (final Teleporter item : purgatoryServer.customTeleporters) {
-
-				if(item instanceof PurgatoryTeleporter) {
-					
-					pt = (PurgatoryTeleporter) item;
-				}
+	       
+			
+	        if (ConfigurationHandler.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos)) {
+		        //Test both below for server problems...SP both work
+	        	entity.changeDimension(newDimension, ConfigurationHandler.PURGATORY_TELEPORTER);
 	        }
-	        
 			
-			if(!foundTeleporter) {
-				
-				pt = 
-				
-			}*/
-	        
-			
-	        ConfigurationHandler.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos);
-			
-			
-	        //Test both below for server problems...SP both work
-	        entity.changeDimension(newDimension, ConfigurationHandler.PURGATORY_TELEPORTER);
-	        
 
+			
 	         //Also is this owserver or pwserver...hmmm
 	        /*
 	         overworldServer.getMinecraftServer().getPlayerList()
