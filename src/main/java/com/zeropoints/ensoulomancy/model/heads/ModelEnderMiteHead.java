@@ -11,12 +11,12 @@ public class ModelEnderMiteHead extends ModelHeadBase {
     public ModelEnderMiteHead() {
         this.textureWidth = 64;
         this.textureHeight = 32;
-        this.Body = new ModelRenderer(this, 0, 5);
-        this.Body.setRotationPoint(0, 0, 0);
-        this.Body.addBox(-1, -4, 0, 6, 4, 5, 0);
         this.Head = new ModelRenderer(this, 0, 0);
-        this.Head.setRotationPoint(0, 0, 0);
-        this.Head.addBox(0, -3, -1, 4, 3, 2, 0);
+        this.Head.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.Head.addBox(-2.0F, -3.0F, -3.0F, 4, 3, 2, 0.0F);
+        this.Body = new ModelRenderer(this, 0, 5);
+        this.Body.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.Body.addBox(-3.0F, -4.0F, -1.0F, 6, 4, 5, 0.0F);
         this.Head.addChild(this.Body);
     }
 

@@ -12,6 +12,7 @@ import com.zeropoints.ensoulomancy.items.SoulIngot;
 import com.zeropoints.ensoulomancy.items.SoulSeeds;
 import com.zeropoints.ensoulomancy.items.SoulSeedsStem;
 import com.zeropoints.ensoulomancy.items.armor.Halo;
+import com.zeropoints.ensoulomancy.items.tools.Bla;
 import com.zeropoints.ensoulomancy.items.tools.ReapingScythe;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -49,6 +50,7 @@ public class ModItems {
 
 	// Tools
 	public static final ReapingScythe REAPING_SCYTHE = new ReapingScythe();
+	public static final Bla BLA = new Bla();
 	
 	// Items
 	public static final SoulIngot SOUL_INGOT = new SoulIngot();

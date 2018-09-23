@@ -18,7 +18,7 @@ public class RenderGhostPlayer extends RenderPlayer {
 	public void preRenderCallback(AbstractClientPlayer entitylivingbaseIn, float partialTickTime) {
         GlStateManager.scale(0.9375F, 0.9375F, 0.9375F);
 		GlStateManager.enableBlend();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 0.5F);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F);
         GlStateManager.disableBlend();
 	}
 	

@@ -15,6 +15,64 @@ item.soul_skull.blaze.name=Blaze Head
 item.soul_skull.cow.name=Cow Head
 item.soul_skull.chicken.name=Chicken Head
 item.soul_skull.bat.name=Bat Head
+item.soul_skull.mushroomcow.name=Mooshroom Head
+item.soul_skull.enderman.name=Enderman Head
+item.soul_skull.endermite.name=Endermite Head
+item.soul_skull.ghast.name=Ghast Head
+item.soul_skull.guardian.name=Guardian Head
+item.soul_skull.guardianelder.name=Elder Guardian Head
+item.soul_skull.horse.horse_white.name=White Horse Head
+item.soul_skull.horse.horse_creamy.name=Creamy Horse Head
+item.soul_skull.horse.horse_chestnut.name=Chestnut Horse Head
+item.soul_skull.horse.horse_black.name=Black Horse Head
+item.soul_skull.horse.horse_gray.name=Gray Horse Head
+item.soul_skull.horse.horse_darkbrown.name=Dark Brown Horse Head
+item.soul_skull.donkey.name=Donkey Head
+item.soul_skull.mule.name=Mule Head
+item.soul_skull.skeletonhorse.name=Skeleton Horse Head
+item.soul_skull.zombiehorse.name=Zombie Horse Head
+item.soul_skull.husk.name=Husk Head
+item.soul_skull.evokerillager.name=Evoker Head
+item.soul_skull.vindicatorillager.name=Vindicator Head
+item.soul_skull.lavaslime.name=Magma Cube Head
+item.soul_skull.llama.default.name=Llama Head
+item.soul_skull.llama.llama_brown.name=Brown Llama Head
+item.soul_skull.llama.llama_creamy.name=Creamy Llama Head
+item.soul_skull.llama.llama_gray.name=Gray Llama Head
+item.soul_skull.llama.llama_white.name=White Llama Head
+item.soul_skull.ozelot.ocelot.name=Ocelot Head
+item.soul_skull.ozelot.black.name=Black Cat Head
+item.soul_skull.ozelot.red.name=Red Cat Head
+item.soul_skull.ozelot.siamese.name=Siamese Cat Head
+item.soul_skull.parrot.parrot_blue.name=Blue Parrot Head
+item.soul_skull.parrot.parrot_green.name=Green Parrot Head
+item.soul_skull.parrot.parrot_grey.name=Grey Parrot Head
+item.soul_skull.parrot.parrot_red_blue.name=Red-Blue Parrot Head
+item.soul_skull.parrot.parrot_yellow_blue.name=Yellow-Blue Parrot Head
+item.soul_skull.pig.name=Pig Head
+item.soul_skull.pigzombie.name=Zombie Pigman Head
+item.soul_skull.polarbear.name=Polar Bear Head
+item.soul_skull.rabbit.black.name=Black Rabbit Head
+item.soul_skull.rabbit.brown.name=Brown Rabbit Head
+item.soul_skull.rabbit.caerbannog.name=Caerbannog Rabbit Head
+item.soul_skull.rabbit.gold.name=Gold Rabbit Head
+item.soul_skull.rabbit.toast.name=Toast Head
+item.soul_skull.rabbit.white.name=White Rabbit Head
+item.soul_skull.rabbit.white_splotched.name=White Splotched Rabbit Head
+item.soul_skull.sheep.name=Sheep Head
+item.soul_skull.shulker.name=Shulker Head
+item.soul_skull.silverfish.name=Silverfish Head
+item.soul_skull.slime.name=Slime Head
+item.soul_skull.snowman.name=Snow Golem Head
+item.soul_skull.spider.name=Spider Head
+item.soul_skull.cavespider.name=Cave Spider Head
+item.soul_skull.squid.name=Squid Head
+item.soul_skull.stray.name=Stray Head
+item.soul_skull.vex.name=Vex Head
+item.soul_skull.villagergolem.name=Iron Golem Head
+item.soul_skull.villager.name=Villager Head
+item.soul_skull.witch.name=Witch Head
+item.soul_skull.wolf.name=Wolf Head
 
 // Blocks
 
@@ -26,15 +84,17 @@ item.halo_helmet.name=Halo
 
 // Entities
 entity.Imp.name=Imp
+entity.Pixie.name=Pixie
+entity.IttanMomen.name=Ittan Momen
+
 
 // Tile Entities
 tile.soul_skull.name=Tile Skull
+item.soul_bed.name=Soul Bed
 
 //World
 generator.PURGATORY=Purgatory
 generator.PURGATORY.info=Bridge between worlds.
-
-//New stuff for new stuffy
 
 
 

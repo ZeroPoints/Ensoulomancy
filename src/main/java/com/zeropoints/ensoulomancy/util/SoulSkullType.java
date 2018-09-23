@@ -28,8 +28,15 @@ public class SoulSkullType {
 	
 	public static class SkullRegistryHelper {
 		
+		/**
+		 * a map that matches entityName to resource location and head class for all skull types.
+		 */
 		public static final Map<String,Integer> SoulSkullTypeMap = new HashMap<String,Integer>();
 		
+		/**
+		 * A list <EntityName,resource,headClass> for all types of entities matching up to their relevant head model
+		 * Entities are named in format: Entity[.variant_name]
+		 */
 		public static final SoulSkullType[] SoulSkullTypes = {
 			new SoulSkullType("Bat", "textures/entity/bat", ModelBatHead.class),
 			new SoulSkullType("Blaze", "textures/entity/blaze", ModelBlazeHead.class),
@@ -90,7 +97,7 @@ public class SoulSkullType {
 			new SoulSkullType("Stray", "textures/entity/skeleton/stray", ModelSkeletonHead.class),
 			new SoulSkullType("Vex", "textures/entity/illager/vex", ModelVexHead.class),
 			new SoulSkullType("VillagerGolem", "textures/entity/iron_golem", ModelIronGolemHead.class),
-			new SoulSkullType("Villager", "textures/entity/iron_golem", ModelVillagerHead.class),
+			new SoulSkullType("Villager", "textures/entity/villager/villager", ModelVillagerHead.class),
 			new SoulSkullType("Witch", "textures/entity/witch", ModelWitchHead.class),
 			new SoulSkullType("Wolf", "textures/entity/wolf/wolf", ModelWolfHead.class),
 		};

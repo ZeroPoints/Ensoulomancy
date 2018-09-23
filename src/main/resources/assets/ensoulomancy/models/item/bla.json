@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ensoulomancy:blocks/soul_essence_stem_connected"
+    }
+}

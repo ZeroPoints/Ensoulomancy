@@ -3,6 +3,7 @@ package com.zeropoints.ensoulomancy.render.layer;
 import com.google.common.collect.Maps;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
+import com.zeropoints.ensoulomancy.render.player.RenderGhost;
 
 import java.util.Map;
 import net.minecraft.client.Minecraft;
@@ -36,15 +37,12 @@ public abstract class LayerGhostArmorBase<T extends ModelBase> implements LayerR
     }
 
     public void doRenderLayer(EntityLivingBase entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-    	// Only render the armor with alpha if the player is currently a ghost.
-    	if (entity instanceof EntityPlayer) {
-    		IGhost ghost = Ghost.getCapability((EntityPlayer)entity);
-    		if (ghost.isGhost()) {
-    			this.alpha = 0.5F;
-    		}
-    		else {
-    			this.alpha = 1.0F;
-    		}
+    	this.alpha = 1.0F;
+    	
+    	// Only render the armor with alpha if the player / entity is currently a ghost.
+    	if (entity instanceof EntityPlayer && Ghost.getCapability((EntityPlayer)entity).isGhost() || 
+    			entity instanceof RenderGhost && ((RenderGhost)entity).isGhost()) {
+			this.alpha = 0.5F;
     	}
     	
         this.renderArmorLayer(entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.CHEST);

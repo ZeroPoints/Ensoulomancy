@@ -12,12 +12,15 @@ import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RenderSubPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -114,5 +117,39 @@ public class ClientProxy extends CommonProxy {
         NetworkPlayerInfo networkplayerinfo = Minecraft.getMinecraft().getConnection().getPlayerInfo(player.getGameProfile().getId());
         return networkplayerinfo != null ? networkplayerinfo.getGameType() : GameType.CREATIVE;
     }
+    
+    /*
+    public static Particle getParticle(World world, BlockPos pos, BlockPos eventPos, int id, int startingAge) {
+    	Particle particle = null;
+
+		if (id == ClientOreParticleHandler.RADAR) {
+			float x, y, z;
+			x = ((int)((float)Math.random() * 4f))/5f + 0.1f;
+			y = 0.5f + (float)Math.random() * 0.75f;
+			z = ((int)((float)Math.random() * 4f))/5f + 0.1f;
+			particle = new ProspectorParticle(worldObj, oreAt.getX()+x, oreAt.getY()+y, oreAt.getZ()+z, 0, 0, 0);//3, 20
+			IBlockState state = worldObj.getBlockState(oreAt);
+			Block block = state.getBlock();
+			if(block instanceof IBlockMultiBreak) {
+				Color c = ((IBlockMultiBreak)block).getProspectorParticleColor(worldObj, oreAt, state);
+				particle.setRBGColorF(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f);
+			}
+		}
+		if (id == ClientOreParticleHandler.DUST) {
+			float x, y, z;
+			x = ((int)((float)Math.random() * 8f))/10f + 0.1f;
+			y = 0.5f + (float)Math.random() * 0.5f;
+			z = ((int)((float)Math.random() * 8f))/10f + 0.1f;
+			particle = new ProspectorParticleDust(worldObj, eventAt.getX()+x, eventAt.getY()+y, eventAt.getZ()+z, 0, 0, 0,startingAge);//3, 20
+			IBlockState state = worldObj.getBlockState(oreAt);
+			Block block = state.getBlock();
+			if(block instanceof IBlockMultiBreak) {
+				Color c = ((IBlockMultiBreak)block).getProspectorParticleColor(worldObj, oreAt, state);
+				particle.setRBGColorF(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f);
+			}
+		}
+		return particle;
+    }
+    */
 }
 

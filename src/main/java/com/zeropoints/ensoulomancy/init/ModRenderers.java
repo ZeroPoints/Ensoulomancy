@@ -1,7 +1,13 @@
 package com.zeropoints.ensoulomancy.init;
 
-import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
-import com.zeropoints.ensoulomancy.render.entity.mobs.RenderImp;
+import com.zeropoints.ensoulomancy.entity.EntityHusk;
+import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
+import com.zeropoints.ensoulomancy.entity.ghost.*;
+import com.zeropoints.ensoulomancy.entity.hallowed.*;
+import com.zeropoints.ensoulomancy.entity.profane.*;
+import com.zeropoints.ensoulomancy.render.entity.husk.RenderHusk;
+import com.zeropoints.ensoulomancy.render.entity.mobs.*;
+import com.zeropoints.ensoulomancy.render.player.RenderEntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -43,7 +49,12 @@ public class ModRenderers {
         	}
         }*/
     	
+    	RenderingRegistry.registerEntityRenderingHandler(EntityPlayerCorpse.class, new RenderEntityPlayerCorpse.RenderFactory());
+    	RenderingRegistry.registerEntityRenderingHandler(EntityHusk.class, new RenderHusk.RenderFactory());
+    	
+    	RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, new RenderPixie.RenderFactory());
     	RenderingRegistry.registerEntityRenderingHandler(EntityImp.class, new RenderImp.RenderFactory());
+    	RenderingRegistry.registerEntityRenderingHandler(EntityIttanMomen.class, new RenderIttanMomen.RenderFactory());
     }
 
     public static void registerRenderer(Item item, int meta, String id) {

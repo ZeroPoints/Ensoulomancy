@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleep;
+import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 import com.zeropoints.ensoulomancy.network.common.PacketGhost;
+import com.zeropoints.ensoulomancy.util.CameraRenderHelper;
 import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
 
 import net.minecraft.block.BlockHorizontal;
@@ -48,6 +50,9 @@ public class Ghost implements IGhost {
     
     /** Whether the player is trying to become ghost-form */
     private boolean isSleeping = false;
+    
+    /** The entity that currently resides in the player's soul-bed */
+    private EntityPlayerCorpse corpseEntity;
     
     
 	public static IGhost getCapability(EntityPlayer player) {
@@ -101,6 +106,10 @@ public class Ghost implements IGhost {
 		this.isSleeping = false;
 		this.isGhost = false;
 		
+		if (this.corpseEntity != null && !this.corpseEntity.isDead) {
+			this.corpseEntity.setDead();
+		}
+		
 		if (player != null && !player.world.isRemote) {
 	        ((WorldServer) player.world).spawnParticle(EnumParticleTypes.PORTAL, false, player.posX, player.posY + 0.5, player.posZ, 25, 0.5, 0.5, 0.5, 0.05);
 			player.sendMessage(new TextComponentString("Not a Ghost"));
@@ -134,39 +143,45 @@ public class Ghost implements IGhost {
 	}
 	
 	@Override
-	public void sleep(EntityPlayer player, BlockPos bedPosition) {
+	public void sleep(EntityPlayer player, BlockPos bedPos) {
 		// Set position for this bed so when player leaves ghost form they appear there ???
-		this.bedPosition = bedPosition;
-		
-		// Not sure what this does. Will test
-    	try {
-    		ReflectionHelper.findMethod(EntityPlayer.class, "spawnShoulderEntities", "func_192030_dh").invoke(player);
-		} 
-    	catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.bedPosition = bedPos;
 		
 		// This code teleports the player to the bed and locks views?
-		final IBlockState state = player.world.isBlockLoaded(bedPosition) ? player.world.getBlockState(bedPosition) : null;
+		final IBlockState state = player.world.isBlockLoaded(bedPos) ? player.world.getBlockState(bedPos) : null;
         final boolean isBed = state != null && state.getBlock() == ModBlocks.SOUL_BED;
         final EnumFacing enumfacing = isBed && state.getBlock() instanceof BlockHorizontal ? (EnumFacing)state.getValue(BlockHorizontal.FACING) : null;
         
-        float f1 = 0.5F;
-        float f2 = 0.5F;
-        
-        if (enumfacing != null) {
-            f1 = 0.5F + (float)enumfacing.getFrontOffsetX() * 0.4F;
-            f2 = 0.5F + (float)enumfacing.getFrontOffsetZ() * 0.4F;            
-            player.renderOffsetX = -1.8F * (float)enumfacing.getFrontOffsetX();
-            player.renderOffsetZ = -1.8F * (float)enumfacing.getFrontOffsetZ();
-        }
-        
-        player.setPosition(bedPosition.getX() + f1, bedPosition.getY() + 0.6875F, bedPosition.getZ() + f2);
-
+        float yaw = CameraRenderHelper.getYaw(enumfacing.getOpposite());
+        BlockPos bedFront = bedPos.offset(enumfacing, -2);
+        player.setLocationAndAngles(bedFront.getX() + 0.5F, bedFront.getY(), bedFront.getZ() + 0.5F, yaw, 0.0F);
         player.motionX = 0.0D;
         player.motionY = 0.0D;
         player.motionZ = 0.0D;
-		
+        
+    	// Spawn fake player rendered in the bed
+        this.corpseEntity = new EntityPlayerCorpse(player.world, player, false);
+        player.world.spawnEntity(this.corpseEntity);
+        this.corpseEntity.setLocationAndAngles(0.5D + bedPos.getX(), bedPos.getY() + 0.5625D, bedPos.getZ() + 0.5D, yaw, 0.0F);
+        
+        // Spawn fake ghost player that will render to stand up
+        EntityPlayerCorpse ghostCorpse = new EntityPlayerCorpse(player.world, player, true);
+        player.world.spawnEntity(ghostCorpse);
+        ghostCorpse.setLocationAndAngles(0.5D + bedPos.getX(), bedPos.getY() + 0.5625D, bedPos.getZ() + 0.5D, yaw, 0.0F);
+        
+    	if (player.world.isRemote) {
+    		// This method executes when the spawned camera stops rendering the player's view.
+    		Runnable onStopped = new Runnable() {
+				@Override
+				public void run() {
+					ghostCorpse.setDead();
+				}
+    		};
+    		
+    		// Create the camera and set the player's view to it
+    		CameraRenderHelper.createCamera(bedPos, enumfacing, onStopped);
+    	}  
+        
         // Start the sleeping animations in the update function now
 		if (!player.world.isRemote) {
 			return;
@@ -174,45 +189,14 @@ public class Ghost implements IGhost {
 		
 		this.isSleeping = true;
 		this.sleepTimer = 0;
-	}
-	
-	/*
-	@SideOnly(Side.CLIENT)
-    public boolean tryStartCameraFlight() {
-        if (cameraFlightActive || !isClientCloseEnough()) {
-            return false;
-        }
-
-        Vector3 offset = new Vector3(this).add(0, 6, 0);
-        ClientCameraFlightHelper.CameraFlightBuilder builder = ClientCameraFlightHelper.builder(offset.clone().add(4, 0, 4), new Vector3(this).add(0.5, 0.5, 0.5));
-        builder.addCircularPoints(offset, ClientCameraFlightHelper.DynamicRadiusGetter.dyanmicIncrease( 5,  0.025), 200, 2);
-        builder.addCircularPoints(offset, ClientCameraFlightHelper.DynamicRadiusGetter.dyanmicIncrease(10, -0.01) , 200, 2);
-        builder.setTickDelegate(createFloatDelegate(new Vector3(this).add(0.5F, 1.2F, 0.5F)));
-        builder.setStopDelegate(createAttunementDelegate());
-
-        OrbitalPropertiesAttunement att = new OrbitalPropertiesAttunement(this, true);
-        OrbitalEffectController ctrl = EffectHandler.getInstance().orbital(att, att, null);
-        ctrl.setOrbitAxis(Vector3.RotAxis.Y_AXIS).setOrbitRadius(3).setTicksPerRotation(80).setOffset(new Vector3(this).add(0.5, 0.5, 0.5));
-
-        ctrl = EffectHandler.getInstance().orbital(att, att, null);
-        ctrl.setOrbitAxis(Vector3.RotAxis.Y_AXIS).setOrbitRadius(3)
-                .setTicksPerRotation(80).setTickOffset(40).setOffset(new Vector3(this).add(0.5, 0.5, 0.5));
-
-        this.clientActiveCameraFlight = builder.finishAndStart();
-        this.cameraFlightActive = true;
-        return true;
-    }
-	*/
-	
+	}	
 	
 	@Override
 	public void stopSleeping(EntityPlayer player) {
 		this.isSleeping = false;
 		this.sleepTimer = 0;
 		
-		//if (player.world.isRemote) {
 		Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
-		//}
 	}
 
 	@Override

@@ -40,8 +40,6 @@ public class RenderSubPlayer extends RenderPlayer {
 	
     public RenderPlayer original;
     
-    //public static Method setModelVisibilities = ReflectionHelper.findMethod(RenderPlayer.class, "setModelVisibilities", "func_177137_d", AbstractClientPlayer.class);
-    
     
     /**
      * Initiate with render manager, player renderer and smallArms flag.

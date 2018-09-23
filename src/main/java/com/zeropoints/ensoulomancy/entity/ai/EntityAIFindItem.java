@@ -5,12 +5,11 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.item.EntityItem;
@@ -22,7 +21,7 @@ import net.minecraft.world.World;
 
 public class EntityAIFindItem extends EntityAIBase {
 	
-    protected final EntityCreature creature;
+    protected final EntityLiving creature;
     protected double speed;
     protected double itemPosX;
     protected double itemPosY;
@@ -34,6 +33,12 @@ public class EntityAIFindItem extends EntityAIBase {
         this.creature = creature;
         this.speed = speedIn;
         this.setMutexBits(1);
+    }
+    
+    public EntityAIFindItem(EntityLiving creature, double speedIn) {
+    	this.creature = creature;
+    	this.speed = speedIn;
+    	this.setMutexBits(1);
     }
 
     /**

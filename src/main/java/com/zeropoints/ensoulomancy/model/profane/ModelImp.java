@@ -1,41 +1,41 @@
 package com.zeropoints.ensoulomancy.model.profane;
 
-import com.zeropoints.ensoulomancy.render.entity.mobs.EntityImp;
+import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Imp - ChickenMobile
  * Created using Tabula 7.0.0
  */
 public class ModelImp extends ModelBiped {
-    //public ModelRenderer bipedBody;
     public ModelRenderer Neck;
     public ModelRenderer LeftThigh;
     public ModelRenderer RightThigh;
     public ModelRenderer LeftWing;
     public ModelRenderer RightWing;
-    //public ModelRenderer bipedLeftArm; // This exists in the ModelBiped class
-    //public ModelRenderer bipedRightArm;
     public ModelRenderer Tail;
-    //public ModelRenderer bipedHead;
     public ModelRenderer LeftHorn;
     public ModelRenderer RightHorn;
     public ModelRenderer LeftHornTip;
     public ModelRenderer RightHornTip;
-    //public ModelRenderer bipedLeftLeg;
-    //public ModelRenderer bipedRightLeg;
     public ModelRenderer LeftFoot;
     public ModelRenderer RightFoot;
     public ModelRenderer LeftWingEnd;
     public ModelRenderer RightWingEnd;
     public ModelRenderer Tail_2;
+    
+    private ModelImp.State state = ModelImp.State.STANDING;
 
     public ModelImp() {
     	this.textureWidth = 64;
@@ -62,7 +62,6 @@ public class ModelImp extends ModelBiped {
         this.bipedLeftArm.mirror = true;
         this.bipedLeftArm.setRotationPoint(3.0F, 3.0F, 0.0F);
         this.bipedLeftArm.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F);
-        //this.setRotateAngle(bipedLeftArm, -1.0471975511965976F, 0.0F, 0.0F);
         this.bipedBody = new ModelRenderer(this, 3, 18);
         this.bipedBody.setRotationPoint(0.0F, 8.0F, -4.0F);
         this.bipedBody.addBox(-3.0F, 2.0F, -2.0F, 6, 9, 5, 0.0F);
@@ -78,7 +77,6 @@ public class ModelImp extends ModelBiped {
         this.bipedRightArm = new ModelRenderer(this, 0, 12);
         this.bipedRightArm.setRotationPoint(-3.0F, 3.0F, 0.0F);
         this.bipedRightArm.addBox(-2.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F);
-        //this.setRotateAngle(bipedRightArm, -1.0471975511965976F, 0.0F, 0.0F);
         this.LeftWingEnd = new ModelRenderer(this, 25, 12);
         this.LeftWingEnd.mirror = true;
         this.LeftWingEnd.setRotationPoint(13.0F, 0.0F, 0.0F);
@@ -156,27 +154,33 @@ public class ModelImp extends ModelBiped {
     
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netbipedHeadYaw, float bipedHeadPitch, float scaleFactor, Entity entityIn) {
-    	EntityImp imp = (EntityImp)entityIn;
-    	
     	this.bipedHead.rotateAngleX = bipedHeadPitch * 0.017453292F;
         this.bipedHead.rotateAngleY = netbipedHeadYaw * 0.017453292F;
         this.bipedHead.rotateAngleZ = 0.0F;
         
-        if (imp.isFlying) { // TODO: this doesn't actually ever hit. Have to figure out why
+        if (this.state == ModelImp.State.FLYING) {
         	// Body Swing
     		this.bipedBody.rotateAngleX = ((float)Math.PI / 4F) + MathHelper.cos(ageInTicks * 0.1F) * 0.15F;
             this.bipedBody.rotateAngleY = 0.0F;
             
+            // Leg Swing
+            this.bipedLeftLeg.rotateAngleX = MathHelper.sin(ageInTicks / 10) * 0.3F;
+            this.bipedRightLeg.rotateAngleX = MathHelper.cos(ageInTicks / 15) * 0.3F;
+            
             // Wings
-            this.RightWing.rotateAngleY = MathHelper.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F;
+            this.RightWing.rotateAngleY = MathHelper.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F + 0.5F;
             this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
             this.LeftWingEnd.rotateAngleY = this.RightWing.rotateAngleY * 0.5F;
             this.RightWingEnd.rotateAngleY = -this.RightWing.rotateAngleY * 0.5F;
     	}
-        else { // Running
-        	// Legs
-        	this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        else { // Flying
+        	// Body
+    		this.bipedBody.rotateAngleX = 0.68F;
+            this.bipedBody.rotateAngleY = 0.0F;
+        	
+            // Legs
             this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+        	this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
             
             // Arms
             this.bipedLeftArm.rotateAngleX = this.bipedRightLeg.rotateAngleX * 0.6F - 1.0F;
@@ -184,10 +188,19 @@ public class ModelImp extends ModelBiped {
             
             // Wings
             this.LeftWing.rotateAngleY = -0.6F;
-            this.RightWing.rotateAngleY = -this.LeftWing.rotateAngleY;
+            this.RightWing.rotateAngleY = 0.6F;
             this.LeftWingEnd.rotateAngleY = 1.5F;
-            this.RightWingEnd.rotateAngleY = -this.LeftWingEnd.rotateAngleY;
+            this.RightWingEnd.rotateAngleY = -1.5F;
         }
+    }
+    
+    @Override
+    public void setLivingAnimations(EntityLivingBase entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    	if (!entity.onGround || (entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isFlying)) {
+    		this.state = ModelImp.State.FLYING;
+    		return;
+    	}
+    	this.state = ModelImp.State.STANDING;
     }
     
     @Override
@@ -201,19 +214,11 @@ public class ModelImp extends ModelBiped {
      */
     private void postRender(ModelRenderer mr, float scale) {
         GlStateManager.translate(mr.rotationPointX * scale, 14 * scale, 3 * scale);
-        //GlStateManager.translate(mr.rotationPointX * scale, mr.rotationPointY * scale, mr.rotationPointZ * scale);
-
-        if (mr.rotateAngleZ != 0.0F) {
-            GlStateManager.rotate(mr.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
-        }
-
-        if (mr.rotateAngleY != 0.0F) {
-            GlStateManager.rotate(mr.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
-        }
-
-        if (mr.rotateAngleX != 0.0F) {
-            GlStateManager.rotate(mr.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
-        }
+        float rot = 180F / (float)Math.PI;
+        
+        if (mr.rotateAngleX != 0F) GlStateManager.rotate(mr.rotateAngleX * rot, 1, 0, 0);
+        if (mr.rotateAngleY != 0F) GlStateManager.rotate(mr.rotateAngleY * rot, 0, 1, 0);
+        if (mr.rotateAngleZ != 0F) GlStateManager.rotate(mr.rotateAngleZ * rot, 0, 0, 1);
     }
 
     /**
@@ -223,5 +228,11 @@ public class ModelImp extends ModelBiped {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    static enum State {
+        FLYING,
+        STANDING
     }
 }
