@@ -11,6 +11,7 @@
   "credits": "McHorse, Asanetargoss",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "requiredMods": ["metamorph"]
+  "dependencies": ["metamorph"]
 }
 ]
