@@ -7,7 +7,7 @@ public interface IEntity {
 	public void RegisterEntityRenderer();
 	
 	public enum MobType {
-		NONE, GHOST, HALLOWED, PROFANE
+		NONE, GHOST, HALLOWED, PROFANE, CUSTOM
 	}
 	
 }

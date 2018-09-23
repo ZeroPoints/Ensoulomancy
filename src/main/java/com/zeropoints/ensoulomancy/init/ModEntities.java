@@ -4,6 +4,8 @@ package com.zeropoints.ensoulomancy.init;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.profane.*;
 import com.zeropoints.ensoulomancy.entity.hallowed.*;
+import com.zeropoints.ensoulomancy.entity.EntityHusk;
+import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.entity.ghost.*;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -18,7 +20,9 @@ public class ModEntities {
 		int id = 0;
 		
 		// Fake player corpse entity
-		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":player_corpse"), EntityIttanMomen.class, "PlayerCorpse", id++, Main.instance, 0, 1, false);
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":player_corpse"), EntityPlayerCorpse.class, "PlayerCorpse", id++, Main.instance, 0, 1, false);
+		// Husk
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":husk"), EntityHusk.class, "Husky", id++, Main.instance, 64, 1, true);
 		
 		// Hallowed
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":pixie"), EntityPixie.class, "Pixie", id++, Main.instance, 64, 1, true, 0xC1A2D0, 0xE5D5D9);

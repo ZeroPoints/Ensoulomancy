@@ -67,6 +67,10 @@ public class EntityPlayerCorpse extends EntityLiving implements RenderGhost {
         }
 	}
 	
+	public EntityPlayerCorpse(World world) {
+		this(world, null, false);
+	}
+	
 	@Override
 	public float getEyeHeight() {
 		return super.getEyeHeight();

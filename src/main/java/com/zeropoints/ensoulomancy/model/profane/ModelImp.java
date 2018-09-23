@@ -8,6 +8,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -194,8 +195,8 @@ public class ModelImp extends ModelBiped {
     }
     
     @Override
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-    	if (!entitylivingbaseIn.onGround) {
+    public void setLivingAnimations(EntityLivingBase entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    	if (!entity.onGround || (entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isFlying)) {
     		this.state = ModelImp.State.FLYING;
     		return;
     	}
@@ -213,10 +214,11 @@ public class ModelImp extends ModelBiped {
      */
     private void postRender(ModelRenderer mr, float scale) {
         GlStateManager.translate(mr.rotationPointX * scale, 14 * scale, 3 * scale);
+        float rot = 180F / (float)Math.PI;
         
-        if (mr.rotateAngleZ != 0.0F) GlStateManager.rotate(mr.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
-        if (mr.rotateAngleY != 0.0F) GlStateManager.rotate(mr.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
-        if (mr.rotateAngleX != 0.0F) GlStateManager.rotate(mr.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+        if (mr.rotateAngleX != 0F) GlStateManager.rotate(mr.rotateAngleX * rot, 1, 0, 0);
+        if (mr.rotateAngleY != 0F) GlStateManager.rotate(mr.rotateAngleY * rot, 0, 1, 0);
+        if (mr.rotateAngleZ != 0F) GlStateManager.rotate(mr.rotateAngleZ * rot, 0, 0, 1);
     }
 
     /**

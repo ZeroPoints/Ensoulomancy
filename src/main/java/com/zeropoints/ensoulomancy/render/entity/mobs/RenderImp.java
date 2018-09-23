@@ -40,6 +40,9 @@ public class RenderImp extends RenderBiped<EntityImp> {
         GlStateManager.scale(0.7F, 0.7F, 0.7F);
     }
 	
+    /*
+     * This applies walk gait I think
+     */
 	protected void applyRotations(EntityImp entityLiving, float a, float rotationYaw, float partialTicks) {
 		super.applyRotations(entityLiving, a, rotationYaw, partialTicks);
 		
