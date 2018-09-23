@@ -21,6 +21,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import mchorse.metamorph.api.EntityUtils;
+import mchorse.metamorph.api.MorphAPI;
+import mchorse.metamorph.api.MorphManager;
+import mchorse.metamorph.api.morphs.AbstractMorph;
+import mchorse.metamorph.capabilities.morphing.*;
+
 
 public class ReapingScythe extends ToolSword {
 
@@ -48,8 +54,9 @@ public class ReapingScythe extends ToolSword {
         	return false;
         }
         
-        /*
-        IMorphing capability = Morphing.getCapability(player);
+        
+        
+        IMorphing capability = Morphing.get(player);
         
         // Cannot morph if currently possessing
         if (capability == null || capability.isMorphed()) {
@@ -69,10 +76,10 @@ public class ReapingScythe extends ToolSword {
 
         AbstractMorph morph = MorphManager.INSTANCE.morphFromNBT(tag);
         
-        MorphAPI.morph(player, morph);
+        MorphAPI.morph(player, morph, true);
         
         target.setDead(); // Remove entity from world
-        */
+        
         return true;
     }
 	
@@ -85,12 +92,12 @@ public class ReapingScythe extends ToolSword {
 		if (player.world.isRemote || !player.isSneaking()) {
 			return EnumActionResult.PASS;
 		}
-		/*
-		IMorphing capability = Morphing.getCapability(player);
+		
+		IMorphing capability = Morphing.get(player);
 		if (capability != null && capability.isMorphed()) {
 			MorphAPI.demorph(player);
 		}
-		*/
+		
         return EnumActionResult.PASS;
     }
 	
