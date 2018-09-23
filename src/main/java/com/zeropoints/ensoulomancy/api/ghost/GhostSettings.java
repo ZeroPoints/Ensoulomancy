@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.zeropoints.ensoulomancy.api.DefaultSettings;
-import com.zeropoints.ensoulomancy.api.morphs.abilities.IAbility;
-import com.zeropoints.ensoulomancy.api.morphs.abilities.IAction;
-import com.zeropoints.ensoulomancy.api.morphs.abilities.IAttackAbility;
+//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAbility;
+//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAction;
+//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAttackAbility;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

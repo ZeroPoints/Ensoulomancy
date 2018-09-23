@@ -2,8 +2,8 @@ package com.zeropoints.ensoulomancy.network.client;
 
 import org.lwjgl.input.Keyboard;
 
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 import com.zeropoints.ensoulomancy.network.common.PacketAction;
 
@@ -44,11 +44,13 @@ public class KeyboardHandler {
             Dispatcher.sendToServer(new PacketAction());
 
             EntityPlayer player = Minecraft.getMinecraft().player;
+            /*
             IMorphing capability = Morphing.getCapability(player);
 
             if (capability != null & capability.isMorphed()) {
                 capability.getCurrentMorph().action(player);
             }
+            */
         }
     }
 }

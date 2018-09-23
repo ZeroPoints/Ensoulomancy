@@ -3,12 +3,12 @@ package com.zeropoints.ensoulomancy.items.tools;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.api.morphs.AbstractMorph;
-import com.zeropoints.ensoulomancy.api.morphs.EntityUtils;
-import com.zeropoints.ensoulomancy.api.morphs.MorphAPI;
-import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+//import com.zeropoints.ensoulomancy.api.morphs.AbstractMorph;
+//import com.zeropoints.ensoulomancy.api.morphs.EntityUtils;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphAPI;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.init.ModItems;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -48,6 +48,7 @@ public class ReapingScythe extends ToolSword {
         	return false;
         }
         
+        /*
         IMorphing capability = Morphing.getCapability(player);
         
         // Cannot morph if currently possessing
@@ -71,6 +72,7 @@ public class ReapingScythe extends ToolSword {
         MorphAPI.morph(player, morph);
         
         target.setDead(); // Remove entity from world
+        */
         return true;
     }
 	
@@ -83,12 +85,12 @@ public class ReapingScythe extends ToolSword {
 		if (player.world.isRemote || !player.isSneaking()) {
 			return EnumActionResult.PASS;
 		}
-		
+		/*
 		IMorphing capability = Morphing.getCapability(player);
 		if (capability != null && capability.isMorphed()) {
 			MorphAPI.demorph(player);
 		}
-		
+		*/
         return EnumActionResult.PASS;
     }
 	

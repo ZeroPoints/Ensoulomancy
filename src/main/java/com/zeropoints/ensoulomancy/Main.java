@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
 import com.zeropoints.ensoulomancy.proxy.CommonProxy;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
 import com.zeropoints.ensoulomancy.util.EnsoulomancyTab;
@@ -22,7 +22,7 @@ import com.zeropoints.ensoulomancy.util.Reference;
 
 
 
-@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
+@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION, dependencies = "required-after:metamorph@[1.1.6,)")
 public class Main {
     
 	public static final CreativeTabs ENSOULOMANCY_TAB = new EnsoulomancyTab("ensoulomancy_tab");
@@ -85,7 +85,7 @@ public class Main {
 	@EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         /* Setting up the blacklist */
-        MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
+        //MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
 
         /* Register commands */
         //event.registerServerCommand(new CommandMorph());
