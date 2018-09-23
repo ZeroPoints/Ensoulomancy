@@ -1,33 +1,35 @@
 package com.zeropoints.ensoulomancy;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
-
-import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
-import com.zeropoints.ensoulomancy.proxy.CommonProxy;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
-import com.zeropoints.ensoulomancy.util.EnsoulomancyTab;
-import com.zeropoints.ensoulomancy.util.Reference;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
-@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION)
+//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
+import com.zeropoints.ensoulomancy.proxy.CommonProxy;
+import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.util.EnsoulomancyTab;
+import com.zeropoints.ensoulomancy.util.Reference;
+
+
+
+@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION, dependencies = "required-after:metamorph@[1.1.6,)")
 public class Main {
     
 	public static final CreativeTabs ENSOULOMANCY_TAB = new EnsoulomancyTab("ensoulomancy_tab");
 	
     public static boolean DEBUG = true;
     public static Logger LOGGER;
+    
     
     /**
      * Log out the message if in DEBUG mode.
@@ -41,6 +43,10 @@ public class Main {
         }
     }
 
+    public static void log(String message) {
+    	log(null, message);
+    } 
+    
     public static void LogMesssage(String message) {
     	log(null, message);
     } 
@@ -62,6 +68,8 @@ public class Main {
         new ConfigurationHandler();
         
 		proxy.preInit(e);
+		
+
     }
 	
 	@EventHandler
@@ -77,7 +85,7 @@ public class Main {
 	@EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         /* Setting up the blacklist */
-        MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
+        //MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
 
         /* Register commands */
         //event.registerServerCommand(new CommandMorph());

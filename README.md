@@ -12,3 +12,13 @@ New blocks
 New challenging boss fights    
 Many new mobs    
 May contain exploding chickens or bat zombies    
+
+
+Credit goes to alot of minecraft modders whos code provides a great resource for learning and building upon    
+Special credit to:    
+https://github.com/mchorse/metamorph (MIT) for the basis of our morphing code    
+https://wiki.mcjty.eu/ (Tutorials)    
+https://shadowfacts.net/ (Tutorials)    
+http://discord.gg/moddedmc (Community Help)    
+https://minecraft.curseforge.com/projects/tabula-minecraft-modeler (3D Modeling)    
++more when we remember who/what

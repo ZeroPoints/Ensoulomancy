@@ -33,7 +33,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
         
         
         
-        hasSkyLight = true;
+        hasSkyLight = false;
     	
         setDimension(ConfigurationHandler.dimensionId);
         
@@ -87,7 +87,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
     /**
 	 * Dunno
 	 */
-    /*
+    
     @Override
     protected void generateLightBrightnessTable() {
     	float f = 12.0F;
@@ -97,7 +97,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
     	}
     }
     	
-*/
+
     
     
 }

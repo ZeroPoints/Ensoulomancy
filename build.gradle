@@ -11,9 +11,9 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.0"
-group = "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+version = "1.1a"
+group = "com.zeropoints.ensoulomancy" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ensoulomancy"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -38,6 +38,9 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
+      
+  	compile files("./libs/metamorph-1.1.6-1.12.2.jar")
+
       
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
@@ -75,11 +78,6 @@ processResources {
         exclude 'mcmod.info'
     }
     
-    rename '(.+_at.cfg)', 'META-INF/$1'
+    
 }
 
-jar {
-    manifest {
-        attributes 'FMLAT': 'sc_at.cfg'
-    }
-}

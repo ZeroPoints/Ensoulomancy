@@ -9,21 +9,21 @@ import org.apache.logging.log4j.core.Filter.Result;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.api.DefaultSettings;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
-import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.GhostProvider;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.MorphingProvider;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.MorphingProvider;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.ISoulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.Soulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.SoulpoolProvider;
 import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
 import com.zeropoints.ensoulomancy.items.armor.Halo;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
-import com.zeropoints.ensoulomancy.network.common.PacketMorph;
+//import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 import com.zeropoints.ensoulomancy.util.Reference;
 import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
@@ -68,7 +68,7 @@ public class CapabilityHandler {
     	if (!(event.getObject() instanceof EntityPlayer)) return;
     	
         event.addCapability(SOULPOOL_CAPABILITY, new SoulpoolProvider());
-        event.addCapability(MORPHING_CAPABILITY, new MorphingProvider());
+        //event.addCapability(MORPHING_CAPABILITY, new MorphingProvider());
         event.addCapability(GHOST_CAPABILITY, new GhostProvider());
     }
     
@@ -80,7 +80,7 @@ public class CapabilityHandler {
 	public void onPlayerLogsIn(PlayerLoggedInEvent event) {
 		
 		EntityPlayer player = event.player; 
-		Map<String,MorphSettings> morphSettings = new HashMap<String,MorphSettings>();
+		//Map<String,MorphSettings> morphSettings = new HashMap<String,MorphSettings>();
 		GhostSettings ghostSettings = new GhostSettings(); // A default of null was crashing the dispatcher sometimes
 		
 		// Soulpool
@@ -93,7 +93,7 @@ public class CapabilityHandler {
 		String message = String.format("You have %1$d soul.", soulpool.get()); 
 		player.sendMessage(new TextComponentString(message)); 
 		
-
+/*
 		// Morphing
         IMorphing morph = Morphing.getCapability(player);
         if (morph != null) {
@@ -106,7 +106,7 @@ public class CapabilityHandler {
 
             morphSettings = MorphManager.INSTANCE.activeSettings;
         }
-        
+        */
         
         // Ghost
     	IGhost ghost = Ghost.getCapability(player);
@@ -118,8 +118,9 @@ public class CapabilityHandler {
     		ghostSettings = ghost.getSettings();
     	}
     	
+    	/*morphSettings, */
     	// Send settings to client
-		Dispatcher.sendTo(new PacketSettings(morphSettings, ghostSettings), (EntityPlayerMP) player);
+		Dispatcher.sendTo(new PacketSettings(ghostSettings), (EntityPlayerMP) player);
 	} 
 	
 	/**
@@ -159,8 +160,8 @@ public class CapabilityHandler {
             EntityPlayer player = (EntityPlayer) event.getEntity();
 
             if (!player.world.isRemote) {
-                IMorphing morphing = Morphing.getCapability(player);
-                this.getCurrentMorph(morphing, player);
+                //IMorphing morphing = Morphing.getCapability(player);
+                //this.getCurrentMorph(morphing, player);
             }
         }
     }
@@ -171,20 +172,22 @@ public class CapabilityHandler {
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
         EntityPlayer player = event.getEntityPlayer();
-        IMorphing morphing = Morphing.getCapability(player);
-        IMorphing oldMorphing = Morphing.getCapability(event.getOriginal());
+        //IMorphing morphing = Morphing.getCapability(player);
+        //IMorphing oldMorphing = Morphing.getCapability(event.getOriginal());
 
         if (!event.isWasDeath()) {
-            morphing.copy(oldMorphing, player);
+            //morphing.copy(oldMorphing, player);
         }
     }
 
     /**
      * Send currently morphed morph to the given player. 
      */
+   /* 
     private void getCurrentMorph(IMorphing morph, EntityPlayer player) {
         Dispatcher.sendTo(new PacketMorph(morph.getCurrentMorph()), (EntityPlayerMP)player);
     }	
+    */
 	
 
 	/**

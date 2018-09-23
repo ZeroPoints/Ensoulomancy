@@ -3,12 +3,12 @@ package com.zeropoints.ensoulomancy.items.tools;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.api.morphs.AbstractMorph;
-import com.zeropoints.ensoulomancy.api.morphs.EntityUtils;
-import com.zeropoints.ensoulomancy.api.morphs.MorphAPI;
-import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+//import com.zeropoints.ensoulomancy.api.morphs.AbstractMorph;
+//import com.zeropoints.ensoulomancy.api.morphs.EntityUtils;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphAPI;
+//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.init.ModItems;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -21,6 +21,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import mchorse.metamorph.api.EntityUtils;
+import mchorse.metamorph.api.MorphAPI;
+import mchorse.metamorph.api.MorphManager;
+import mchorse.metamorph.api.morphs.AbstractMorph;
+import mchorse.metamorph.capabilities.morphing.*;
+
 
 public class ReapingScythe extends ToolSword {
 
@@ -48,7 +54,9 @@ public class ReapingScythe extends ToolSword {
         	return false;
         }
         
-        IMorphing capability = Morphing.getCapability(player);
+        
+        
+        IMorphing capability = Morphing.get(player);
         
         // Cannot morph if currently possessing
         if (capability == null || capability.isMorphed()) {
@@ -68,9 +76,10 @@ public class ReapingScythe extends ToolSword {
 
         AbstractMorph morph = MorphManager.INSTANCE.morphFromNBT(tag);
         
-        MorphAPI.morph(player, morph);
+        MorphAPI.morph(player, morph, true);
         
         target.setDead(); // Remove entity from world
+        
         return true;
     }
 	
@@ -84,7 +93,7 @@ public class ReapingScythe extends ToolSword {
 			return EnumActionResult.PASS;
 		}
 		
-		IMorphing capability = Morphing.getCapability(player);
+		IMorphing capability = Morphing.get(player);
 		if (capability != null && capability.isMorphed()) {
 			MorphAPI.demorph(player);
 		}

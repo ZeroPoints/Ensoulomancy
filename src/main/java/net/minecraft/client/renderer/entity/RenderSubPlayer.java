@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
+//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.render.layer.LayerGhostBipedArmor;
 import com.zeropoints.ensoulomancy.render.layer.LayerGhostHeldItem;
 
@@ -58,14 +58,15 @@ public class RenderSubPlayer extends RenderPlayer {
      */
     @Override
     public void renderLeftArm(AbstractClientPlayer clientPlayer) {
-        IMorphing morph = Morphing.getCapability(clientPlayer);
+        /*
+    	IMorphing morph = Morphing.getCapability(clientPlayer);
 
         if (morph != null && morph.isMorphed()) {
             if (morph.getCurrentMorph().renderHand(clientPlayer, EnumHand.OFF_HAND)) {
                 return;
             }
         }
-        
+        */
         this.original.renderLeftArm(clientPlayer);
     }
 
@@ -74,14 +75,16 @@ public class RenderSubPlayer extends RenderPlayer {
      */
     @Override
     public void renderRightArm(AbstractClientPlayer clientPlayer) {
-        IMorphing morph = Morphing.getCapability(clientPlayer);
+        /*
+    	IMorphing morph = Morphing.getCapability(clientPlayer);
 
         if (morph != null && morph.isMorphed()) {
             if (morph.getCurrentMorph().renderHand(clientPlayer, EnumHand.MAIN_HAND)) {
                 return;
             }
         }
-        
+        */
+    	
     	IGhost ghost = Ghost.getCapability(clientPlayer);
         
         if (ghost != null && ghost.isGhost()) {

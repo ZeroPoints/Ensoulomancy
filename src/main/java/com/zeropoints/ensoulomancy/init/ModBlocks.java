@@ -6,6 +6,9 @@ import java.util.Set;
 import com.google.common.base.Preconditions;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
+import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
+//import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
+///import com.zeropoints.ensoulomancy.blocks.MysticalBlockPortal;
 import com.zeropoints.ensoulomancy.blocks.ObjCrop;
 import com.zeropoints.ensoulomancy.blocks.PedestalCrop;
 import com.zeropoints.ensoulomancy.blocks.SoulEssenceCrop;
@@ -15,6 +18,7 @@ import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +44,12 @@ public class ModBlocks {
 	// Tile Entities
 	public static final BlockSoulSkull SOUL_SKULL = new BlockSoulSkull();
 	public static final BlockSoulBed SOUL_BED = new BlockSoulBed();
-		
+
+	
+
+	public static MysticalBlock MYSTICAL_BLOCK = new MysticalBlock(Material.SAND);
+	//public static MysticalBlockPortal portal = new MysticalBlockPortal();
+	
 	//---------------------------------------------------------------------
 
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)

@@ -1,17 +1,17 @@
 package com.zeropoints.ensoulomancy.network;
 
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerGhost;
-import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorph;
-import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorphPlayer;
+//import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorph;
+//import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorphPlayer;
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerSettings;
 import com.zeropoints.ensoulomancy.network.common.PacketAction;
 import com.zeropoints.ensoulomancy.network.common.PacketGhost;
-import com.zeropoints.ensoulomancy.network.common.PacketMorph;
-import com.zeropoints.ensoulomancy.network.common.PacketMorphPlayer;
+//import com.zeropoints.ensoulomancy.network.common.PacketMorph;
+//import com.zeropoints.ensoulomancy.network.common.PacketMorphPlayer;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 import com.zeropoints.ensoulomancy.network.server.ServerHandlerAction;
 import com.zeropoints.ensoulomancy.network.server.ServerHandlerGhost;
-import com.zeropoints.ensoulomancy.network.server.ServerHandlerMorph;
+//import com.zeropoints.ensoulomancy.network.server.ServerHandlerMorph;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.entity.Entity;
@@ -62,9 +62,9 @@ public class Dispatcher {
         register(PacketAction.class, ServerHandlerAction.class, Side.SERVER);
 
         /* Morphing */
-        register(PacketMorph.class, ClientHandlerMorph.class, Side.CLIENT);
-        register(PacketMorph.class, ServerHandlerMorph.class, Side.SERVER);
-        register(PacketMorphPlayer.class, ClientHandlerMorphPlayer.class, Side.CLIENT);
+        //register(PacketMorph.class, ClientHandlerMorph.class, Side.CLIENT);
+        //register(PacketMorph.class, ServerHandlerMorph.class, Side.SERVER);
+        //register(PacketMorphPlayer.class, ClientHandlerMorphPlayer.class, Side.CLIENT);
 
         /* Syncing data */
         register(PacketSettings.class, ClientHandlerSettings.class, Side.CLIENT);

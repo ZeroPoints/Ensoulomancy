@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.zeropoints.ensoulomancy.api.morphs.EntityMorph;
+//import com.zeropoints.ensoulomancy.api.morphs.EntityMorph;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
-import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.entity.EntityCamera;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -92,6 +89,7 @@ public class RenderingHandler {
         //	return;
         //}
         
+        /*
         IMorphing morph = Morphing.getCapability(player);
 
         // Render morph
@@ -99,6 +97,7 @@ public class RenderingHandler {
         	event.setCanceled(true);
         	return;
         }
+        */
         
         IGhost ghost = Ghost.getCapability(player);
         
@@ -131,13 +130,12 @@ public class RenderingHandler {
      */
     @SubscribeEvent
     public void onNameRender(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {
-    	
+    	/*
         EntityLivingBase host = EntityMorph.renderEntity;
 
         if (host == null) {
             return;
         }
-
         event.setCanceled(true);
 
         EntityLivingBase target = event.getEntity();
@@ -153,13 +151,17 @@ public class RenderingHandler {
             GlStateManager.alphaFunc(516, 0.1F);
             this.renderEntityName(target, host.getDisplayName().getFormattedText(), event.getX(), event.getY(), event.getZ());
         }
+        
+*/
     }
 
     /**
      * Can render the morph's name 
      */
     protected boolean canRenderName(EntityLivingBase host) {
-        EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
+        
+    	
+    	EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
         boolean flag = !host.isInvisibleToPlayer(entityplayersp);
 
         if (host != entityplayersp) {
