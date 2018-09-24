@@ -23,6 +23,7 @@ import com.zeropoints.ensoulomancy.init.ModBiomes;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.init.ModEntities;
 import com.zeropoints.ensoulomancy.init.ModEvents;
+import com.zeropoints.ensoulomancy.init.ModMorphs;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 import com.zeropoints.ensoulomancy.util.Reference;
 import com.zeropoints.ensoulomancy.util.EnsoulomancyConfig;
@@ -88,6 +89,7 @@ public class CommonProxy {
     	ModDimensions.init();
 		ModBiomes.init();
 		ModEvents.init();
+		ModMorphs.init();
 		
 		CapabilityManager.INSTANCE.register(ISoulpool.class, new SoulpoolStorage(), new SoulpoolFactory());
 		//CapabilityManager.INSTANCE.register(IMorphing.class, new MorphingStorage(), Morphing.class);
