@@ -94,7 +94,6 @@ public class EntityFrostshot extends Entity
      */
     public void onUpdate()
     {
-    	Main.log("Frostshot Update 1");
         if (this.world.isRemote || (this.shootingEntity == null || !this.shootingEntity.isDead) && this.world.isBlockLoaded(new BlockPos(this)))
         {
             super.onUpdate();
@@ -137,6 +136,9 @@ public class EntityFrostshot extends Entity
             this.motionZ *= (double)f;
             this.world.spawnParticle(this.getParticleType(), this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
             this.setPosition(this.posX, this.posY, this.posZ);
+            
+
+        	Main.log("Frostshot Update -                                X:" +  this.posX + ", Y:" + this.posY + ", Z:" + this.posZ);
         }
         else
         {
