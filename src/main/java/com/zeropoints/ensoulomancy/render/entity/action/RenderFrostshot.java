@@ -43,7 +43,7 @@ public class RenderFrostshot extends Render<EntityFrostshot> {
 	
 	
 	
-	
+	@Override
 	public void doRender(EntityFrostshot entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         GlStateManager.pushMatrix();
