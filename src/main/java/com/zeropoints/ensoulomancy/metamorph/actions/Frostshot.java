@@ -19,7 +19,7 @@ public class Frostshot implements IAction
     @Override
     public void execute(EntityLivingBase target, @Nullable AbstractMorph morph)
     {
-    	Main.log("Frostshot Executed");
+    	Main.log("Frostshot Executed: " + target.dimension);
     	
         World world = target.world;
 
@@ -48,7 +48,12 @@ public class Frostshot implements IAction
         fireball.posY = target.posY + target.height * 0.9;
         fireball.posZ = target.posZ;
 
-        world.spawnEntity(fireball);
+        if(world.spawnEntity(fireball)) {
+        	Main.log("Frostshot Yay");
+        }
+        else {
+        	Main.log("Frostshot No");
+        }
 
         if (target instanceof EntityPlayer)
         {

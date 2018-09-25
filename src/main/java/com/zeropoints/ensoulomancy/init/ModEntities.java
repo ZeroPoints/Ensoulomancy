@@ -6,6 +6,7 @@ import com.zeropoints.ensoulomancy.entity.profane.*;
 import com.zeropoints.ensoulomancy.entity.hallowed.*;
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
+import com.zeropoints.ensoulomancy.entity.action.EntityFrostshot;
 import com.zeropoints.ensoulomancy.entity.ghost.*;
 import com.zeropoints.ensoulomancy.util.Reference;
 
@@ -30,5 +31,9 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":imp"), EntityImp.class, "Imp", id++, Main.instance, 64, 1, true, 0xF52A35, 0x589BCD);
 		// Ghost
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":ittan_momen"), EntityIttanMomen.class, "IttanMomen", id++, Main.instance, 64, 1, true, 0xF9FAFA, 0xE41545);
+		
+
+		// Action
+		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID + ":textures/items/soul_essence.png"), EntityFrostshot.class, "Frostshot", id++, Main.instance, 64, 1, true);
 	}
 }

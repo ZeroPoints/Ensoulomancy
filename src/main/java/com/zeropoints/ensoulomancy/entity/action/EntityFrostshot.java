@@ -94,75 +94,15 @@ public class EntityFrostshot extends Entity
      */
     public void onUpdate()
     {
-        if (this.world.isRemote || (this.shootingEntity == null || !this.shootingEntity.isDead) && this.world.isBlockLoaded(new BlockPos(this)))
-        {
-            super.onUpdate();
-
-            if (this.isFireballFiery())
-            {
-                this.setFire(1);
-            }
-
-            ++this.ticksInAir;
-            RayTraceResult raytraceresult = ProjectileHelper.forwardsRaycast(this, true, this.ticksInAir >= 25, this.shootingEntity);
-
-            if (raytraceresult != null && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
-            {
-                //this.onImpact(raytraceresult);
-            }
-
-            this.posX += this.motionX;
-            this.posY += this.motionY;
-            this.posZ += this.motionZ;
-            ProjectileHelper.rotateTowardsMovement(this, 0.2F);
-            float f = this.getMotionFactor();
-
-            if (this.isInWater())
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    float f1 = 0.25F;
-                    this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * 0.25D, this.posY - this.motionY * 0.25D, this.posZ - this.motionZ * 0.25D, this.motionX, this.motionY, this.motionZ);
-                }
-
-                f = 0.8F;
-            }
-
-            this.motionX += this.accelerationX;
-            this.motionY += this.accelerationY;
-            this.motionZ += this.accelerationZ;
-            this.motionX *= (double)f;
-            this.motionY *= (double)f;
-            this.motionZ *= (double)f;
-            this.world.spawnParticle(this.getParticleType(), this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
-            this.setPosition(this.posX, this.posY, this.posZ);
-            
-
-        	Main.log("Frostshot Update -                                X:" +  this.posX + ", Y:" + this.posY + ", Z:" + this.posZ);
-        }
-        else
-        {
-            this.setDead();
-        }
+        
     }
 
-    protected boolean isFireballFiery()
-    {
-        return true;
-    }
 
     protected EnumParticleTypes getParticleType()
     {
         return EnumParticleTypes.SMOKE_NORMAL;
     }
 
-    /**
-     * Return the motion factor for this projectile. The factor is multiplied by the original motion.
-     */
-    protected float getMotionFactor()
-    {
-        return 0.95F;
-    }
 
     /**
      * Called when this EntityFireball hits a block or entity.
