@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.zeropoints.ensoulomancy.items.ItemSoulBed;
 import com.zeropoints.ensoulomancy.items.ItemSoulSkull;
+import com.zeropoints.ensoulomancy.items.ItemSpiritGuide;
 import com.zeropoints.ensoulomancy.items.ObjSeeds;
 import com.zeropoints.ensoulomancy.items.PedestalSeeds;
 import com.zeropoints.ensoulomancy.items.SoulEssence;
@@ -55,6 +56,7 @@ public class ModItems {
 	// Items
 	public static final SoulIngot SOUL_INGOT = new SoulIngot();
 	public static final ItemSoulSkull SOUL_SKULL = new ItemSoulSkull();
+	public static final ItemSpiritGuide SPIRIT_GUIDE = new ItemSpiritGuide();
 	
 	// Block Items
 	public static final ItemSoulBed SOUL_BED = new ItemSoulBed();

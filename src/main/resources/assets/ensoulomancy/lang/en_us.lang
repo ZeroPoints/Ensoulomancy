@@ -9,6 +9,7 @@ item.soul_seeds_stem.name=Soul Seeds Stem
 item.pedestal_seeds.name=Pedestal Seeds
 item.obj_seeds.name=Obj Seeds
 item.soul_ingot.name=Soul Ingot
+item.spirit_guide.name=Spirit Guide
 
 // Heads
 item.soul_skull.blaze.name=Blaze Head
