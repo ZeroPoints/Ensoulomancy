@@ -21,56 +21,57 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiSpiritGuide extends GuiContainer {
 
-	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/spirit_guide.png");
-
+	private static final ResourceLocation PLANK_TEXTURE = new ResourceLocation("textures/blocks/planks_birch.png");
 	
+	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/spirit_guide.png");
+	private static final ResourceLocation DECAL_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/spirit_guide_decals.png");
+
 	public GuiTextArea textArea = null;
 	
-	public static final int BUTTON_0 = 0;
-	public static final int BUTTON_1 = 1;
-	public static final int BUTTON_2 = 2;
+	public static final int BUTTON_BACK = 0;
+	public static final int BUTTON_NEXT = 1;
+	public static final int BUTTON_BYE = 2;
 	
 	
 	public GuiSpiritGuide(Container container) {
 		super(container);
-		
-		textArea = new GuiTextArea(guiLeft, guiTop, 200, 150, "texty face long snot potato super doooper iceypole food to eat more text. plz keep going with more text everywhere");
-		
+		textArea = new GuiTextArea(guiLeft - 25, guiTop + 25, 225, 150, "\nWelcome to Ensoulomancy\nI am your spirit guide.\n\nPress the next button for a quick guide on how to use this book.");
 	}
 
+	@Override
+    public boolean doesGuiPauseGame() {
+    	return true;
+    }
 	
 	@Override
-	public void initGui()
-    {
+	public void initGui() {
 		super.initGui();
-		buttonList.add(new GuiSpiritGuideMenuButton(999901, guiLeft, guiTop, 20, 20, "<"));
-		buttonList.add(new GuiSpiritGuideMenuButton(999902, guiLeft, guiTop+30, 80, 20, "texty face"));
-		buttonList.add(new GuiSpiritGuideMenuButton(999903, guiLeft-50, guiTop+60, 250, 20, "texty face long snot potato"));
-		
-		
-		
-
+		buttonList.add(new GuiSpiritGuideMenuButton(BUTTON_BACK, guiLeft + 55, guiTop, 20, 20, "<"));
+		buttonList.add(new GuiSpiritGuideMenuButton(BUTTON_NEXT, guiLeft + 100, guiTop, 20, 20, ">"));
+		buttonList.add(new GuiSpiritGuideMenuButton(BUTTON_BYE, guiLeft, height - 35, 175, 20, "GOOD BYE"));
     }
 	
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		GlStateManager.color(1, 1, 1, 1);
-		mc.getTextureManager().bindTexture(BG_TEXTURE);
-		//int x, int y, float u, float v, int uWidth, int vHeight, int width, int height, float tileWidth, float tileHeight
-		//First 2 is screen top left corner offset
-		//UV values would be texture offsets
-		//Second last 2 are scale to stretch image over screen
-		//Last 2 i have no idea. Seems to act strange with 1 and repeats the image in same area. at larger number then image.
-		//Main.log("x:" + xSize +  ". y:"+ySize);
-		//Main.log("w:" + width  +  ". h:"+height );
-		//Main.log("w:" + mc.displayWidth  +  ". h:"+mc.displayHeight );
+		int h = height - 20, w = width - 20;
 		
-		drawScaledCustomSizeModalRect(10, 20, 0, 0, 256, 256, width-20, height-40, 256, 256);
-
-
+		GlStateManager.color(1, 1, 1, 1);
+		mc.getTextureManager().bindTexture(PLANK_TEXTURE);
+		drawScaledCustomSizeModalRect(10, 10, 0, 0, w/4, h/4, w, h, 16, 16);
+		
+		mc.getTextureManager().bindTexture(DECAL_TEXTURE);
+		int size = 4;
+		int textureH = 256 * size,
+			textureW = 256 * size,
+			dw = 24 * size,
+			dh = 30 * size;
+		drawModalRectWithCustomSizedTexture(10, 10, 0, 0, dw, dh, textureW, textureH); // Sun
+		drawModalRectWithCustomSizedTexture(width - 10 - dw, 10, dw, 0, dw, dh, textureW, textureH); // Moon
+		//if (width > 300) {
+			drawModalRectWithCustomSizedTexture(width / 2 - 128, 15, 0, 30, 256, 57, 256, 256); // Centered Text
+		//}
 	}
-	
 	
 	
 	/*
@@ -81,39 +82,27 @@ public class GuiSpiritGuide extends GuiContainer {
 	 */
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		
-		
 		textArea.DrawTextArea(fontRenderer);
-		
-		
 		//String name = I18n.format(ModItems.SPIRIT_GUIDE.getUnlocalizedName() + ".name");
 		//fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 0x404040);
 		//fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, ySize - 94, 0x404040);
-		
-		
 	}
 	
 	
-	
-
-
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
-    {
-		Main.log("act perf");
-		switch(button.id) {
-		case BUTTON_0:
-			
-			break;
-		case BUTTON_2:
-					
-					break;
-		case BUTTON_1:
-			
-			break;
-		default:
-		
-			break;
+	protected void actionPerformed(GuiButton button) throws IOException {
+		switch (button.id) {
+			case BUTTON_BACK:
+				System.out.println("back");
+				break;
+			case BUTTON_NEXT:
+				System.out.println("next");
+				break;
+			case BUTTON_BYE:
+				System.out.println("Good Bye!");
+				break;
+			default:
+				break;
 		}
     }
 	
