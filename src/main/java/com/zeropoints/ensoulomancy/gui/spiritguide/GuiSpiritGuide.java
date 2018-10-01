@@ -35,7 +35,7 @@ public class GuiSpiritGuide extends GuiContainer {
 	
 	public GuiSpiritGuide(Container container) {
 		super(container);
-		textArea = new GuiTextArea(guiLeft - 25, guiTop + 25, 225, 150, "\nWelcome to Ensoulomancy\nI am your spirit guide.\n\nPress the next button for a quick guide on how to use this book.");
+		textArea = new GuiTextArea(guiLeft - 25, guiTop + 25, 225, 150, "\nWelcome to Ensoulomancy\nI am your spirit guide.\n\nPress the next button for a quick introduction on how to use this book.");
 	}
 
 	@Override
