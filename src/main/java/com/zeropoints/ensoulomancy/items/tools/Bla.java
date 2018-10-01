@@ -38,6 +38,7 @@ public class Bla extends ToolSword {
 		options.extraOptions.add("spiderLegs");
 			
 		EntityHusk husk = new EntityHusk(world, options);
+		husk.setOptions(options);
 		husk.setPosition(player.posX, player.posY, player.posZ);
 		
 		if (!player.world.isRemote) {

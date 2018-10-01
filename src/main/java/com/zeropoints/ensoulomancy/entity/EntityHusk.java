@@ -68,6 +68,8 @@ public class EntityHusk extends EntityLiving implements IEntity {
 	
 	public HuskOptions options;
 	
+	public static final DataParameter<NBTTagCompound> huskOptions = EntityDataManager.<NBTTagCompound>createKey(EntityHusk.class, DataSerializers.COMPOUND_TAG);
+	
 	public EntityHusk(World world, HuskOptions options) {
 		super(world);
 		this.setSize(options.height, options.width);
@@ -78,11 +80,10 @@ public class EntityHusk extends EntityLiving implements IEntity {
 		super(world);
 	}
 	
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
-        
-        NBTTagCompound optionComp = new NBTTagCompound();
+	
+	
+	private NBTTagCompound createNBTOptions() {
+		NBTTagCompound optionComp = new NBTTagCompound();
         optionComp.setString("head", options.head);
         optionComp.setString("body", options.body);
         
@@ -95,18 +96,13 @@ public class EntityHusk extends EntityLiving implements IEntity {
         	extraNBT.appendTag(extraOptionComp);
         }
         optionComp.setTag("extra", extraNBT);
-
-        // Set settings to NBT compound
-        compound.setTag("options", optionComp);
-    }
+        
+        return optionComp;
+	}
 	
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
-		
+	private HuskOptions getOptionsFromNBT(NBTTagCompound optNBT) {
 		HuskOptions options = new HuskOptions();
 		
-		NBTTagCompound optNBT = compound.getCompoundTag("options");
 		options.body = optNBT.getString("body");
 		options.head = optNBT.getString("head");
 		
@@ -115,7 +111,28 @@ public class EntityHusk extends EntityLiving implements IEntity {
             options.extraOptions.add(extraTagList.getCompoundTagAt(i).getString("key"));
         }
         
-        this.options = options;
+        return options;
+	}
+	
+	// Hopefully this sets it so the data is correctly moved over when spawned in world
+	public void setOptions(HuskOptions options) {
+		this.options = options;
+		this.getDataManager().set(huskOptions, createNBTOptions());
+		this.getDataManager().setDirty(huskOptions);
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setTag("options", getDataManager().get(huskOptions));
+    }
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+		NBTTagCompound options = compound.getCompoundTag("options");
+		getDataManager().set(huskOptions, options);
+        this.options = getOptionsFromNBT(options);
 	}
 	
 	@Override

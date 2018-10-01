@@ -158,6 +158,9 @@ public class ModelImp extends ModelBiped {
         this.bipedHead.rotateAngleY = netbipedHeadYaw * 0.017453292F;
         this.bipedHead.rotateAngleZ = 0.0F;
         
+        this.bipedLeftArm.rotateAngleZ = 0;
+        this.bipedRightArm.rotateAngleZ = 0;
+        
         if (this.state == ModelImp.State.FLYING) {
         	// Body Swing
     		this.bipedBody.rotateAngleX = ((float)Math.PI / 4F) + MathHelper.cos(ageInTicks * 0.1F) * 0.15F;
@@ -167,13 +170,17 @@ public class ModelImp extends ModelBiped {
             this.bipedLeftLeg.rotateAngleX = MathHelper.sin(ageInTicks / 10) * 0.3F;
             this.bipedRightLeg.rotateAngleX = MathHelper.cos(ageInTicks / 15) * 0.3F;
             
+            // Arms
+            this.bipedLeftArm.rotateAngleX = -1.0F;
+            this.bipedRightArm.rotateAngleX = -1.0F;
+            
             // Wings
             this.RightWing.rotateAngleY = MathHelper.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F + 0.5F;
             this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
             this.LeftWingEnd.rotateAngleY = this.RightWing.rotateAngleY * 0.5F;
             this.RightWingEnd.rotateAngleY = -this.RightWing.rotateAngleY * 0.5F;
     	}
-        else { // Flying
+        else { // Grounded
         	// Body
     		this.bipedBody.rotateAngleX = 0.68F;
             this.bipedBody.rotateAngleY = 0.0F;
@@ -192,6 +199,22 @@ public class ModelImp extends ModelBiped {
             this.LeftWingEnd.rotateAngleY = 1.5F;
             this.RightWingEnd.rotateAngleY = -1.5F;
         }
+        
+        if (this.swingProgress > 0.0F) {
+            EnumHandSide enumhandside = this.getMainHand(entityIn);
+            ModelRenderer modelrenderer = this.getArmForSide(enumhandside);
+            this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt(this.swingProgress) * ((float)Math.PI * 2F)) * 0.1F;
+
+            if (enumhandside == EnumHandSide.LEFT) {
+                this.bipedBody.rotateAngleY *= -1.0F;
+            }
+            
+            float f1 = 1.0F - (float)Math.pow(1.0F - this.swingProgress, 4);
+            float f2 = MathHelper.sin(f1 * (float)Math.PI);
+            float f3 = MathHelper.sin(this.swingProgress * (float)Math.PI) * -(this.bipedHead.rotateAngleX - 0.7F) * 0.75F;
+            modelrenderer.rotateAngleX -= f2 * 1.2F + f3;
+            //modelrenderer.rotateAngleZ += f2 / 2;
+        }
     }
     
     @Override
@@ -205,6 +228,7 @@ public class ModelImp extends ModelBiped {
     
     @Override
     public void postRenderArm(float scale, EnumHandSide side) {
+		side = side == EnumHandSide.RIGHT ? EnumHandSide.LEFT : EnumHandSide.RIGHT;
         this.postRender(this.getArmForSide(side), scale);
     }
     
@@ -213,7 +237,7 @@ public class ModelImp extends ModelBiped {
      * For now I hackily changed the numbers to be in the correct position. 
      */
     private void postRender(ModelRenderer mr, float scale) {
-        GlStateManager.translate(mr.rotationPointX * scale, 14 * scale, 3 * scale);
+        GlStateManager.translate(mr.rotationPointX * scale * 1.8F, 0.8F, 0.2F);
         float rot = 180F / (float)Math.PI;
         
         if (mr.rotateAngleX != 0F) GlStateManager.rotate(mr.rotateAngleX * rot, 1, 0, 0);

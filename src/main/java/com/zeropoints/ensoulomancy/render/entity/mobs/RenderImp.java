@@ -41,16 +41,16 @@ public class RenderImp extends RenderBiped<EntityImp> {
     }
 	
     /*
-     * This applies walk gait I think
+     * This applies walk gait
      */
-	protected void applyRotations(EntityImp entityLiving, float a, float rotationYaw, float partialTicks) {
-		super.applyRotations(entityLiving, a, rotationYaw, partialTicks);
+	protected void applyRotations(EntityImp entity, float a, float rotationYaw, float partialTicks) {
+		super.applyRotations(entity, a, rotationYaw, partialTicks);
 		
-		if((double)entityLiving.limbSwingAmount >= 0.01D) {
+		if (entity.onGround && (double)entity.limbSwingAmount >= 0.01D) {
 			float f = 13.0F;
-			float f1 = entityLiving.limbSwing - entityLiving.limbSwingAmount * (1.0F - partialTicks);
-			float f2 = (Math.abs(f1 % 13.0F - 6.5F) - 3.25F) / 3.25F;
-			GlStateManager.rotate(6.5F * f2, 0.0F, 0.0F, 1.0F);
+			float f1 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
+			float f2 = (Math.abs(f1 % f - f/2) - f/4) / (f/4);
+			GlStateManager.rotate((f/2) * f2, 0.0F, 0.0F, 1.0F);
 		}
 	}
 	
