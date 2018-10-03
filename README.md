@@ -13,6 +13,7 @@ New challenging boss fights
 Many new mobs    
 May contain exploding chickens or bat zombies    
 
+Progress Images found @ https://twitter.com/XeroPoints
 
 Credit goes to alot of minecraft modders whos code provides a great resource for learning and building upon    
 Special credit to:    
