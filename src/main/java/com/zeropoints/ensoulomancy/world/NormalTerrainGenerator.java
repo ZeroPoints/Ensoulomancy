@@ -5,6 +5,8 @@ import java.util.Random;
 import org.apache.commons.lang3.time.StopWatch;
 
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.init.ModBiomes;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.world.biome.ICustomBiome;
 
 import net.minecraft.util.math.*;
@@ -122,7 +124,6 @@ public class NormalTerrainGenerator {
         int l = 0;
         int i1 = 0;
 
-        double[] heightMap = new double[825];
         
         for (int j1 = 0; j1 < 5; ++j1) {
             for (int k1 = 0; k1 < 5; ++k1) {
@@ -202,11 +203,15 @@ public class NormalTerrainGenerator {
 
                     
                     this.heightMaps[l] = new BiomeHeights();
-                    this.heightMaps[l].height = d10;
                     this.heightMaps[l].biome = biome;
+                    if(Biome.getIdForBiome(biome) == Biome.getIdForBiome(ModBiomes.VOID_BIOME)) {
+                    	this.heightMaps[l].height = -9999;
+                    }
+                    else {
+                    	this.heightMaps[l].height = d10;
+                    }
                     
                     ++l;
-                    //Main.LogMesssage("Height: " + l + " - " + d10);
                 }
             }
         }
@@ -218,10 +223,14 @@ public class NormalTerrainGenerator {
      * Generates the height map and places blocks at locations based on height map
      */
     public void generate(int chunkX, int chunkZ, ChunkPrimer primer) {
-    	this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX * 4, chunkZ * 4, 5, 5, 200.0D, 200.0D, 0.5D);
-        this.mainNoiseRegion = this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
-        this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
-        this.maxLimitRegion = this.maxLimitPerlinNoise.generateNoiseOctaves(this.maxLimitRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 684.412D, 684.412D, 684.412D);
+    	this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX * 4, chunkZ * 4, 5, 5, 200.0D, 200.0D, 0);
+    	
+    	//8.55515D, 4.277575D, 8.55515D
+        this.mainNoiseRegion =    this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
+        
+        //684.412D, 684.412D, 684.412D
+        this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion,  chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
+        this.maxLimitRegion = this.maxLimitPerlinNoise.generateNoiseOctaves(this.maxLimitRegion,  chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 512, 256, 512);
         
         generateHeightmap(chunkX * 4, 0, chunkZ * 4);
 
@@ -269,7 +278,6 @@ public class NormalTerrainGenerator {
                     
 
                     // linearly interpolate between the noise points to get a noise value for each block in the subchunk
-
                     double noiseStepY00 = (n_x0y1z0.height - n_x0y0z0.height) * oneEighth;
                     double noiseStepY01 = (n_x0y1z1.height - n_x0y0z1.height) * oneEighth;
                     double noiseStepY10 = (n_x1y1z0.height - n_x1y0z0.height) * oneEighth;
@@ -309,7 +317,7 @@ public class NormalTerrainGenerator {
                             	
                             	//Emerald is our replacement block for calculations in our custom biomes genTerrainBlocks
                             	if ((noiseVal) > 0.0D) {
-                                    primer.setBlockState(ix * 4 + jx, iy * 8 + jy, iz * 4 + jz, Blocks.EMERALD_BLOCK.getDefaultState());
+                                    primer.setBlockState(ix * 4 + jx, iy * 8 + jy, iz * 4 + jz, Blocks.STONE.getDefaultState());
                                 }
                             	
                             	

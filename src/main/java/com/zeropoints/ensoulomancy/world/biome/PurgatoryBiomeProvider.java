@@ -57,26 +57,31 @@ public class PurgatoryBiomeProvider extends BiomeProvider {
     	GenLayer biomes = new GenLayerPurgatory(seed);
         
         //Zooms in...Kinda amplifies the size of biomes...Int is how many times it calls this function
-        biomes = GenLayerZoom.magnify(1000L, biomes,1);
+        biomes = GenLayerZoom.magnify(1000L, biomes,3);
 
         //Smothes the edges of biomes. Can probably move this up higher on.
-        //biomes = new GenLayerSmooth(1000L, biomes);
+        biomes = new GenLayerSmooth(1000L, biomes);
 
         //Creates voids between our 3 custom biomes from the purgatory biome
         biomes = new GenLayerRiverStyx(1000L, biomes);
 
         //Smothes the edges of biomes. Can probably move this up higher on.
-        //biomes = new GenLayerSmooth(1000L, biomes);
+        biomes = new GenLayerSmooth(1000L, biomes);
+        
 
         //Zooms in...Kinda amplifies the size of biomes...Int is how many times it calls this function
         biomes = GenLayerZoom.magnify(1000L, biomes,4);
-        
+
         //Smothes the edges of biomes. Can probably move this up higher on.
-        //biomes = new GenLayerSmooth(1000L, biomes);
+        biomes = new GenLayerSmooth(1000L, biomes);
+        
+        
 
        //Magic...Dont know..DONT KNOW. Cant pass in biomes as second genlayer. Has to be a voronoizoom?
         GenLayer biomeIndexLayer = new GenLayerVoronoiZoom(1000L, biomes);
-        
+        biomeIndexLayer.initWorldGenSeed(seed);
+        biomes.initWorldGenSeed(seed);
+
         //Have to return 2 always...Dont know why
         return new GenLayer[]{
                 biomes,

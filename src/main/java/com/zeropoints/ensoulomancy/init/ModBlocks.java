@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.zeropoints.ensoulomancy.blocks.BlockBase;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
+import com.zeropoints.ensoulomancy.blocks.BlockSoulStone;
 import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
 //import com.zeropoints.ensoulomancy.blocks.MysticalBlock;
 ///import com.zeropoints.ensoulomancy.blocks.MysticalBlockPortal;
@@ -48,6 +50,8 @@ public class ModBlocks {
 	
 
 	public static MysticalBlock MYSTICAL_BLOCK = new MysticalBlock(Material.SAND);
+	public static BlockSoulStone SOUL_STONE = new BlockSoulStone();
+	
 	//public static MysticalBlockPortal portal = new MysticalBlockPortal();
 	
 	//---------------------------------------------------------------------

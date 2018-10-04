@@ -7,6 +7,8 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -30,15 +32,15 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 	/**
 	 * Initiates the purgatories Hallowed biome 
 	 */
-	public HallowedBiome(BiomeProperties properties) {
-		super(properties);
+	public HallowedBiome() {
+		super(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(7.7F).setHeightVariation(0.4F));
 		this.setRegistryName("ensoulomancy", "hallowed");
 		this.topBlock = Blocks.END_STONE.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
+		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
 	}
 	
 	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityEvoker.class, 1, 1, 1)
+			new SpawnListEntry(EntityPixie.class, 1, 1, 1)
 			);
 	
 	/**
@@ -91,12 +93,12 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 
 	@Override
 	public int GetMaxHeight() {
-		return 220;
+		return 240;
 	}
 	
 	@Override
 	public int GetMinHeight() {
-		return 178;
+		return 180;
 	}
 	
 	

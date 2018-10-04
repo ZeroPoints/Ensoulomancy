@@ -27,8 +27,8 @@ public class VoidBiome extends Biome implements ICustomBiome {
 	/**
 	 * Initiates the purgatories Void biome 
 	 */
-	public VoidBiome(BiomeProperties properties) {
-		super(properties);
+	public VoidBiome() {
+		super(new Biome.BiomeProperties("VoidBiome").setBaseHeight(-30F).setHeightVariation(0.0F));
 
 		
 
@@ -95,12 +95,12 @@ public class VoidBiome extends Biome implements ICustomBiome {
 
 	@Override
 	public int GetMaxHeight() {
-		return -1;
+		return -9999;
 	}
 	
 	@Override
 	public int GetMinHeight() {
-		return -1;
+		return -9999;
 	}
 	
 	

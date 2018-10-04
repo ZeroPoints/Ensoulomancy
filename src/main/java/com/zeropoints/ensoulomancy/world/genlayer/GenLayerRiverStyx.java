@@ -1,4 +1,5 @@
 package com.zeropoints.ensoulomancy.world.genlayer;
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModBiomes;
 
 import net.minecraft.init.Biomes;
@@ -17,8 +18,9 @@ public class GenLayerRiverStyx extends GenLayer
 
   
 /*
+ * Goes through chunk and seperates biomes with a void biome.
+ * TODO: Checck against all 4 sides and if 3 are not the same/void replace current  block with void. This is to get rid of the  weird single block lines extending areas. To try smooth edges.
  * Returns the int values for biome locations in a chunk 
- * After seperating biomes from each other with a void biome
  */
     @Override
     public int[] getInts(int x, int y, int width, int depth) {
@@ -26,9 +28,8 @@ public class GenLayerRiverStyx extends GenLayer
 
         int[] aint = this.parent.getInts(x,y,width,depth);
 
-    	int prevBiome = Biome.getIdForBiome(Biomes.DEFAULT);
-    	int defaultBiome = prevBiome;
     	int voidBiome = Biome.getIdForBiome(ModBiomes.VOID_BIOME);
+    	
     	
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {
@@ -52,21 +53,25 @@ public class GenLayerRiverStyx extends GenLayer
             	//South is pos Z
             	int south = aint[dx + (dz+1) * depth];
             	
-            	int middle =  aint[dx + dz * depth];
+            	int middleOffset = dx + dz * depth;
+            	int middle =  aint[middleOffset];
 
             	//Checks all blocks next to this block and changes this block if its different
+            	
             	if(middle != east && east != voidBiome) {
-            		aint[dx + dz * depth] = voidBiome;
+            		aint[middleOffset] = voidBiome;
             	}
             	else if(middle != west && west != voidBiome) {
-            		aint[dx + dz * depth] = voidBiome;
+            		aint[middleOffset] = voidBiome;
             	}
             	else if(middle != north && north != voidBiome) {
-            		aint[dx + dz * depth] = voidBiome;
+            		aint[middleOffset] = voidBiome;
             	}
             	else if(middle != south && south != voidBiome) {
-            		aint[dx + dz * depth] = voidBiome;
+            		aint[middleOffset] = voidBiome;
             	}
+            	
+            	
             	
                 
             }

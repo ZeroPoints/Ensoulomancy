@@ -7,7 +7,11 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.entity.ghost.EntityIttanMomen;
+import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
+import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 import com.zeropoints.ensoulomancy.init.ModBiomes;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -30,15 +34,15 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 	/**
 	 * Initiates the purgatories Spirit biome 
 	 */
-	public SpiritBiome(BiomeProperties properties) {
-		super(properties);
+	public SpiritBiome() {
+		super(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(2.5F).setHeightVariation(0.4F));
 		this.setRegistryName("ensoulomancy", "spirit");
-		this.topBlock = Blocks.SNOW.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState(); 
+		this.topBlock = Blocks.SOUL_SAND.getDefaultState(); 
+		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState(); 
 	}
 	
 	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityEnderman.class, 1, 1, 1)
+			new SpawnListEntry(EntityIttanMomen.class, 1, 1, 1)
 			);
 	
 
@@ -87,11 +91,11 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 
 	@Override
 	public int GetMaxHeight() {
-		return 136;
+		return 160;
 	}
 	
 	@Override
 	public int GetMinHeight() {
-		return 94;
+		return 100;
 	}
 }

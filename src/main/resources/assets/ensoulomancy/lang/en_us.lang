@@ -76,6 +76,7 @@ item.soul_skull.witch.name=Witch Head
 item.soul_skull.wolf.name=Wolf Head
 
 // Blocks
+tile.soul_stone.name=Soul Stone
 
 // Tools
 item.reaping_scythe.name=Reaping Scythe
