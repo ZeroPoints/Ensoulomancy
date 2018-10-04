@@ -9,6 +9,7 @@ item.soul_seeds_stem.name=Soul Seeds Stem
 item.pedestal_seeds.name=Pedestal Seeds
 item.obj_seeds.name=Obj Seeds
 item.soul_ingot.name=Soul Ingot
+item.spirit_guide.name=Spirit Guide
 
 // Heads
 item.soul_skull.blaze.name=Blaze Head
@@ -75,6 +76,7 @@ item.soul_skull.witch.name=Witch Head
 item.soul_skull.wolf.name=Wolf Head
 
 // Blocks
+tile.soul_stone.name=Soul Stone
 
 // Tools
 item.reaping_scythe.name=Reaping Scythe

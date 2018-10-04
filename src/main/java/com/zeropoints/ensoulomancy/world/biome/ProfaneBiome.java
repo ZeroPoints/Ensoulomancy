@@ -8,6 +8,8 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -32,15 +34,15 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	/**
 	 * Initiates the purgatories Profane biome 
 	 */
-	public ProfaneBiome(BiomeProperties properties) {
-		super(properties);
+	public ProfaneBiome() {
+		super(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(-1.999F).setHeightVariation(0.4F));
 		this.setRegistryName("ensoulomancy", "profane");
 		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
-		this.fillerBlock = Blocks.SOUL_SAND.getDefaultState();
+		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
 	}
 
 	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
-			new SpawnListEntry(net.minecraft.entity.monster.EntityMagmaCube.class, 1, 1, 1)
+			new SpawnListEntry(EntityImp.class, 1, 1, 1)
 			);
 	
 
@@ -96,12 +98,12 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	
 	@Override
 	public int GetMaxHeight() {
-		return 52;
+		return 80;
 	}
 	
 	@Override
 	public int GetMinHeight() {
-		return 10;
+		return 20;
 	}
 	
 	

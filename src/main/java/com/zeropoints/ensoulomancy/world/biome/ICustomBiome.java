@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.init.ModBlocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -68,66 +70,51 @@ public interface ICustomBiome {
 	 */
 	public static void CustomeGenTerrainBlocks(IBlockState topBlock, IBlockState fillerBlock, int maxHeight, int minHeight, World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
 		
-        int j = -1;
-        //K is noise for how many blocks it will FILL up. Fill goes reverse from air to fill depth
-        //Probbably try use the noiseval passed in. Also try give larger valllue if its first emerald block is at the top of the areas spectrum
-        int k = rand.nextInt(5) + 1;
 
+        //K is noise for how many blocks it will FILL up. Fill goes reverse from air to fill depth
+
+        int k = (int)(noiseVal / 3.0D + 3.0D + rand.nextDouble() * 0.25D);        
+        int j = -1;
         int l = x & 15;
         int i1 = z & 15;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
         IBlockState iPrevBlockState = Blocks.AIR.getDefaultState();
         
-        boolean land = false;
-        int counter = 0;
+        boolean landFound = false;
         
-        //Probably doesnt need to go all the way to bedrock...as this is a top layer biome
+        //Probably doesnt need to go all the way to bedrock...Keep it without  our biomes range
         for (int j1 = maxHeight; j1 >= minHeight-1; --j1)
         {
-            
+        	
         	
             IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
 
             //If block is an air block continue to next
             if (iblockstate2.getMaterial() == Material.AIR)
             {
-            	
-                //Hacky code to try fix problem with floating small land masses.
-                
                 iPrevBlockState = Blocks.AIR.getDefaultState();
-                //we didnt fill up enough land blocks to create a nice land mass.
-                if(j > 0) {
-                	//Loop through the ammount of blocks found and delete them
-                	while(counter >= 0 ) {
-                    	
-                    	//undo blocks as this is most likely floating dirt mass
-                        chunkPrimerIn.setBlockState(i1, j1 + (counter) + 1, l, iPrevBlockState);
-                    	
-                        counter--;
-                    }
-                	j = 0;
-                }
-                
             }
-            else if (iblockstate2.getBlock() == Blocks.EMERALD_BLOCK)
+            else if (iblockstate2.getBlock() == Blocks.STONE)
             {
-            	if(!land) {
-            		//My attempt to make blocks near top of range have larger fill noise
-                	if(maxHeight - j1 < 14) {
-                		//k = rand.nextInt(10) + 5;
+            	if(!landFound) {
+            		//My attempt to make blocks near top of range have larger fill noise as brains not working
+            		//Side effect is if the edge of the biome is at a high point it will look weird
+            		/*
+            		if(minHeight + ((maxHeight - minHeight) / 3) < j1 ) {
+                		k = (int)(noiseVal / 3.0D + 6.0D + rand.nextDouble() * 0.25D);
+                		//Main.log("Top Height blocks. Try fill more with noise");
                 	}
-                	land = true;
+                	*/
+                	landFound = true;
             	}
             }
             
-            if(land) {
-            	counter++;
-            	
+            
+            if(landFound) {
             	//If previous was air then this emerald placeholder block can be changed to our top soil
             	if (j == -1 && iPrevBlockState.getMaterial() == Material.AIR)
                 {
-                	
                     j = k;
                     iPrevBlockState = topBlock;
                     chunkPrimerIn.setBlockState(i1, j1, l, iPrevBlockState);

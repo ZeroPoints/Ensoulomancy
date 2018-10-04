@@ -12,8 +12,12 @@ public class PurgatoryWorldInfo extends WorldInfo {
 	public PurgatoryWorldInfo() {
 		super();
 		
+		
 		setTerrainType(ModDimensions.purgatoryWorldType);
 		//
 	}
+	
+	
+
 	
 }
