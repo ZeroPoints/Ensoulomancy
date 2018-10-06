@@ -8,6 +8,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.entity.ghost.EntityIttanMomen;
 import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 
@@ -39,12 +40,15 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 		this.setRegistryName("ensoulomancy", "profane");
 		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
 		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
+		
+		this.spawnableMonsterList.clear();
+		this.spawnableMonsterList.add(new SpawnListEntry(EntityImp.class, 1, 1, 1));
+		this.spawnableCreatureList.clear();
+		this.spawnableWaterCreatureList.clear();
+		this.spawnableCaveCreatureList.clear();
 	}
 
-	public static List<SpawnListEntry> localSpawn = Lists.newArrayList(
-			new SpawnListEntry(EntityImp.class, 1, 1, 1)
-			);
-	
+
 
 	/**
 	 * Goes through each block from ceiling to floor replacing blocks related to this biome
@@ -55,45 +59,6 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 		ICustomBiome.CustomeGenTerrainBlocks(this.topBlock, this.fillerBlock, GetMaxHeight(), GetMinHeight(), worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 
     }
-
-	
-	/**
-	 * Gets the monsters that this biome will spawn
-	 */
-	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
-    {
-		return getLocaleSpawn(creatureType);
-    	/*
-		if(pos.getY() <= 50) {
-    		
-    	}
-    	if(pos.getY() > 50 && pos.getY() <= 90) {
-    		return getMiddleSpawn();
-    	}
-		return null;
-*/
-    }
-
-
-
-	
-	@Override
-	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
-		return Lists.newArrayList(
-				new SpawnListEntry(net.minecraft.entity.monster.EntityHusk.class, 1, 1, 1)
-				) ;	
-	}
-
-
-	@Override
-	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
-		if(creatureType == EnumCreatureType.MONSTER) {
-    		return localSpawn ;	
-		}
-		else {
-			return null;
-		}
-	}
 
 	
 	@Override

@@ -135,7 +135,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
 	@Override
 	protected void generateLightBrightnessTable()
    {
-       float f = 0.11F;
+       float f = 0.25F;
 
        for (int i = 0; i <= 15; ++i)
        {
@@ -217,7 +217,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
         //Night  Fog = x:0.045176468789577484,    y:0.050823528319597244,  z:0.09000000357627869
         
         //TEALISH
-        return new Vec3d(0.3333, 0.6666, 0.5555);
+        return new Vec3d(0.1111, 0.4444, 0.3333);
     }
     
     
@@ -237,7 +237,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
     	//Night    Sky = x:0.0,						y:0.0,						z:0.0   	
     	
     	//TEALISH
-        return new Vec3d(0.3333, 0.6666, 0.5555);
+        return new Vec3d(0.1111, 0.4444, 0.3333);
     }
     
     

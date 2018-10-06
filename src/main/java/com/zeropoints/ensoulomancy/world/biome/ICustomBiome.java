@@ -22,9 +22,10 @@ public interface ICustomBiome {
 	
 
 	/**
-	 * Gets the monsters that this biome will spawn
+	 * Gets the monsters that this biome will spawn based  on blockpos height
+	 * Removed for now
 	 */
-	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos);
+	//public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos);
 	
 
 	/**
@@ -41,17 +42,7 @@ public interface ICustomBiome {
 	
 	
 	
-	/**
-	 * Gets the mobs that will be spawned when this biome is at the middle layer
-	 */
-	public List<Biome.SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType);
 
-	/**
-	 * Gets the mobs that will be spawned when this biome is at its natural layer
-	 */
-	public List<Biome.SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType);
-	
-	
 	
 	
 	/**

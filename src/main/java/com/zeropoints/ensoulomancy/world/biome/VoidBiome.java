@@ -69,27 +69,6 @@ public class VoidBiome extends Biome implements ICustomBiome {
 
 
 	
-	/**
-	 * Gets the monsters that this biome will spawn
-	 */
-	public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos)
-    {
-		return null;
-    }
-
-	
-	
-	@Override
-	public List<SpawnListEntry> getMiddleSpawn(EnumCreatureType creatureType) {    
-		return null ;	
-	}
-	
-
-	
-	@Override
-	public List<SpawnListEntry> getLocaleSpawn(EnumCreatureType creatureType) {
-		return null ;	
-	}
 	
 	
 

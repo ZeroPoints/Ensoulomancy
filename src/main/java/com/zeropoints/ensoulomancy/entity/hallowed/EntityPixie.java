@@ -28,6 +28,7 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWaterFlying;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.EntityFlyHelper;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -47,7 +48,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-public class EntityPixie extends EntityCreature implements IEntity {
+public class EntityPixie extends EntityMob implements IEntity {
 
 	private static final DataParameter<Integer> variant = EntityDataManager.<Integer>createKey(EntityPixie.class, DataSerializers.VARINT);
 	private int droppedItemTimer = 0;
