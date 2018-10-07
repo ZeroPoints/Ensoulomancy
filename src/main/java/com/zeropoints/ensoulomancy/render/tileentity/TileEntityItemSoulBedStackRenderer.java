@@ -3,12 +3,10 @@ package com.zeropoints.ensoulomancy.render.tileentity;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

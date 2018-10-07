@@ -15,8 +15,6 @@ import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.entity.RenderFireball;
-import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;

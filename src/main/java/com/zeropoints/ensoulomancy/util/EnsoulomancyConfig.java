@@ -1,7 +1,5 @@
 package com.zeropoints.ensoulomancy.util;
 
-import com.zeropoints.ensoulomancy.Main;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

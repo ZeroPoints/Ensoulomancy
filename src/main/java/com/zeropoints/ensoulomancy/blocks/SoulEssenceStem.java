@@ -1,28 +1,14 @@
 package com.zeropoints.ensoulomancy.blocks;
 
 
-import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.init.ModDimensions;
-import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
-import com.zeropoints.ensoulomancy.util.IHasModel;
-
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraft.entity.player.EntityPlayer;
 
 
 

@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.proxy;
 
 import java.io.File;
 
-import org.apache.logging.log4j.Level;
+
 
 import com.zeropoints.ensoulomancy.Main;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
@@ -27,12 +27,10 @@ import com.zeropoints.ensoulomancy.init.ModEvents;
 import com.zeropoints.ensoulomancy.init.ModGuiHandler;
 import com.zeropoints.ensoulomancy.init.ModMorphs;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
-import com.zeropoints.ensoulomancy.util.Reference;
+import com.zeropoints.ensoulomancy.world.gen.structure.WorldGenSpiritTemple;
 import com.zeropoints.ensoulomancy.util.EnsoulomancyConfig;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -40,6 +38,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * CommonProxy makes sure initialisation certain registry/events are triggered both client and server side.
@@ -67,7 +66,8 @@ public class CommonProxy {
      */
     public Configuration forge;
     
-    
+    public static WorldGenSpiritTemple worldGenSpiritTemple = new WorldGenSpiritTemple();
+
 	
 	public void preInit(FMLPreInitializationEvent e) {
 		Dispatcher.register();
@@ -83,6 +83,8 @@ public class CommonProxy {
     	
     	this.forge = new Configuration(config);
     	this.config = new EnsoulomancyConfig(this.forge);
+    	
+    	
     	//this.morphs = morphs;
     }
 
@@ -100,6 +102,9 @@ public class CommonProxy {
 		//CapabilityManager.INSTANCE.register(IMorphing.class, new MorphingStorage(), Morphing.class);
 		CapabilityManager.INSTANCE.register(IGhost.class, new GhostStorage(), new GhostFactory());
 		
+
+    	GameRegistry.registerWorldGenerator(worldGenSpiritTemple, 25);
+    	
     	/* Register factories */
     	//RegisterHandler.registerAbilities(MorphManager.INSTANCE);
     	//MorphManager.INSTANCE.register();

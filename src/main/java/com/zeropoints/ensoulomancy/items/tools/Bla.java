@@ -1,7 +1,5 @@
 package com.zeropoints.ensoulomancy.items.tools;
 
-import org.apache.logging.log4j.Level;
-
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.entity.EntityHusk.HuskOptions;
 import com.zeropoints.ensoulomancy.init.ModItems;

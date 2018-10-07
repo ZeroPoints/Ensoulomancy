@@ -1,14 +1,9 @@
 package com.zeropoints.ensoulomancy.network.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.zeropoints.ensoulomancy.api.DefaultSettings;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 /**

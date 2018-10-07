@@ -8,7 +8,6 @@ import com.zeropoints.ensoulomancy.model.heads.ModelHorseHead;
 import com.zeropoints.ensoulomancy.model.heads.ModelLlamaHead;
 import com.zeropoints.ensoulomancy.model.heads.ModelParrotHead;
 import com.zeropoints.ensoulomancy.model.heads.ModelRabbitHead;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
 import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
 
 import net.minecraft.entity.Entity;

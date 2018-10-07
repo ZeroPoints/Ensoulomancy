@@ -1,11 +1,8 @@
 package com.zeropoints.ensoulomancy.render.layer;
 
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
-import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

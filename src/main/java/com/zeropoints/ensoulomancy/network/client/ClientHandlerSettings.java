@@ -1,10 +1,5 @@
 package com.zeropoints.ensoulomancy.network.client;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.zeropoints.ensoulomancy.api.DefaultSettings;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;

@@ -7,29 +7,19 @@ import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModEvents;
-import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RenderSubPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameType;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -85,7 +75,7 @@ public class ClientProxy extends CommonProxy {
                 field.setAccessible(true);
 
                 try {
-                    Map map = (Map)field.get(manager);
+                    Map<String, RenderPlayer> map = (Map<String, RenderPlayer>)field.get(manager);
                     if (map.get("default") instanceof net.minecraft.client.renderer.entity.RenderPlayer) {
                         skins = map;
                         break;

@@ -1,32 +1,14 @@
 package net.minecraft.client.renderer.entity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 //import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
 //import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.render.layer.LayerGhostBipedArmor;
-import com.zeropoints.ensoulomancy.render.layer.LayerGhostHeldItem;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerArrow;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.client.renderer.entity.layers.LayerCape;
-import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
-import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
-import net.minecraft.client.renderer.entity.layers.LayerElytra;
-import net.minecraft.client.renderer.entity.layers.LayerEntityOnShoulder;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 /**
  * Render sub player renderer

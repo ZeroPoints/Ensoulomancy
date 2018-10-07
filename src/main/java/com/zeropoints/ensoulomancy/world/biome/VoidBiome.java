@@ -1,23 +1,12 @@
 package com.zeropoints.ensoulomancy.world.biome;
 
-import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
-import com.zeropoints.ensoulomancy.init.ModBiomes;
+import com.zeropoints.ensoulomancy.util.Reference;
 
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityPolarBear;
-import net.minecraft.entity.monster.EntityStray;
-import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 
@@ -32,13 +21,17 @@ public class VoidBiome extends Biome implements ICustomBiome {
 
 		
 
-		this.setRegistryName("ensoulomancy", "voidbiome");
+		this.setRegistryName(Reference.MOD_ID, "voidbiome");
 
 		this.topBlock = Blocks.AIR.getDefaultState(); 
 		this.fillerBlock = Blocks.AIR.getDefaultState(); 
 
 		
-        
+
+		this.spawnableMonsterList.clear();
+		this.spawnableCreatureList.clear();
+		this.spawnableWaterCreatureList.clear();
+		this.spawnableCaveCreatureList.clear();
 	}
 	
 	

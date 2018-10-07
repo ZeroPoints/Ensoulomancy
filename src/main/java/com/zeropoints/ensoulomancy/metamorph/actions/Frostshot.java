@@ -9,7 +9,6 @@ import mchorse.metamorph.api.abilities.IAction;
 import mchorse.metamorph.api.morphs.AbstractMorph;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;

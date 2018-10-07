@@ -1,7 +1,6 @@
 package com.zeropoints.ensoulomancy.world;
 
 
-import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.world.biome.PurgatoryBiomeProvider;
 
 import net.minecraft.world.World;

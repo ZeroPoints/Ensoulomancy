@@ -3,8 +3,6 @@ package com.zeropoints.ensoulomancy.network.common;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class PacketGhost implements IMessage {

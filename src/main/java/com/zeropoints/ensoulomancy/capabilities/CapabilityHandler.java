@@ -1,13 +1,7 @@
 package com.zeropoints.ensoulomancy.capabilities;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.Filter.Result;
-
 import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.api.DefaultSettings;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
@@ -21,37 +15,26 @@ import com.zeropoints.ensoulomancy.capabilities.soulpool.ISoulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.Soulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.SoulpoolProvider;
 import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
-import com.zeropoints.ensoulomancy.items.armor.Halo;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 //import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 import com.zeropoints.ensoulomancy.util.Reference;
-import com.zeropoints.ensoulomancy.world.PurgatoryWorldType;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.StartTracking;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class CapabilityHandler {

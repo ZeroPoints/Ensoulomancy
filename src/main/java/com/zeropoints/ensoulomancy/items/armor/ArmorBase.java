@@ -5,7 +5,6 @@ import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 

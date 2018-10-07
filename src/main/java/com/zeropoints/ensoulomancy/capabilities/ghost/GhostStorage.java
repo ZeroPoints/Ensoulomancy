@@ -3,7 +3,6 @@ package com.zeropoints.ensoulomancy.capabilities.ghost;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagCompound;

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.zeropoints.ensoulomancy.model.ModelHeadBase;
 import com.zeropoints.ensoulomancy.model.heads.*;
-import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
-
 import net.minecraft.util.ResourceLocation;
 
 public class SoulSkullType {

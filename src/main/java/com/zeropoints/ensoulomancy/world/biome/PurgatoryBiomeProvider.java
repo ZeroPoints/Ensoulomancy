@@ -1,33 +1,16 @@
 package com.zeropoints.ensoulomancy.world.biome;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
-import com.zeropoints.ensoulomancy.world.genlayer.GenLayerPurgatory;
-import com.zeropoints.ensoulomancy.world.genlayer.GenLayerRiverStyx;
+import com.zeropoints.ensoulomancy.world.gen.layer.GenLayerPurgatory;
+import com.zeropoints.ensoulomancy.world.gen.layer.GenLayerRiverStyx;
 
-import net.minecraft.crash.CrashReport;
-import net.minecraft.crash.CrashReportCategory;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityHusk;
-import net.minecraft.init.Biomes;
-import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.GenLayerRiver;
 import net.minecraft.world.gen.layer.GenLayerSmooth;
 import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
 import net.minecraft.world.gen.layer.GenLayerZoom;
-import net.minecraft.world.gen.layer.IntCache;
-import net.minecraftforge.common.BiomeManager.BiomeEntry;
 
 
 public class PurgatoryBiomeProvider extends BiomeProvider {

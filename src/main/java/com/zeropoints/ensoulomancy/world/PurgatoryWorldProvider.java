@@ -1,25 +1,14 @@
 package com.zeropoints.ensoulomancy.world;
 
 import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.init.ModBiomes;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
 import com.zeropoints.ensoulomancy.world.biome.PurgatoryBiomeProvider;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.init.Biomes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

@@ -1,12 +1,7 @@
 package com.zeropoints.ensoulomancy.gui.spiritguide;
 
-import com.zeropoints.ensoulomancy.Main;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class GuiTextArea extends Gui {
 

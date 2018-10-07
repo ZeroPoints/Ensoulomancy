@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
-import com.zeropoints.ensoulomancy.blocks.BlockBase;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulStone;

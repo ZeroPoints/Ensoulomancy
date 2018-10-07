@@ -1,21 +1,11 @@
 package com.zeropoints.ensoulomancy.gui.spiritguide;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.util.Reference;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 

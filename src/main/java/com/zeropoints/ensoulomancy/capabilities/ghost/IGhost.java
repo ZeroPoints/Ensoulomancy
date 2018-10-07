@@ -1,7 +1,5 @@
 package com.zeropoints.ensoulomancy.capabilities.ghost;
 
-import java.util.Map;
-
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
 
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,8 +1,5 @@
 package com.zeropoints.ensoulomancy.capabilities.soulpool;
 
-import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.util.Reference;
-
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTPrimitive;

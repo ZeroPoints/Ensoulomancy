@@ -1,17 +1,12 @@
 package com.zeropoints.ensoulomancy.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
 import net.minecraftforge.common.config.Configuration;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
-import com.zeropoints.ensoulomancy.world.PurgatoryWorldProvider;
 
 public class ConfigurationHandler {
 

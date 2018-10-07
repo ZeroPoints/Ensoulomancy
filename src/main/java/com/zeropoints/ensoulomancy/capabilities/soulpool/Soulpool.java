@@ -1,8 +1,6 @@
 package com.zeropoints.ensoulomancy.capabilities.soulpool;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.INBTSerializable;
 
 public class Soulpool implements ISoulpool {
 

@@ -1,26 +1,16 @@
 package com.zeropoints.ensoulomancy.entity.hallowed;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import com.zeropoints.ensoulomancy.entity.ai.EntityAIFindItem;
-import com.zeropoints.ensoulomancy.entity.ai.EntityAIWanderWalkingOrFlying;
 import com.zeropoints.ensoulomancy.render.entity.mobs.RenderPixie;
 import com.zeropoints.ensoulomancy.render.particle.ParticlePixieDust;
 import com.zeropoints.ensoulomancy.util.IEntity;
-import com.zeropoints.ensoulomancy.util.IEntity.MobType;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIPanic;
@@ -39,11 +29,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

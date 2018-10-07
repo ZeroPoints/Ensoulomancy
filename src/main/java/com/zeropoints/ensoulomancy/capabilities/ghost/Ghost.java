@@ -1,11 +1,7 @@
 package com.zeropoints.ensoulomancy.capabilities.ghost;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.logging.log4j.Level;
 
-import com.zeropoints.ensoulomancy.api.ghost.GuiSoulSleep;
 import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.Main;
@@ -21,13 +17,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

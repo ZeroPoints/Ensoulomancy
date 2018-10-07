@@ -1,35 +1,21 @@
 package com.zeropoints.ensoulomancy.world;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.time.StopWatch;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.init.ModBiomes;
-import com.zeropoints.ensoulomancy.world.biome.ICustomBiome;
+import com.zeropoints.ensoulomancy.world.gen.structure.WorldGenSpiritTemple;
 
 import net.minecraft.entity.EnumCreatureType;
-//import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
-import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
-import net.minecraftforge.event.terraingen.TerrainGen;
 
 /**
  * Our custom chunk generator
@@ -43,6 +29,13 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
 
     private NormalTerrainGenerator terraingen = new NormalTerrainGenerator();
 
+    
+    //public PurgatoryWorldSavedData purgatoryWorldSavedData;
+
+    //private MapGenSpiritTemple spiritTempleGen = new MapGenSpiritTemple(this);
+
+    
+    
     /**
      * Our custom chunk generator
      */
@@ -52,6 +45,16 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         this.random = new Random((seed + 516) * 314);
         terraingen.setup(worldObj, random);
         
+        /*
+        if(purgatoryWorldSavedData == null) {
+        	Main.log("Getting Existing World Saved Data");
+        	purgatoryWorldSavedData = PurgatoryWorldSavedData.GetExisting(world);
+        }
+        else {
+        	Main.log("Already Existing World Saved Data");
+        }
+        */
+
     }
 
     
@@ -80,6 +83,9 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         // Generate caves
         //this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
 
+        //this.spiritTempleGen.generate(this.worldObj, x, z, chunkprimer);
+
+        
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
 
         byte[] biomeArray = chunk.getBiomeArray();
@@ -103,14 +109,21 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
         int j = z * 16;
         BlockPos blockpos = new BlockPos(i, 0, j);
         Biome biome = this.worldObj.getBiome(blockpos.add(16, 0, 16));
+        ChunkPos chunkpos = new ChunkPos(x, z);
 
         // Add biome decorations (like flowers, grass, trees, ...)
         biome.decorate(this.worldObj, this.random, blockpos);
+
+        //this.spiritTempleGen.generateStructure(this.worldObj, this.random, chunkpos);
 
         // Make sure animals appropriate to the biome spawn here when the chunk is generated
         WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, i + 8, j + 8, 16, 16, this.random);
     }
 
+    
+    
+    
+    
     @Override
     public boolean generateStructures(Chunk chunkIn, int x, int z) {
         return false;
@@ -125,6 +138,28 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
 
+    	if (creatureType == EnumCreatureType.MONSTER)
+        {
+    		
+	        long chunkPos = ChunkPos.asLong(pos.getX()/16, pos.getZ()/16);
+        	if(PurgatoryWorldSavedData.GetExisting(worldObj).spiritTempleLocations.containsKey(chunkPos)) {
+        		//Main.log("Spawn me some temple mobs...");
+        		return WorldGenSpiritTemple.SpawnableMonsterList;
+        	}
+    		
+    		/*
+	    	if (this.spiritTempleGen.isInsideStructure(pos))
+	        {
+	            return this.spiritTempleGen.getSpawnList();
+	        }
+	
+	        if (this.spiritTempleGen.isPositionInStructure(this.worldObj, pos) && this.worldObj.getBlockState(pos.down()).getBlock() == Blocks.NETHER_BRICK)
+	        {
+	            return this.spiritTempleGen.getSpawnList();
+	        }
+	        */
+        }
+        
 		Biome biome = this.worldObj.getBiome(pos);
     	return biome.getSpawnableList(creatureType);
     	
@@ -132,21 +167,17 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
     }
     
     
-    /*
-     * Dont know
-     */
     @Nullable
-    @Override
-    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
-        return null;
+    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored)
+    {
+        //return this.spiritTempleGen.getStructureName().equals(structureName) && this.spiritTempleGen != null ? this.spiritTempleGen.getNearestStructurePos(worldIn, position, findUnexplored) : null;
+    	return null;
     }
-    
-    /*
-     * Dont know
-     */
-    @Override
-    public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {
-        return false;
+
+    public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos)
+    {
+        //return this.spiritTempleGen.getStructureName().equals(structureName) && this.spiritTempleGen != null ? this.spiritTempleGen.isInsideStructure(pos) : false;
+    	return false;
     }
     
     /*
@@ -154,6 +185,7 @@ public class PurgatoryChunkGenerator implements IChunkGenerator {
      */
     @Override
     public void recreateStructures(Chunk chunkIn, int x, int z) {
+        //this.spiritTempleGen.generate(this.worldObj, x, z, (ChunkPrimer)null);
 
     }
 

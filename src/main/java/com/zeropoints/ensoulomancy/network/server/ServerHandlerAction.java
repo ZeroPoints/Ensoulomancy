@@ -7,7 +7,6 @@ package com.zeropoints.ensoulomancy.network.server;
 import com.zeropoints.ensoulomancy.network.common.PacketAction;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.common.MinecraftForge;
 
 public class ServerHandlerAction extends ServerMessageHandler<PacketAction> {
     @Override

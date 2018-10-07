@@ -5,8 +5,6 @@ import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.util.Reference;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;

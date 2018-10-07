@@ -2,7 +2,6 @@ package com.zeropoints.ensoulomancy.render.layer;
 
 import com.google.common.collect.Maps;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
-import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.render.player.RenderGhost;
 
 import java.util.Map;

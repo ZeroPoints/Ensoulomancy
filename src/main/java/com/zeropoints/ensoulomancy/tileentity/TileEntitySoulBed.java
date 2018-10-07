@@ -3,18 +3,12 @@ package com.zeropoints.ensoulomancy.tileentity;
 import javax.annotation.Nullable;
 
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
-import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.util.Reference;
 
-import net.minecraft.block.BlockBed;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBed;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

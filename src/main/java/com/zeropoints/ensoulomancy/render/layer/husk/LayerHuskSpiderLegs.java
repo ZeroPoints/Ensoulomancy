@@ -1,18 +1,14 @@
 package com.zeropoints.ensoulomancy.render.layer.husk;
 
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderSpider;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
-import com.zeropoints.ensoulomancy.init.ModItems;
 import com.zeropoints.ensoulomancy.model.husk.ModelHuskSpiderLegs;
 import com.zeropoints.ensoulomancy.render.entity.husk.RenderHusk;
-import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
 
 
 @SideOnly(Side.CLIENT)

@@ -1,7 +1,5 @@
 package com.zeropoints.ensoulomancy.api;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 //import com.zeropoints.ensoulomancy.api.morphs.abilities.IAbility;
@@ -9,7 +7,6 @@ import java.util.Map;
 //import com.zeropoints.ensoulomancy.api.morphs.abilities.IAttackAbility;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 /**
  * Morph settings
