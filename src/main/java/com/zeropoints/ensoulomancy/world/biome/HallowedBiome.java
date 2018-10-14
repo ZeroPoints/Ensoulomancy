@@ -2,9 +2,10 @@ package com.zeropoints.ensoulomancy.world.biome;
 
 import java.util.Random;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -19,10 +20,15 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 	 */
 	public HallowedBiome() {
 		super(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(7.7F).setHeightVariation(0.4F));
-		this.setRegistryName(Reference.MOD_ID, "hallowed");
+
+		//May aswell register it i guess
+		this.setRegistryName(Main.MOD_ID, "hallowed");
+
+		//Set some default blocks for this biome
 		this.topBlock = Blocks.END_STONE.getDefaultState(); 
 		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
-		
+
+		//Clear and set new defaults
 		this.spawnableMonsterList.clear();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityPixie.class, 1, 1, 1));
 		this.spawnableCreatureList.clear();
@@ -44,11 +50,21 @@ public class HallowedBiome extends Biome implements ICustomBiome {
 	
 	
 
+
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMaxHeight() {
 		return 240;
 	}
 	
+	
+
+
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMinHeight() {
 		return 180;

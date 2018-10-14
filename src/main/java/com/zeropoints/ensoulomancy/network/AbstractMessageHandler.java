@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * Base of all MessageHandlers.
  *
- * @author Ernio (Ernest Sadowski)
+ * Original Author MCHorse. 
  */
 public abstract class AbstractMessageHandler<T extends IMessage> implements IMessageHandler<T, IMessage> {
     /**

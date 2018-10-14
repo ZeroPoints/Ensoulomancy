@@ -21,47 +21,44 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 public class NormalTerrainGenerator {
 
 	
+	/**
+	 * Help bind the height to the biome...
+	 * We can then exclude heights if they  are outside that ICustomBiomes height range
+	 * 
+	 * @author ZeroPoints
+	 *
+	 */
 	public class BiomeHeights {
 		
 		public double height;
 		
 		public Biome biome; 
-		
-		
 	}
 	
-	
+
+    private final BiomeHeights[] heightMaps;
 	
 	private World world;
     private Random random;
-
-    
-
-    private final BiomeHeights[] heightMaps;
-
     private double[] mainNoiseRegion;
     private double[] minLimitRegion;
     private double[] maxLimitRegion;
     private double[] depthRegion;
-
     private NoiseGeneratorOctaves minLimitPerlinNoise;
     private NoiseGeneratorOctaves maxLimitPerlinNoise;
     private NoiseGeneratorOctaves mainPerlinNoise;
     private NoiseGeneratorPerlin surfaceNoise;
-
-    // A NoiseGeneratorOctaves used in generating terrain
     private NoiseGeneratorOctaves depthNoise;
-
     private final float[] biomeWeights;
     private double[] depthBuffer = new double[256];
-
     private Biome[] biomesForGeneration;
 
     /**
-     * Dunno...
+     * init some weights and height map
      */
     public NormalTerrainGenerator() {
 
+    	//pretty sure 825 is significant. I think its 32 chunks of 25 or something like that...
         this.heightMaps = new BiomeHeights[825];
 
         
@@ -85,6 +82,7 @@ public class NormalTerrainGenerator {
     /**
      * Setup all noise generators...
      * This is for giving bumpy terrain
+     * I should learn what most of these do 
      */
     public void setup(World world, Random rand) {
         this.world = world;
@@ -115,12 +113,12 @@ public class NormalTerrainGenerator {
     /**
      * Builds a heightmap of locations the biomes will be spawning in this chunk
      */
-    private void generateHeightmap(int chunkX4, int chunkY4, int chunkZ4) {
+    private void generateHeightmap() {
         
         int l = 0;
         int i1 = 0;
 
-        
+        //mmmm  4 by 4...
         for (int j1 = 0; j1 < 5; ++j1) {
             for (int k1 = 0; k1 < 5; ++k1) {
                 float f = 0.0F;
@@ -200,6 +198,7 @@ public class NormalTerrainGenerator {
                     
                     this.heightMaps[l] = new BiomeHeights();
                     this.heightMaps[l].biome = biome;
+                    //Ye if its a void biome just tell  that to spawn way away...Maybe a better way...
                     if(Biome.getIdForBiome(biome) == Biome.getIdForBiome(ModBiomes.VOID_BIOME)) {
                     	this.heightMaps[l].height = -9999;
                     }
@@ -220,16 +219,13 @@ public class NormalTerrainGenerator {
      */
     public void generate(int chunkX, int chunkZ, ChunkPrimer primer) {
     	this.depthRegion = this.depthNoise.generateNoiseOctaves(this.depthRegion, chunkX * 4, chunkZ * 4, 5, 5, 200.0D, 200.0D, 0);
-    	
     	//8.55515D, 4.277575D, 8.55515D
         this.mainNoiseRegion =    this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
-        
         //684.412D, 684.412D, 684.412D
         this.minLimitRegion = this.minLimitPerlinNoise.generateNoiseOctaves(this.minLimitRegion,  chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 8.55515D, 4.277575D, 8.55515D);
         this.maxLimitRegion = this.maxLimitPerlinNoise.generateNoiseOctaves(this.maxLimitRegion,  chunkX * 4, 0, chunkZ * 4, 5, 33, 5, 512, 256, 512);
         
-        generateHeightmap(chunkX * 4, 0, chunkZ * 4);
-
+        generateHeightmap();
 
         double oneEighth = 0.125D;
         double oneQuarter = 0.25D;
@@ -270,7 +266,6 @@ public class NormalTerrainGenerator {
                 	BiomeHeights n_x0y1z1 = heightMaps[k_x0z1 + iy + 1];
                 	BiomeHeights n_x1y1z0 = heightMaps[k_x1z0 + iy + 1];
                 	BiomeHeights n_x1y1z1 = heightMaps[k_x1z1 + iy + 1];
-                    
                     
 
                     // linearly interpolate between the noise points to get a noise value for each block in the subchunk

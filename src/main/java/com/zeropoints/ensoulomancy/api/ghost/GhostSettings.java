@@ -8,7 +8,7 @@ import com.zeropoints.ensoulomancy.api.DefaultSettings;
 import io.netty.buffer.ByteBuf;
 
 /**
- * Morph settings
+ * Ghost settings
  * 
  * An instance of this class is responsible for storing information about 
  * morph's configurable settings.
@@ -53,3 +53,4 @@ public class GhostSettings extends DefaultSettings {
     }
     
 }
+

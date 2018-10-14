@@ -7,18 +7,24 @@ import net.minecraft.world.gen.layer.GenLayer;
 
 public class GenLayerRiverStyx extends GenLayer
 {
-    public GenLayerRiverStyx(long p_i2128_1_, GenLayer p_i2128_3_)
+	
+	
+	/**
+	 * Inits the river styx...Which is just the void biome. It places void between all different biome edges.
+	 * @param seed
+	 * @param parentIn
+	 */
+    public GenLayerRiverStyx(long seed, GenLayer parentIn)
     {
-        super(p_i2128_1_);
-        parent = p_i2128_3_;
+        super(seed);
+        parent = parentIn;
     }
 
   
-/*
- * Goes through chunk and seperates biomes with a void biome.
- * TODO: Checck against all 4 sides and if 3 are not the same/void replace current  block with void. This is to get rid of the  weird single block lines extending areas. To try smooth edges.
- * Returns the int values for biome locations in a chunk 
- */
+	/*
+	 * Goes through chunk and seperates biomes with a void biome. * 
+	 * Returns the int values for biome locations in a chunk 
+	 */
     @Override
     public int[] getInts(int x, int y, int width, int depth) {
 
@@ -30,6 +36,7 @@ public class GenLayerRiverStyx extends GenLayer
     	
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {
+            	//dunno if i need this
                 //initChunkSeed(dx + x, dz + y);
                 
             	//East is pos X
@@ -67,8 +74,6 @@ public class GenLayerRiverStyx extends GenLayer
             	else if(middle != south && south != voidBiome) {
             		aint[middleOffset] = voidBiome;
             	}
-            	
-            	
             	
                 
             }

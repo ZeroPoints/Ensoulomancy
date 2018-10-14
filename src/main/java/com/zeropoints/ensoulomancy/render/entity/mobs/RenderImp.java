@@ -1,8 +1,9 @@
 package com.zeropoints.ensoulomancy.render.entity.mobs;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 import com.zeropoints.ensoulomancy.model.profane.ModelImp;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 @SideOnly(Side.CLIENT)
 public class RenderImp extends RenderBiped<EntityImp> {
 	
-	private static final ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/entity/profane/imp.png");
+	private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MOD_ID + ":textures/entity/profane/imp.png");
 	
 	public RenderImp(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelImp(), 0.2F);

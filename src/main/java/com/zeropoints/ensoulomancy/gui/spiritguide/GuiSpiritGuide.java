@@ -1,7 +1,9 @@
 package com.zeropoints.ensoulomancy.gui.spiritguide;
 
 import java.io.IOException;
-import com.zeropoints.ensoulomancy.util.Reference;
+
+import com.zeropoints.ensoulomancy.Main;
+
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -13,8 +15,8 @@ public class GuiSpiritGuide extends GuiContainer {
 
 	private static final ResourceLocation PLANK_TEXTURE = new ResourceLocation("textures/blocks/planks_birch.png");
 	
-	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/spirit_guide.png");
-	private static final ResourceLocation DECAL_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/spirit_guide_decals.png");
+	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(Main.MOD_ID, "textures/gui/spirit_guide.png");
+	private static final ResourceLocation DECAL_TEXTURE = new ResourceLocation(Main.MOD_ID, "textures/gui/spirit_guide_decals.png");
 
 	public GuiTextArea textArea = null;
 	

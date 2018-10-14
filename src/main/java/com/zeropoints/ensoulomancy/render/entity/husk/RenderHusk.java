@@ -1,10 +1,11 @@
 package com.zeropoints.ensoulomancy.render.entity.husk;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.model.husk.ModelHusk;
 import com.zeropoints.ensoulomancy.render.layer.husk.LayerHuskHead;
 import com.zeropoints.ensoulomancy.render.layer.husk.LayerHuskSpiderLegs;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -29,7 +30,7 @@ public class RenderHusk<T extends EntityHusk> extends RenderLiving<T> {
 	@Override
 	protected ResourceLocation getEntityTexture(T entity) {
 		// TODO: dynamic texture creation? Will need to return some sort of default 
-		return new ResourceLocation(Reference.MOD_ID + ":textures/entity/profane/imp.png");
+		return new ResourceLocation(Main.MOD_ID + ":textures/entity/profane/imp.png");
 	}
 	
 	public void postRender(float scale) {

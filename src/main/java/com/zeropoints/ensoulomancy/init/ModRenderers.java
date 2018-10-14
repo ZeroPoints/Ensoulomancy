@@ -1,5 +1,7 @@
 package com.zeropoints.ensoulomancy.init;
 
+
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.entity.action.EntityFrostshot;
@@ -11,7 +13,7 @@ import com.zeropoints.ensoulomancy.render.entity.husk.RenderHusk;
 import com.zeropoints.ensoulomancy.render.entity.mobs.*;
 import com.zeropoints.ensoulomancy.render.player.RenderEntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -25,7 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Side.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Side.CLIENT)
 public class ModRenderers {
 	
     @SubscribeEvent
@@ -60,7 +62,6 @@ public class ModRenderers {
     	
 
     	RenderingRegistry.registerEntityRenderingHandler(EntityFrostshot.class, new RenderFrostshot.RenderFactory());
-//        this.entityRenderMap.put(EntitySmallFireball.class, new RenderFireball(this, 0.5F));
 
     }
 

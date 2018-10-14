@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
  * class will prevent the client-side message handling method from appearing in
  * server message handler classes.
  *
- * @author Ernio (Ernest Sadowski)
+ * Original Author MCHorse. 
  */
 public abstract class ServerMessageHandler<T extends IMessage> extends AbstractMessageHandler<T> {
 	

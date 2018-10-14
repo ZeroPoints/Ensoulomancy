@@ -1,6 +1,6 @@
 package com.zeropoints.ensoulomancy.blocks;
 
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 
 import net.minecraft.block.material.Material;
@@ -51,7 +51,7 @@ public class MysticalBlock extends BlockBase  {
 			int newDimension = entity.dimension;
 			
 			if(oldDimension == 0) {
-				newDimension = ConfigurationHandler.dimensionId;
+				newDimension = ModDimensions.dimensionId;
 				
 			}
 			else {
@@ -61,7 +61,7 @@ public class MysticalBlock extends BlockBase  {
 	        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) entity;
 	        MinecraftServer server = entity.getEntityWorld().getMinecraftServer();
 	        WorldServer overworldServer = server.getWorld(0);
-	        WorldServer purgatoryServer = server.getWorld(ConfigurationHandler.dimensionId);
+	        WorldServer purgatoryServer = server.getWorld(ModDimensions.dimensionId);
 	        //entity.addExperienceLevel(0);
 	        
 	
@@ -70,15 +70,15 @@ public class MysticalBlock extends BlockBase  {
 	        }
 	
 	        
-	        if(ConfigurationHandler.PURGATORY_TELEPORTER == null) {
-	        	ConfigurationHandler.PURGATORY_TELEPORTER = new PurgatoryTeleporter(overworldServer, purgatoryServer);
-	        	purgatoryServer.customTeleporters.add(ConfigurationHandler.PURGATORY_TELEPORTER);
+	        if(ModDimensions.PURGATORY_TELEPORTER == null) {
+	        	ModDimensions.PURGATORY_TELEPORTER = new PurgatoryTeleporter(overworldServer, purgatoryServer);
+	        	purgatoryServer.customTeleporters.add(ModDimensions.PURGATORY_TELEPORTER);
 	        }
 	       
 			
-	        if (ConfigurationHandler.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos)) {
+	        if (ModDimensions.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos)) {
 		        //Test both below for server problems...SP both work
-	        	entity.changeDimension(newDimension, ConfigurationHandler.PURGATORY_TELEPORTER);
+	        	entity.changeDimension(newDimension, ModDimensions.PURGATORY_TELEPORTER);
 	        }
 			
 

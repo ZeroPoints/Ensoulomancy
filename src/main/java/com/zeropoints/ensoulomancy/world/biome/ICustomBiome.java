@@ -9,17 +9,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 
+
+
+/**
+ * Interface to add some of my biome specific code
+ * @author ZeroPoints
+ *
+ */
 public interface ICustomBiome {
 
 	
 	
 
-	/**
-	 * Gets the monsters that this biome will spawn based  on blockpos height
-	 * Removed for now
-	 */
-	//public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType, BlockPos pos);
-	
 
 	/**
 	 * Max height this biome will cut blocks from
@@ -40,6 +41,7 @@ public interface ICustomBiome {
 	
 	/**
 	 * Reusable static functions used between the 3 biomes
+	 * Block replacement for my specific biomes
 	 * 
 	 * @param topBlock
 	 * @param fillerBlock

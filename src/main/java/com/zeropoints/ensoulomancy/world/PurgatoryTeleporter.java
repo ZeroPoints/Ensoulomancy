@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.init.ModDimensions;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
@@ -23,18 +23,18 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 
 
-/*
- * Teleporter object for controlling how a player is sent to the purgatory dim and how the portal is created in the dim
- * 
- * Still extends Teleporter for entity.chanedim function. Any actual purgatoryteleporter functionality is called prior to calling entity.chanedim
- * 
- * When i get better i will learn how to write this better...
- * But for now the reason im not using the base functions is because i wanted the senderblock location for some calculations for building destinationblock portal
- * 
- */
+
 public class PurgatoryTeleporter extends Teleporter {
 
-	
+	/**
+	 * Teleporter object for controlling how a player is sent to the purgatory dim and how the portal is created in the dim
+	 * 
+	 * Still extends Teleporter for entity.chanedim function. Any actual purgatoryteleporter functionality is called prior to calling entity.chanedim
+	 * 
+	 * When i get better i will learn how to write this better...
+	 * But for now the reason im not using the base functions is because i wanted the senderblock location for some calculations for building destinationblock portal
+	 * 
+	 */
 	public PurgatoryTeleporter(WorldServer overWorld, WorldServer purgatoryWorld) {
 		super(purgatoryWorld);
 
@@ -44,7 +44,7 @@ public class PurgatoryTeleporter extends Teleporter {
 	}
 
 
-	//Server objs
+	//Keep track of which both servers for entire life of this class...Maybe make them static...
 	public WorldServer PurgatoryWorldServer;
 	public WorldServer OverWorldServer;
 	
@@ -56,8 +56,8 @@ public class PurgatoryTeleporter extends Teleporter {
 	
 	
 	
-	/*
-	 * Performs everythingn for creating a portal
+	/**
+	 * Performs everything for creating a portal
 	 */
 	public Boolean CalculateReceiverPortal(Entity entity, int targetDim, BlockPos senderBlockPos) {
 
@@ -107,7 +107,7 @@ public class PurgatoryTeleporter extends Teleporter {
 
 		Main.log("OW Block:" + pm.OverWorldBlock.getY());
 		Main.log("PG Block:" + pm.PurgatoryBlock.getY());
-		if(targetDim == ConfigurationHandler.dimensionId) {
+		if(targetDim == ModDimensions.dimensionId) {
 			//get difference
 			double offset = entity.posY - pm.OverWorldBlock.getY();
 
@@ -131,27 +131,27 @@ public class PurgatoryTeleporter extends Teleporter {
     
 	
 	
-	/*
+	/**
 	 * Builds the portal using blocks from the sending dimension.
 	 * Only rebuilds if it can't find one that already exists.
 	 * 
 	 * Slight annoying condition can be hit but i can't be bothered fixing:
 	 * 		If you already had a portal built in chunk and server restarts and you put a new sender block in same chunk
-	 * 		it will rebuild a portal for the new sender block unless you first click the original block. This is kind of an exception case though
+	 * 		it will rebuild a portal for the new sender block unless you first click the original block. This is kind of an exception case though.
 	 * 
 	 * Other problems:
 	 * 		Since i scan blocks around if a player builds 2 portal blocks and places them next to each other at chunk boundary 
 	 * 		and they keep going back and forth and restarting game it will keep rebuilding portal. Its a slow way to dupe these blocks.
 	 * 		I dont think its a game breaking problem as it takes too much effort for little gain when you can easily farm the blocks..
 	 * 
-	 * TODO: Will need to alter this later so it will not replace Biome structure blocks. 
-	 * TODO: Get bounds of portal and maybe dont build in targetdim until it finds a box of empty area to build portal.
+	 * TODO: Will need to alter this later so it will not replace Biome structure blocks...maybe. 
+	 * TODO: Get bounds of portal and maybe dont build in targetdim until it finds a box of empty area to build portal...Dont want to delete a structure...
 	 */
 	private Boolean BuildPortal(Entity entity, int targetDim, BlockPos senderBlockPos, long chunkPos) {
         int surfaceY = senderBlockPos.getY();
 		WorldServer targetServer;
 		WorldServer oldServer;
-		if(targetDim == ConfigurationHandler.dimensionId) {
+		if(targetDim == ModDimensions.dimensionId) {
 			oldServer = OverWorldServer;
 			targetServer = PurgatoryWorldServer;
         }
@@ -167,7 +167,7 @@ public class PurgatoryTeleporter extends Teleporter {
 		
         //When the biome maps directly to void biome just build at that location
         if(bi.getBiomeName() == "VoidBiome") {
-        	Main.LogMesssage("VOID Selected");
+        	Main.log("VOID Selected");
         	//Due to restart the portal may already exist before. Check that before actually re-building portal
         	bs = targetServer.getBlockState(receiverControllerBlockPos);
         	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
@@ -224,7 +224,7 @@ public class PurgatoryTeleporter extends Teleporter {
 	            }
 	        } 
 
-			Main.LogMesssage("Found Portal Blocks: " + blockFrameCache.size());
+			Main.log("Found Portal Blocks: " + blockFrameCache.size());
 			//Build new portal in otherworld
 			for(Map.Entry<BlockPos, IBlockState> entry: blockFrameCache.entrySet()) {
 				targetServer.setBlockState(new BlockPos(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ()), entry.getValue());
@@ -234,11 +234,10 @@ public class PurgatoryTeleporter extends Teleporter {
 		}
 
 		
-		
 		//Did we build successfully...Or map successfully.
     	if(targetServer.getBlockState(receiverControllerBlockPos).getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
     		PortalMapping pm ;
-        	if(targetDim == ConfigurationHandler.dimensionId) {
+        	if(targetDim == ModDimensions.dimensionId) {
         		pm = new PortalMapping(receiverControllerBlockPos, senderBlockPos);
             }
             else {

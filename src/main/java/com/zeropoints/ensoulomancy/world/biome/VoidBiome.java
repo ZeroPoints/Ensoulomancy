@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.world.biome;
 
 import java.util.Random;
 
-import com.zeropoints.ensoulomancy.util.Reference;
+import com.zeropoints.ensoulomancy.Main;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -19,15 +19,15 @@ public class VoidBiome extends Biome implements ICustomBiome {
 	public VoidBiome() {
 		super(new Biome.BiomeProperties("VoidBiome").setBaseHeight(-30F).setHeightVariation(0.0F));
 
-		
+		//May aswewll register it i guess...
+		this.setRegistryName(Main.MOD_ID, "voidbiome");
 
-		this.setRegistryName(Reference.MOD_ID, "voidbiome");
-
+		//Set our default block types
 		this.topBlock = Blocks.AIR.getDefaultState(); 
 		this.fillerBlock = Blocks.AIR.getDefaultState(); 
 
 		
-
+		//clear defaults
 		this.spawnableMonsterList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableWaterCreatureList.clear();
@@ -53,8 +53,6 @@ public class VoidBiome extends Biome implements ICustomBiome {
         	chunkPrimerIn.setBlockState(i1, j1, l, AIR);
         	
         }
-        
-		
     }
 	
 	
@@ -62,14 +60,22 @@ public class VoidBiome extends Biome implements ICustomBiome {
 
 
 	
-	
-	
-
+	/*
+	 * Piss our blocks off the screen
+	 * (non-Javadoc)
+	 * @see com.zeropoints.ensoulomancy.world.biome.ICustomBiome#GetMaxHeight()
+	 */
 	@Override
 	public int GetMaxHeight() {
 		return -9999;
 	}
 	
+
+	/*
+	 * Piss our blocks off the screen
+	 * (non-Javadoc)
+	 * @see com.zeropoints.ensoulomancy.world.biome.ICustomBiome#GetMaxHeight()
+	 */
 	@Override
 	public int GetMinHeight() {
 		return -9999;

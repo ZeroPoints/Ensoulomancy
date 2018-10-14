@@ -2,8 +2,9 @@ package com.zeropoints.ensoulomancy.tileentity;
 
 import javax.annotation.Nullable;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntitySoulBed extends TileEntity {
 	
-    public final static String resourceLocation = Reference.MOD_ID + ":soul_bed";
+    public final static String resourceLocation = Main.MOD_ID + ":soul_bed";
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {

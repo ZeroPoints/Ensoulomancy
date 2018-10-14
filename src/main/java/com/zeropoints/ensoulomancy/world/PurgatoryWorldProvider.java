@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.world;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.util.Config;
 import com.zeropoints.ensoulomancy.world.biome.PurgatoryBiomeProvider;
 
 import net.minecraft.util.math.Vec3d;
@@ -21,18 +21,16 @@ public class PurgatoryWorldProvider extends WorldProvider {
     @Override
     protected void init () {
 
-        biomeProvider = new PurgatoryBiomeProvider(world);
+        biomeProvider = new PurgatoryBiomeProvider();
         
-        //me trying things dunno...
-        //this.setSkyRenderer(skyRenderer);
         
         //This needs to be set.!!!
         //REASON: enabled causes light calcs on block updates for all blocks below blocks. Since we have large empty spaces all the way to the void it is LAGGY.
         hasSkyLight = false;
     	
-        setDimension(ConfigurationHandler.dimensionId);
+        setDimension(ModDimensions.dimensionId);
         
-        Main.LogMesssage("PurgatoryWorldProvider", "init");
+        Main.log("PurgatoryWorldProvider init");
         
     }
     
@@ -110,7 +108,7 @@ public class PurgatoryWorldProvider extends WorldProvider {
      */
     @Override
     public IChunkGenerator createChunkGenerator() {
-        return new PurgatoryChunkGenerator(this.world, this.world.getSeed(), false, world.getWorldInfo().getGeneratorOptions());
+        return new PurgatoryChunkGenerator(this.world, this.world.getSeed(), world.getWorldInfo().getGeneratorOptions());
     }
     
     

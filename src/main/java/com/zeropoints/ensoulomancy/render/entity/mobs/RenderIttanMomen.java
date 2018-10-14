@@ -1,8 +1,9 @@
 package com.zeropoints.ensoulomancy.render.entity.mobs;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.ghost.EntityIttanMomen;
 import com.zeropoints.ensoulomancy.model.ghost.ModelIttanMomen;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 @SideOnly(Side.CLIENT)
 public class RenderIttanMomen extends RenderLiving<EntityIttanMomen> {
 	
-	private static final ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/entity/ghost/ittan_momen.png");
+	private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MOD_ID + ":textures/entity/ghost/ittan_momen.png");
 	
 	public RenderIttanMomen(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelIttanMomen(), 0.2F);

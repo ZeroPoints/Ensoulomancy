@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.render.entity.action;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.action.EntityFrostshot;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderFrostshot extends Render<EntityFrostshot> {
 	
     
-	private static final ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/items/soul_essence.png");
+	private static final ResourceLocation TEXTURES = new ResourceLocation(Main.MOD_ID + ":textures/items/soul_essence.png");
 	
 	public RenderFrostshot(RenderManager renderManagerIn) {
 		super(renderManagerIn);

@@ -2,10 +2,10 @@ package com.zeropoints.ensoulomancy.world.biome;
 
 import java.util.Random;
 
-
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.profane.EntityImp;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -21,10 +21,17 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 	 */
 	public ProfaneBiome() {
 		super(new Biome.BiomeProperties("ProfaneBiome").setBaseHeight(-1.999F).setHeightVariation(0.4F));
-		this.setRegistryName(Reference.MOD_ID, "profane");
+		
+
+		//May aswell register it i guess
+		this.setRegistryName(Main.MOD_ID, "profane");
+		
+
+		//Set some default blocks for this biome
 		this.topBlock = Blocks.NETHERRACK.getDefaultState(); 
 		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
-		
+
+		//Clear and set new defaults
 		this.spawnableMonsterList.clear();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityImp.class, 1, 1, 1));
 		this.spawnableCreatureList.clear();
@@ -44,12 +51,20 @@ public class ProfaneBiome extends Biome implements ICustomBiome {
 
     }
 
-	
+
+
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMaxHeight() {
 		return 80;
 	}
-	
+
+
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMinHeight() {
 		return 20;

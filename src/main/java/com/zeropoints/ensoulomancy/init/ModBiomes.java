@@ -23,7 +23,7 @@ public class ModBiomes {
     
     
     /**
-     * Used by genlayer to randomly pick from our known biome list
+     * Used by genlayer to randomly pick from our known biome list - the void its a special case
      */
     public static Biome[] PurgatoryBiomesList;
 

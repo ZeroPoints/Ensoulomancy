@@ -18,7 +18,7 @@ import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
 //import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,9 +39,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class CapabilityHandler {
 	
-    public static final ResourceLocation SOULPOOL_CAPABILITY = new ResourceLocation(Reference.MOD_ID, "soulpool_capability");
-    public static final ResourceLocation MORPHING_CAPABILITY = new ResourceLocation(Reference.MOD_ID, "morphing_capability");
-    public static final ResourceLocation GHOST_CAPABILITY = new ResourceLocation(Reference.MOD_ID, "ghost_capability");
+    public static final ResourceLocation SOULPOOL_CAPABILITY = new ResourceLocation(Main.MOD_ID, "soulpool_capability");
+    public static final ResourceLocation GHOST_CAPABILITY = new ResourceLocation(Main.MOD_ID, "ghost_capability");
     
     /**
      * Attach capabilities
@@ -51,19 +50,17 @@ public class CapabilityHandler {
     	if (!(event.getObject() instanceof EntityPlayer)) return;
     	
         event.addCapability(SOULPOOL_CAPABILITY, new SoulpoolProvider());
-        //event.addCapability(MORPHING_CAPABILITY, new MorphingProvider());
         event.addCapability(GHOST_CAPABILITY, new GhostProvider());
     }
     
     /**
      * Called when the player logs into the server
-     * Handles assignment of soulpool, morphing and ghost form capabilities
+     * Handles assignment of soulpool, ghost form capabilities
      */
 	@SubscribeEvent 
 	public void onPlayerLogsIn(PlayerLoggedInEvent event) {
 		
 		EntityPlayer player = event.player; 
-		//Map<String,MorphSettings> morphSettings = new HashMap<String,MorphSettings>();
 		GhostSettings ghostSettings = new GhostSettings(); // A default of null was crashing the dispatcher sometimes
 		
 		// Soulpool
@@ -76,20 +73,6 @@ public class CapabilityHandler {
 		String message = String.format("You have %1$d soul.", soulpool.get()); 
 		player.sendMessage(new TextComponentString(message)); 
 		
-/*
-		// Morphing
-        IMorphing morph = Morphing.getCapability(player);
-        if (morph != null) {
-            this.getCurrentMorph(morph, player);
-
-            // Ensure that player was morphed 
-            if (morph.isMorphed()) {
-            	morph.getCurrentMorph().morph(player);
-            }
-
-            morphSettings = MorphManager.INSTANCE.activeSettings;
-        }
-        */
         
         // Ghost
     	IGhost ghost = Ghost.getCapability(player);
@@ -101,7 +84,6 @@ public class CapabilityHandler {
     		ghostSettings = ghost.getSettings();
     	}
     	
-    	/*morphSettings, */
     	// Send settings to client
 		Dispatcher.sendTo(new PacketSettings(ghostSettings), (EntityPlayerMP) player);
 	} 
@@ -143,8 +125,6 @@ public class CapabilityHandler {
             EntityPlayer player = (EntityPlayer) event.getEntity();
 
             if (!player.world.isRemote) {
-                //IMorphing morphing = Morphing.getCapability(player);
-                //this.getCurrentMorph(morphing, player);
             }
         }
     }
@@ -155,23 +135,11 @@ public class CapabilityHandler {
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
         EntityPlayer player = event.getEntityPlayer();
-        //IMorphing morphing = Morphing.getCapability(player);
-        //IMorphing oldMorphing = Morphing.getCapability(event.getOriginal());
-
+       
         if (!event.isWasDeath()) {
-            //morphing.copy(oldMorphing, player);
         }
     }
 
-    /**
-     * Send currently morphed morph to the given player. 
-     */
-   /* 
-    private void getCurrentMorph(IMorphing morph, EntityPlayer player) {
-        Dispatcher.sendTo(new PacketMorph(morph.getCurrentMorph()), (EntityPlayerMP)player);
-    }	
-    */
-	
 
 	/**
 	 * Every tick check player data...

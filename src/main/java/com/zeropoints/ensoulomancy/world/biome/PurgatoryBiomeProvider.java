@@ -16,19 +16,23 @@ import net.minecraft.world.gen.layer.GenLayerZoom;
 public class PurgatoryBiomeProvider extends BiomeProvider {
 
 
-	public PurgatoryBiomeProvider(World world) {
-		this(world.getSeed(), world.getWorldInfo().getTerrainType(), world.getWorldInfo().getGeneratorOptions());
+	
+	/**
+	 * Init provider for biomes generation
+	 * 
+	 * @param world
+	 */
+	public PurgatoryBiomeProvider() {
+		super(ModDimensions.purgatoryWorldInfo);
+		//Isn't it awesome when you do all this for nothing...
 	}
 	
-	public PurgatoryBiomeProvider(long seed, WorldType worldType, String chunkProviderSettings) {
-		super(ModDimensions.purgatoryWorldInfo);
-		
-	}
 	
 	
 	
 
 	/**
+	 * Not sure if i should override this or subscribe to the events.(WorldTypeEvent.InitBiomeGens)
 	 * Initiates Purgatorys gen layers for deciding what chunks get what biomes
 	 * Technically this does nothing besides seeding the funcctions with recursiveness.
 	 * Look at GetInts functions inside the genlayers to see what actually logic is applied

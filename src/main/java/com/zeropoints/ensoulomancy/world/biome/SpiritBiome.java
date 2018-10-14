@@ -2,9 +2,10 @@ package com.zeropoints.ensoulomancy.world.biome;
 
 import java.util.Random;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.ghost.EntityIttanMomen;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -20,11 +21,16 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 	 */
 	public SpiritBiome() {
 		super(new Biome.BiomeProperties("SpiritBiome").setBaseHeight(2.55F).setHeightVariation(0.4F));
-		this.setRegistryName(Reference.MOD_ID, "spirit");
+		
+		//May aswell register it i guess
+		this.setRegistryName(Main.MOD_ID, "spirit");
+		
+		//Set some default blocks for this biome
 		this.topBlock = Blocks.SOUL_SAND.getDefaultState(); 
 		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState(); 
 		
 		
+		//Clear and set new defaults
 		this.spawnableMonsterList.clear();
 		this.spawnableMonsterList.add(new SpawnListEntry(EntityIttanMomen.class, 1, 1, 1));
 		this.spawnableCreatureList.clear();
@@ -49,11 +55,17 @@ public class SpiritBiome extends Biome implements ICustomBiome {
 	
 	
 
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMaxHeight() {
 		return 160;
 	}
 	
+	/**
+	 * Height limitation for this biome
+	 */
 	@Override
 	public int GetMinHeight() {
 		return 100;

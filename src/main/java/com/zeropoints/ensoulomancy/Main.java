@@ -16,16 +16,25 @@ import org.apache.logging.log4j.Logger;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
 //import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
 import com.zeropoints.ensoulomancy.proxy.CommonProxy;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.util.Config;
 import com.zeropoints.ensoulomancy.util.EnsoulomancyTab;
-import com.zeropoints.ensoulomancy.util.Reference;
 
 
 
-@Mod(modid=Reference.MOD_ID, name=Reference.NAME, version=Reference.VERSION, dependencies = "required-after:metamorph@[1.1.6,)")
+@Mod(modid=Main.MOD_ID, name=Main.NAME, version=Main.VERSION, dependencies = "required-after:metamorph@[1.1.6,)")
 public class Main {
     
-	public static final CreativeTabs ENSOULOMANCY_TAB = new EnsoulomancyTab("ensoulomancy_tab");
+	public static final CreativeTabs ENSOULOMANCY_TAB = new EnsoulomancyTab();
+	public static final String MOD_ID = "ensoulomancy";
+	public static final String NAME = "Ensoulomancy";
+	public static final String VERSION = "1.1a";
+	public static final String ACCEPTED_VERSIONS = "[1.12.2]";
+	public static final String CLIENT_PROXY_CLASS = "com.zeropoints.ensoulomancy.proxy.ClientProxy";
+	public static final String COMMON_PROXY_CLASS = "com.zeropoints.ensoulomancy.proxy.CommonProxy";
+	public static final String SERVER_PROXY_CLASS = "com.zeropoints.ensoulomancy.proxy.ServerProxy";
+	
+	
+	
 	
     public static boolean DEBUG = true;
     public static Logger LOGGER;
@@ -47,29 +56,21 @@ public class Main {
     	log(null, message);
     } 
     
-    public static void LogMesssage(String message) {
-    	log(null, message);
-    } 
-    
-    public static void LogMesssage(String type, String message) {
-    	log(null, type + " ----- " + message);
-    } 
 
 	
 	@Instance
 	public static Main instance;
 	
-	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.COMMON_PROXY_CLASS)
+	@SidedProxy(clientSide = CLIENT_PROXY_CLASS, serverSide = COMMON_PROXY_CLASS)
 	public static CommonProxy proxy;
+	
+	
+	
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		LOGGER = e.getModLog();
-        new ConfigurationHandler();
-        
 		proxy.preInit(e);
-		
-
     }
 	
 	@EventHandler
@@ -82,16 +83,6 @@ public class Main {
 		proxy.postInit(e);
     }
 
-	@EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
-        /* Setting up the blacklist */
-        //MorphManager.INSTANCE.setActiveSettings(MorphUtils.reloadMorphSettings());
-
-        /* Register commands */
-        //event.registerServerCommand(new CommandMorph());
-        //event.registerServerCommand(new CommandAcquireMorph());
-        //event.registerServerCommand(new CommandMetamorph());
-    }
 }
 
 

@@ -1,8 +1,9 @@
 package com.zeropoints.ensoulomancy.render.entity.mobs;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
 import com.zeropoints.ensoulomancy.model.hallowed.ModelPixie;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -17,10 +18,10 @@ import net.minecraftforge.fml.relauncher.Side;
 @SideOnly(Side.CLIENT)
 public class RenderPixie extends RenderBiped<EntityPixie> {
 	
-	private static final ResourceLocation PIXIE_PINK = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_pink.png");
-	private static final ResourceLocation PIXIE_BLUE = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_blue.png");
-	private static final ResourceLocation PIXIE_GREEN = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_green.png");
-	private static final ResourceLocation PIXIE_BARBARIAN = new ResourceLocation(Reference.MOD_ID + ":textures/entity/hallowed/pixie_barbarian.png");
+	private static final ResourceLocation PIXIE_PINK = new ResourceLocation(Main.MOD_ID + ":textures/entity/hallowed/pixie_pink.png");
+	private static final ResourceLocation PIXIE_BLUE = new ResourceLocation(Main.MOD_ID + ":textures/entity/hallowed/pixie_blue.png");
+	private static final ResourceLocation PIXIE_GREEN = new ResourceLocation(Main.MOD_ID + ":textures/entity/hallowed/pixie_green.png");
+	private static final ResourceLocation PIXIE_BARBARIAN = new ResourceLocation(Main.MOD_ID + ":textures/entity/hallowed/pixie_barbarian.png");
 	
 	public RenderPixie(RenderManager renderManagerIn) {
 		super(renderManagerIn, new ModelPixie(), 0.2F);

@@ -11,29 +11,32 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 public class PurgatoryWorldType extends WorldType {
 
+	
+	/**
+	 * Type...Dunno
+	 */
 	public PurgatoryWorldType() {
 		super("PURGATORY");
-
 	}
 
 	/**
-	 * Dunno
+	 * Our biomes
 	 */
 	 @Override
     public BiomeProvider getBiomeProvider(World world)
     {
-		 return new PurgatoryBiomeProvider(world);
+		 return new PurgatoryBiomeProvider();
     }
 	
 	 
 	 /**
-	 * Dunno
+	 * Our chunks
 	 */
     @Override
     public IChunkGenerator getChunkGenerator(World world, String generatorOptions)
     {
 
-        return new PurgatoryChunkGenerator(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions);
+        return new PurgatoryChunkGenerator(world, world.getSeed(), generatorOptions);
 
     }
     

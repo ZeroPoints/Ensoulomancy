@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * prevents the server-side message handling method from appearing in client
  * message handler classes.
  *
- * @author Ernio (Ernest Sadowski)
+ * Original Author MCHorse. 
  */
 public abstract class ClientMessageHandler<T extends IMessage> extends AbstractMessageHandler<T> {
 	

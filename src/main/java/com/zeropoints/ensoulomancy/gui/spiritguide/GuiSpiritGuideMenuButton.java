@@ -1,6 +1,8 @@
 package com.zeropoints.ensoulomancy.gui.spiritguide;
 
-import com.zeropoints.ensoulomancy.util.Reference;
+
+
+import com.zeropoints.ensoulomancy.Main;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -11,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiSpiritGuideMenuButton extends GuiButton {
 
 	
-	protected static final ResourceLocation MY_TEXTURES = new ResourceLocation(Reference.MOD_ID, "textures/gui/gui_menu_button.png");
+	protected static final ResourceLocation MY_TEXTURES = new ResourceLocation(Main.MOD_ID, "textures/gui/gui_menu_button.png");
 	
 	public GuiSpiritGuideMenuButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);

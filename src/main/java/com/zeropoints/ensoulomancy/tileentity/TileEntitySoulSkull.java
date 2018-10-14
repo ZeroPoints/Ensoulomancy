@@ -2,8 +2,9 @@ package com.zeropoints.ensoulomancy.tileentity;
 
 import javax.annotation.Nullable;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -19,7 +20,7 @@ public class TileEntitySoulSkull extends TileEntity {
 	
     private int skullType;
     private int skullRotation;
-    public final static String resourceLocation = Reference.MOD_ID + ":soul_skull";
+    public final static String resourceLocation = Main.MOD_ID + ":soul_skull";
     
     //TODO: It feels like a lot of this code just does the same thing twice, optimize??
     

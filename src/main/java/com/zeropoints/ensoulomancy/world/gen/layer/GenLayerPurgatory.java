@@ -11,11 +11,21 @@ public class GenLayerPurgatory extends GenLayer {
     
     
 
+	/**
+	 * Purgatory Base Layer Generation
+	 * @param seed
+	 * @param parentIn
+	 */
     public GenLayerPurgatory(long seed, GenLayer parentIn) {
         super(seed);
         parent = parentIn;
     }
 
+	/**
+	 * Purgatory Base Layer Generation
+	 * @param seed
+	 * @param parentIn
+	 */
     public GenLayerPurgatory(long seed) {
         super(seed);
     }
@@ -42,4 +52,6 @@ public class GenLayerPurgatory extends GenLayer {
         }
         return dest;
     }
+    
+    
 }

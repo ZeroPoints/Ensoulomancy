@@ -1,5 +1,6 @@
 package com.zeropoints.ensoulomancy.network;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.network.client.ClientHandlerGhost;
 //import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorph;
 //import com.zeropoints.ensoulomancy.network.client.ClientHandlerMorphPlayer;
@@ -9,10 +10,9 @@ import com.zeropoints.ensoulomancy.network.common.PacketGhost;
 //import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 //import com.zeropoints.ensoulomancy.network.common.PacketMorphPlayer;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
-import com.zeropoints.ensoulomancy.network.server.ServerHandlerAction;
 import com.zeropoints.ensoulomancy.network.server.ServerHandlerGhost;
 //import com.zeropoints.ensoulomancy.network.server.ServerHandlerMorph;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTracker;
@@ -27,11 +27,11 @@ import net.minecraftforge.fml.relauncher.Side;
 
 /**
  * Network dispatcher
- *
- * @author Ernio (Ernest Sadowski)
+ * 
+ * Original Author MCHorse. 
  */
 public class Dispatcher {
-    private static final SimpleNetworkWrapper DISPATCHER = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
+    private static final SimpleNetworkWrapper DISPATCHER = NetworkRegistry.INSTANCE.newSimpleChannel(Main.MOD_ID);
     private static byte PACKET_ID;
 
     public static SimpleNetworkWrapper get() {
@@ -58,13 +58,6 @@ public class Dispatcher {
      * Register all the networking messages and message handlers
      */
     public static void register() {
-        /* Action */
-        register(PacketAction.class, ServerHandlerAction.class, Side.SERVER);
-
-        /* Morphing */
-        //register(PacketMorph.class, ClientHandlerMorph.class, Side.CLIENT);
-        //register(PacketMorph.class, ServerHandlerMorph.class, Side.SERVER);
-        //register(PacketMorphPlayer.class, ClientHandlerMorphPlayer.class, Side.CLIENT);
 
         /* Syncing data */
         register(PacketSettings.class, ClientHandlerSettings.class, Side.CLIENT);

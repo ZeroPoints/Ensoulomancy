@@ -7,8 +7,7 @@ import com.google.common.collect.Lists;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
 import com.zeropoints.ensoulomancy.init.ModBiomes;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
-import com.zeropoints.ensoulomancy.util.Reference;
+import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.world.PurgatoryWorldSavedData;
 import com.zeropoints.ensoulomancy.world.biome.ICustomBiome;
 
@@ -30,13 +29,22 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenSpiritTemple implements IWorldGenerator {
 
 	private static final ResourceLocation SPIRIT_TEMPLE = new ResourceLocation(
-			Reference.MOD_ID + ":spirit_temple_centered");
+			Main.MOD_ID + ":spirit_temple_centered");
 
-	public static final String Name = Reference.MOD_ID + "_spirit_temple";
+	
+	
+	public static final String NBTName = Main.MOD_ID + "_spirit_temple";
 
+	
+	
 	public static List<Biome.SpawnListEntry> SpawnableMonsterList = Lists.<Biome.SpawnListEntry>newArrayList(
 			new SpawnListEntry(EntityPixie.class, 1, 1, 1));
 
+	/**
+	 * Spawns selection for this structure
+	 * @param creatureType
+	 * @return
+	 */
 	public static List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType) {
 		switch (creatureType) {
 		case MONSTER:
@@ -52,14 +60,19 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 		}
 	}
 
+	
+	/**
+	 * Generate the spirit temple
+	 */
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,
 			IChunkProvider chunkProvider) {
 
-		if (world.provider.getDimension() != ConfigurationHandler.dimensionId) {
+		//LIMIT DIM SPAWN
+		if (world.provider.getDimension() != ModDimensions.dimensionId) {
 			return;
 		}
-
+		
 		if (canSpawnStructureAtCoords(random, world, chunkX, chunkZ)) {
 			// Random block in that chunks 16x16 square
 			int x = chunkX * 16 + random.nextInt(16);
@@ -68,6 +81,7 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 			BlockPos basePos = new BlockPos(x, world.getHeight(x, z), z);
 			Biome currentBiome = world.getBiome(basePos);
 			// Biome is spirit biome only
+			//LIMIT BIOME SPAWN
 			if (currentBiome.getRegistryName() != ModBiomes.SPIRIT_BIOME.getRegistryName()) {
 				return;
 			}
@@ -91,9 +105,10 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 			basePos = new BlockPos(x, world.getHeight(centerX, centerZ), z);
 
 			if (basePos.getY() < ((ICustomBiome) currentBiome).GetMinHeight()) {
-				Main.log("Spirit temple spawning way to low for biome");// Could write something hacky to reget top
-																		// block by scanning from maxheight to
-																		// minheight.
+				Main.log("Spirit temple spawning way to low for biome");
+				// Could write something hacky to reget top
+				// block by scanning from maxheight to
+				// minheight.
 				return;
 			}
 
@@ -118,39 +133,6 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 			// Lookup worldsaveddata. We do this so we can lookup in mobspawning. So we can
 			// spawn our mob type inside bounding box area of structure
 
-			/*
-			 * PurgatoryChunkGenerator.purgatoryWorldSavedData.spiritTempleLocations.put(
-			 * chunkPos1, boundingBox);
-			 * 
-			 * PurgatoryChunkGenerator.purgatoryWorldSavedData.spiritTempleLocations.put(
-			 * chunkPos2, boundingBox);
-			 * 
-			 * PurgatoryChunkGenerator.purgatoryWorldSavedData.spiritTempleLocations.put(
-			 * chunkPos3, boundingBox);
-			 * 
-			 * PurgatoryChunkGenerator.purgatoryWorldSavedData.spiritTempleLocations.put(
-			 * chunkPos4, boundingBox);
-			 * 
-			 * PurgatoryChunkGenerator.purgatoryWorldSavedData.markDirty();
-			 */
-
-			/*
-			 * ((PurgatoryChunkGenerator)chunkGenerator).purgatoryWorldSavedData.
-			 * spiritTempleLocations.put(chunkPos1, boundingBox);
-			 * 
-			 * ((PurgatoryChunkGenerator)chunkGenerator).purgatoryWorldSavedData.
-			 * spiritTempleLocations.put(chunkPos2, boundingBox);
-			 * 
-			 * ((PurgatoryChunkGenerator)chunkGenerator).purgatoryWorldSavedData.
-			 * spiritTempleLocations.put(chunkPos3, boundingBox);
-			 * 
-			 * ((PurgatoryChunkGenerator)chunkGenerator).purgatoryWorldSavedData.
-			 * spiritTempleLocations.put(chunkPos4, boundingBox);
-			 * 
-			 * ((PurgatoryChunkGenerator)chunkGenerator).purgatoryWorldSavedData.markDirty()
-			 * ;
-			 */
-
 			PurgatoryWorldSavedData worldData = PurgatoryWorldSavedData.GetExisting(world);
 			worldData.spiritTempleLocations.put(chunkPos1, boundingBox);
 
@@ -167,7 +149,7 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 	}
 
 	/*
-	 * Found in end structure code.
+	 * Found in end structure code...
 	 */
 	private boolean canSpawnStructureAtCoords(Random random, World world, int chunkX, int chunkZ) {
 		int i = chunkX;

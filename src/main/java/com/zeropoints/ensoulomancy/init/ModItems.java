@@ -3,6 +3,7 @@ package com.zeropoints.ensoulomancy.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.items.ItemSoulBed;
 import com.zeropoints.ensoulomancy.items.ItemSoulSkull;
 import com.zeropoints.ensoulomancy.items.ItemSpiritGuide;
@@ -15,7 +16,7 @@ import com.zeropoints.ensoulomancy.items.SoulSeedsStem;
 import com.zeropoints.ensoulomancy.items.armor.Halo;
 import com.zeropoints.ensoulomancy.items.tools.Bla;
 import com.zeropoints.ensoulomancy.items.tools.ReapingScythe;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -36,7 +37,7 @@ public class ModItems {
 	// Materials
 	//DONT PUT ITEMS THAT USE MATERIALS BEFORE THESE MATERIALS
 	public static final ToolMaterial MATERIAL_SOUL_INGOT = EnumHelper.addToolMaterial("material_soul_ingot", 2, 250, 6.0F, 5.0F, 10);
-	public static final ArmorMaterial ARMOR_MATERIAL_HALO = EnumHelper.addArmorMaterial("armor_material_halo", Reference.MOD_ID + ":halo", 10, new int[] {4,7,9,4}, 10,SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.0F);
+	public static final ArmorMaterial ARMOR_MATERIAL_HALO = EnumHelper.addArmorMaterial("armor_material_halo", Main.MOD_ID + ":halo", 10, new int[] {4,7,9,4}, 10,SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 0.0F);
 
 	// Armor
 	public static final Halo HALO_HELMET = new Halo();
@@ -64,7 +65,7 @@ public class ModItems {
 
 	//---------------------------------------------------------------------
 	
-	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+	@Mod.EventBusSubscriber(modid = Main.MOD_ID)
 	public static class RegistrationHandler {
 		
 		@SubscribeEvent

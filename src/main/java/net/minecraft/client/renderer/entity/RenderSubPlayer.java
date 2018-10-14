@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
  * Render sub player renderer
  *
  * This class is responsible for substituting native player renderer classes
- * in the skinMap to achieve the rendering of the custom morphed hands.
+ * in the skinMap to achieve the rendering of the custom ghost hands.
  *
  * I hope nobody will want to substitute the same map as I did :D
  */
@@ -36,37 +36,20 @@ public class RenderSubPlayer extends RenderPlayer {
     }
 
     /**
-     * Render default or morphed left hand.
+     * Render default left hand.
      */
     @Override
     public void renderLeftArm(AbstractClientPlayer clientPlayer) {
-        /*
-    	IMorphing morph = Morphing.getCapability(clientPlayer);
-
-        if (morph != null && morph.isMorphed()) {
-            if (morph.getCurrentMorph().renderHand(clientPlayer, EnumHand.OFF_HAND)) {
-                return;
-            }
-        }
-        */
+        
         this.original.renderLeftArm(clientPlayer);
     }
 
     /**
-     * Render default or morphed right hand.
+     * Render default right hand.
      */
     @Override
     public void renderRightArm(AbstractClientPlayer clientPlayer) {
-        /*
-    	IMorphing morph = Morphing.getCapability(clientPlayer);
-
-        if (morph != null && morph.isMorphed()) {
-            if (morph.getCurrentMorph().renderHand(clientPlayer, EnumHand.MAIN_HAND)) {
-                return;
-            }
-        }
-        */
-    	
+           	
     	IGhost ghost = Ghost.getCapability(clientPlayer);
         
         if (ghost != null && ghost.isGhost()) {

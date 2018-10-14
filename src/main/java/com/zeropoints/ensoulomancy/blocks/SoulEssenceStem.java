@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.blocks;
 
 
 import com.zeropoints.ensoulomancy.init.ModBlocks;
-import com.zeropoints.ensoulomancy.util.ConfigurationHandler;
+import com.zeropoints.ensoulomancy.init.ModDimensions;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -73,7 +73,7 @@ public class SoulEssenceStem extends BlockStem {
 		//Allow player to teleport back through same means of transportation
 		int dim = entity.dimension;
 		if(entity.dimension == 0) {
-			dim = ConfigurationHandler.dimensionId;;
+			dim = ModDimensions.dimensionId;;
 		
 		}
 		else {

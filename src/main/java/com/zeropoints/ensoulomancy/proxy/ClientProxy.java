@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModEvents;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -32,7 +32,7 @@ public class ClientProxy extends CommonProxy {
         super.preInit(e);
         
         //ModRenderers.register(); // client-side only
-        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID); // client-side only
+        OBJLoader.INSTANCE.addDomain(Main.MOD_ID); // client-side only
     }
 	
 	@Override

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulBed;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.blocks.BlockSoulStone;
@@ -16,7 +17,7 @@ import com.zeropoints.ensoulomancy.blocks.SoulEssenceCrop;
 import com.zeropoints.ensoulomancy.blocks.SoulEssenceStem;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulBed;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
-import com.zeropoints.ensoulomancy.util.Reference;
+
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -55,7 +56,7 @@ public class ModBlocks {
 	
 	//---------------------------------------------------------------------
 
-	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+	@Mod.EventBusSubscriber(modid = Main.MOD_ID)
 	public static class RegistrationHandler {
 
 		@SubscribeEvent
