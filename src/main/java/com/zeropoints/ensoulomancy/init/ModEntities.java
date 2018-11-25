@@ -7,6 +7,7 @@ import com.zeropoints.ensoulomancy.entity.hallowed.*;
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.entity.action.EntityFrostshot;
+import com.zeropoints.ensoulomancy.entity.action.EntityLightningBolt;
 import com.zeropoints.ensoulomancy.entity.ghost.*;
 
 
@@ -35,5 +36,6 @@ public class ModEntities {
 
 		// Action
 		EntityRegistry.registerModEntity(new ResourceLocation(Main.MOD_ID + ":textures/items/soul_essence.png"), EntityFrostshot.class, "Frostshot", id++, Main.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(Main.MOD_ID + ":textures/items/spirit_guide.png"), EntityLightningBolt.class, "LightningBolt", id++, Main.instance, 64, 1, true);
 	}
 }

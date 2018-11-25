@@ -8,17 +8,11 @@
 	},
     "ensoulomancy:imp": {
         "abilities": ["fly"],
-        "action": "frostshot",
+        "action": "lightningbolt",
         "attack": "poison",
         "health": 6,
         "speed": 1.15
 	}
-
-
-
-
-
-
 
 
 

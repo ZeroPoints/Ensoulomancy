@@ -5,10 +5,12 @@ import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
 import com.zeropoints.ensoulomancy.entity.EntityPlayerCorpse;
 import com.zeropoints.ensoulomancy.entity.action.EntityFrostshot;
+import com.zeropoints.ensoulomancy.entity.action.EntityLightningBolt;
 import com.zeropoints.ensoulomancy.entity.ghost.*;
 import com.zeropoints.ensoulomancy.entity.hallowed.*;
 import com.zeropoints.ensoulomancy.entity.profane.*;
 import com.zeropoints.ensoulomancy.render.entity.action.RenderFrostshot;
+import com.zeropoints.ensoulomancy.render.entity.action.RenderLightningBolt;
 import com.zeropoints.ensoulomancy.render.entity.husk.RenderHusk;
 import com.zeropoints.ensoulomancy.render.entity.mobs.*;
 import com.zeropoints.ensoulomancy.render.player.RenderEntityPlayerCorpse;
@@ -62,6 +64,7 @@ public class ModRenderers {
     	
 
     	RenderingRegistry.registerEntityRenderingHandler(EntityFrostshot.class, new RenderFrostshot.RenderFactory());
+    	RenderingRegistry.registerEntityRenderingHandler(EntityLightningBolt.class, new RenderLightningBolt.RenderFactory());
 
     }
 
