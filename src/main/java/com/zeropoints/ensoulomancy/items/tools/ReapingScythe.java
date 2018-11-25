@@ -3,12 +3,6 @@ package com.zeropoints.ensoulomancy.items.tools;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
-//import com.zeropoints.ensoulomancy.api.morphs.AbstractMorph;
-//import com.zeropoints.ensoulomancy.api.morphs.EntityUtils;
-//import com.zeropoints.ensoulomancy.api.morphs.MorphAPI;
-//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.init.ModItems;
 
 import net.minecraft.entity.EntityLivingBase;

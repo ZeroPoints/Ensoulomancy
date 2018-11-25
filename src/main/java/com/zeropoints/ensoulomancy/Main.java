@@ -13,8 +13,6 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-//import com.zeropoints.ensoulomancy.api.morphs.MorphUtils;
 import com.zeropoints.ensoulomancy.proxy.CommonProxy;
 import com.zeropoints.ensoulomancy.util.Config;
 import com.zeropoints.ensoulomancy.util.EnsoulomancyTab;

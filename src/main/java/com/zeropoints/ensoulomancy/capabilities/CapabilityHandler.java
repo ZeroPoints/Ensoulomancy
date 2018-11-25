@@ -3,20 +3,14 @@ package com.zeropoints.ensoulomancy.capabilities;
 import org.apache.logging.log4j.Level;
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.api.ghost.GhostSettings;
-//import com.zeropoints.ensoulomancy.api.morphs.MorphManager;
-//import com.zeropoints.ensoulomancy.api.morphs.MorphSettings;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.GhostProvider;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.MorphingProvider;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.ISoulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.Soulpool;
 import com.zeropoints.ensoulomancy.capabilities.soulpool.SoulpoolProvider;
 import com.zeropoints.ensoulomancy.items.armor.ArmorBase;
 import com.zeropoints.ensoulomancy.network.Dispatcher;
-//import com.zeropoints.ensoulomancy.network.common.PacketMorph;
 import com.zeropoints.ensoulomancy.network.common.PacketSettings;
 
 import net.minecraft.entity.Entity;
@@ -32,11 +26,14 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 
+
+//@Mod.EventBusSubscriber(modid = Main.MOD_ID)
 public class CapabilityHandler {
 	
     public static final ResourceLocation SOULPOOL_CAPABILITY = new ResourceLocation(Main.MOD_ID, "soulpool_capability");

@@ -1,6 +1,5 @@
 package com.zeropoints.ensoulomancy.render.player;
 
-//import com.zeropoints.ensoulomancy.api.morphs.EntityMorph;
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
 import com.zeropoints.ensoulomancy.entity.EntityCamera;

@@ -1,0 +1,29 @@
+{
+	"ensoulomancy:pixie": {
+        "abilities": ["prevent_fall"],
+        "action": "frostshot",
+        "attack": "poison",
+        "health": 6,
+        "speed": 1.15
+	},
+    "ensoulomancy:imp": {
+        "abilities": ["fly"],
+        "action": "frostshot",
+        "attack": "poison",
+        "health": 6,
+        "speed": 1.15
+	}
+
+
+
+
+
+
+
+
+
+}
+
+
+
+

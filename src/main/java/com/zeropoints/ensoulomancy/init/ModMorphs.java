@@ -9,7 +9,15 @@ public class ModMorphs {
 	public static void init() {
 
 		MorphManager.INSTANCE.actions.put("frostshot", new Frostshot());
-		
     }
 	
+	
+	
+	
 }
+
+
+
+
+
+

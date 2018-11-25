@@ -1,7 +1,16 @@
 package com.zeropoints.ensoulomancy.util;
 
+
+
+
+
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import mchorse.metamorph.api.MorphManager;
+import mchorse.metamorph.api.MorphSettings;
+import mchorse.metamorph.api.events.RegisterSettingsEvent;
 
 import org.apache.logging.log4j.Level;
 
@@ -21,6 +30,8 @@ public class Config {
 
     public static File directory = new File("config/" + Main.MOD_ID + "/");
     public static File configFile = new File(directory, Main.MOD_ID + ".cfg");
+    
+    
     
     public static Configuration CurrentConfig;    
    
@@ -48,6 +59,7 @@ public class Config {
      */
     private void GeneratePresets () {
 
+    	
     }
     
 
@@ -62,12 +74,24 @@ public class Config {
     	
         ModDimensions.dimensionId = CurrentConfig.getInt("dimensionId", Configuration.CATEGORY_GENERAL, 133780085, Integer.MIN_VALUE, Integer.MAX_VALUE, "The id for the ensoulomancy dimension.");
 
-        
 
+        //
+
+        MorphSettings test = MorphManager.INSTANCE.activeSettings.put("test", MorphSettings.DEFAULT);
+        
+        
         if (CurrentConfig.hasChanged()) {
         	Main.log(Level.INFO, "Saving config file.");
         	CurrentConfig.save();
         }
     }    
     
+    
+
+
+    
+    
 }
+
+
+

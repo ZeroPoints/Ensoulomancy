@@ -1,9 +1,6 @@
 package com.zeropoints.ensoulomancy.api.ghost;
 
 import com.zeropoints.ensoulomancy.api.DefaultSettings;
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAbility;
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAction;
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAttackAbility;
 
 import io.netty.buffer.ByteBuf;
 

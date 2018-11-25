@@ -2,17 +2,15 @@ package com.zeropoints.ensoulomancy.api;
 
 import java.util.Map;
 
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAbility;
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAction;
-//import com.zeropoints.ensoulomancy.api.morphs.abilities.IAttackAbility;
 
 import io.netty.buffer.ByteBuf;
 
 /**
- * Morph settings
+ * Base settings class
  * 
- * An instance of this class is responsible for storing information about 
- * morph's configurable settings.
+ * An instance of this class is responsible for storing information about shit
+ * 
+ * Copied from metamorphs class.
  */
 public class DefaultSettings  {
 	

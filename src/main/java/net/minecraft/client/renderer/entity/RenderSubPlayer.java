@@ -2,8 +2,6 @@ package net.minecraft.client.renderer.entity;
 
 import com.zeropoints.ensoulomancy.capabilities.ghost.Ghost;
 import com.zeropoints.ensoulomancy.capabilities.ghost.IGhost;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.IMorphing;
-//import com.zeropoints.ensoulomancy.capabilities.morphing.Morphing;
 import com.zeropoints.ensoulomancy.render.layer.LayerGhostBipedArmor;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelPlayer;
