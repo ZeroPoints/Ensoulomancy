@@ -62,9 +62,9 @@ public class EntityLightningBolt extends Entity
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
         this.setPosition(x, y, z);
         double d0 = (double)MathHelper.sqrt(accelX * accelX + accelY * accelY + accelZ * accelZ);
-        this.accelerationX = accelX / d0 * 0.1D;
-        this.accelerationY = accelY / d0 * 0.1D;
-        this.accelerationZ = accelZ / d0 * 0.1D;
+        this.accelerationX = accelX / d0 * 0.0D;
+        this.accelerationY = accelY / d0 * 0.0D;
+        this.accelerationZ = accelZ / d0 * 0.0D;
     	Main.log("LightningBolt Created 2");
     }
 
@@ -78,13 +78,13 @@ public class EntityLightningBolt extends Entity
         this.motionX = 0.0D;
         this.motionY = 0.0D;
         this.motionZ = 0.0D;
-        accelX = accelX + 0.4D;
-        accelY = accelY + 0.4D;
-        accelZ = accelZ + 0.4D;
+        accelX = accelX + 0.0D;
+        accelY = accelY + 0.0D;
+        accelZ = accelZ + 0.0D;
         double d0 = (double)MathHelper.sqrt(accelX * accelX + accelY * accelY + accelZ * accelZ);
-        this.accelerationX = accelX / d0 * 0.1D;
-        this.accelerationY = accelY / d0 * 0.1D;
-        this.accelerationZ = accelZ / d0 * 0.1D;
+        this.accelerationX = accelX / d0 * 0.0D;
+        this.accelerationY = accelY / d0 * 0.0D;
+        this.accelerationZ = accelZ / d0 * 0.0D;
     	Main.log("LightningBolt Created 3");
     }
 

@@ -44,7 +44,7 @@ public class Frostshot implements IAction
         EntityFrostshot fireball = new EntityFrostshot(world, target, d2, d3, d4);
 
         fireball.posX = target.posX;
-        fireball.posY = target.posY + target.height * 0.9;
+        fireball.posY = target.posY + target.height * 0.5;
         fireball.posZ = target.posZ;
 
         if(world.spawnEntity(fireball)) {

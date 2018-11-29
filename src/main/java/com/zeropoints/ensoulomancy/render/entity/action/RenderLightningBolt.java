@@ -1,8 +1,11 @@
 package com.zeropoints.ensoulomancy.render.entity.action;
 
+import java.util.Random;
+
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.action.EntityLightningBolt;
 
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -33,47 +36,68 @@ public class RenderLightningBolt extends Render<EntityLightningBolt> {
 	}
 	
 	
-	
 	public void doRender(EntityLightningBolt entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
 
         GlStateManager.pushMatrix();
-        this.bindEntityTexture(entity);    
         
+
+        double xCoord = 0;
+        double yCoord = 0;
+        double widthIn = 2;
+        double heightIn = 2;
         
-        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.translate((float)x - (widthIn/2), (float)y - (widthIn/2), (float)z - (widthIn/2));
         GlStateManager.enableRescaleNormal();
         GlStateManager.scale(1, 1, 1);
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         
-        GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate((float)(this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-		if (this.renderOutlines)
-        {
-            GlStateManager.enableColorMaterial();
-            GlStateManager.enableOutlineMode(this.getTeamColor(entity));
-        }
-        //bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-		bufferbuilder.pos(-0.5D, -0.25D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(0.5D, -0.25D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(0.5D, 0.75D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-        bufferbuilder.pos(-0.5D, 0.75D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        
+        bufferbuilder.pos((double)(xCoord + 0), (double)(yCoord + heightIn), 0).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), (double)(yCoord + heightIn), 0).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), (double)(yCoord + 0), 0).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + 0), (double)(yCoord + 0), 0).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
+        bufferbuilder.pos((double)(xCoord + 0), (double)(yCoord + heightIn), widthIn).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), (double)(yCoord + heightIn), widthIn).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), (double)(yCoord + 0), widthIn).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + 0), (double)(yCoord + 0), widthIn).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
+        bufferbuilder.pos(0, (double)(xCoord + 0), (double)(yCoord + heightIn)).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos(0, (double)(xCoord + widthIn), (double)(yCoord + heightIn)).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos(0, (double)(xCoord + widthIn), (double)(yCoord + 0)).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos(0, (double)(xCoord + 0), (double)(yCoord + 0)).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
+        bufferbuilder.pos(widthIn, (double)(xCoord + 0), (double)(yCoord + heightIn)).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos(widthIn, (double)(xCoord + widthIn), (double)(yCoord + heightIn)).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos(widthIn, (double)(xCoord + widthIn), (double)(yCoord + 0)).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos(widthIn, (double)(xCoord + 0), (double)(yCoord + 0)).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
+        bufferbuilder.pos((double)(xCoord + 0), 0, (double)(yCoord + heightIn)).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), 0, (double)(yCoord + heightIn)).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), 0, (double)(yCoord + 0)).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + 0), 0, (double)(yCoord + 0)).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
+        bufferbuilder.pos((double)(xCoord + 0), widthIn, (double)(yCoord + heightIn)).color(1F, 0, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), widthIn, (double)(yCoord + heightIn)).color(0, 1F, 0, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + widthIn), widthIn, (double)(yCoord + 0)).color(0, 0, 1F, 0.5F).endVertex();
+        bufferbuilder.pos((double)(xCoord + 0), widthIn, (double)(yCoord + 0)).color(0.5F, 0.5F, 0.5F, 0.5F).endVertex();
+        
         tessellator.draw();
-        if (this.renderOutlines)
-        {
-            GlStateManager.disableOutlineMode();
-            GlStateManager.disableColorMaterial();
-        }
+
+        GlStateManager.disableBlend();
+        GlStateManager.enableLighting();
+        GlStateManager.enableTexture2D();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
-		
-		
-        super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
-	
-	
 	
 	
 	
