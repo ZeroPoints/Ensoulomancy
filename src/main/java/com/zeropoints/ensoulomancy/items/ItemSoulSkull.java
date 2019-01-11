@@ -8,8 +8,9 @@ import com.zeropoints.ensoulomancy.init.ModRenderers;
 import com.zeropoints.ensoulomancy.render.tileentity.TileEntityItemSoulSkullStackRenderer;
 import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
+import com.zeropoints.ensoulomancy.util.HuskModelHelper;
+import com.zeropoints.ensoulomancy.util.HuskModelNameHelper;
 import com.zeropoints.ensoulomancy.util.IHasModel;
-import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -57,7 +58,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     	this.setTileEntityItemStackRenderer(new TileEntityItemSoulSkullStackRenderer());
     	
     	// This makes sure we use the right custom item renderer for the skull type
-		for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
+		for (int i = 0; i < HuskModelNameHelper.Types.length; ++i) {
 			ModRenderers.registerRenderer(this, i, "inventory");
 		}
 	}
@@ -129,7 +130,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (this.isInCreativeTab(tab)) {
-        	for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
+        	for (int i = 0; i < 61/*HuskModelHelper.HuskRegistryHelper.Types.length*/; ++i) {
                 items.add(new ItemStack(this, 1, i));
             }
         }
@@ -151,7 +152,7 @@ public class ItemSoulSkull extends Item implements IHasModel {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         int i = stack.getMetadata();
-        return this.getUnlocalizedName() + "." + SkullRegistryHelper.SoulSkullTypes[i].name;
+        return this.getUnlocalizedName() + "." + HuskModelNameHelper.Types[i].toLowerCase();
     }
 
     @Override

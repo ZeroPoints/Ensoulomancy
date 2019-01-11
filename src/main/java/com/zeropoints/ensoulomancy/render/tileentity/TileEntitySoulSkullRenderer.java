@@ -8,11 +8,12 @@ import java.util.Map;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.Main;
-import com.zeropoints.ensoulomancy.model.ModelHeadBase;
-import com.zeropoints.ensoulomancy.model.heads.*;
+import com.zeropoints.ensoulomancy.model.husk.HuskBase;
+import com.zeropoints.ensoulomancy.model.husk.HuskHeadBase;
+import com.zeropoints.ensoulomancy.model.husk.head.*;
 import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
-import com.zeropoints.ensoulomancy.util.SoulSkullType;
-import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
+import com.zeropoints.ensoulomancy.util.HuskModelHelper;
+import com.zeropoints.ensoulomancy.util.HuskModelHelper.HuskRegistryHelper;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -20,6 +21,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,49 +29,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileEntitySoulSkull> {
 	
 	public static TileEntitySoulSkullRenderer instance;
-	
-	//TODO: Merge simple models into one, e.g. blaze, spider
-	
-	// Shared models
-	private static final ModelHeadBase modelCatHead = new ModelCatHead();
-	private static final ModelHeadBase modelCowHead = new ModelCowHead();
-	private static final ModelHeadBase modelGuardianHead = new ModelGuardianHead();
-	private static final ModelHeadBase modelHorseHead = new ModelHorseHead();
-	private static final ModelHeadBase modelIllagerHead = new ModelIllagerHead();
-	private static final ModelHeadBase modelLlamaHead = new ModelLlamaHead();
-	private static final ModelHeadBase modelParrotHead = new ModelParrotHead();
-	private static final ModelHeadBase modelRabbitHead = new ModelRabbitHead();
-	private static final ModelHeadBase modelSpiderHead = new ModelSpiderHead();
-	
-	// put each of our models into a hashmap to retrieve easily through a name
-	// models with sub-types will be classified under the same SoulSkullType
-	static {
-		for (int i = 0; i < SkullRegistryHelper.SoulSkullTypes.length; ++i) {
-			SoulSkullType skullType = SkullRegistryHelper.SoulSkullTypes[i];
-			switch (skullType.headClass.getName()) {
-				case "ModelCatHead":      skullType.model = modelCatHead;		break;
-				case "ModelCowHead":      skullType.model = modelCowHead;		break;
-				case "ModelGuardianHead": skullType.model = modelGuardianHead;	break;
-				case "ModelHorseHead":    skullType.model = modelHorseHead;		break;
-				case "ModelIllagerHead":  skullType.model = modelIllagerHead;	break;
-				case "ModelLlamaHead":    skullType.model = modelLlamaHead;		break;
-				case "ModelParrotHead":   skullType.model = modelParrotHead;	break;
-				case "ModelRabbitHead":   skullType.model = modelRabbitHead;	break;
-				case "ModelSpiderHead":   skullType.model = modelSpiderHead;	break;
-				default: 
-					Constructor<?> cons = skullType.headClass.getConstructors()[0];
-					ModelHeadBase headModel = null;
-					try {
-						headModel = (ModelHeadBase)cons.newInstance();
-					} catch (Exception e) {
-						e.printStackTrace();
-						Main.log(Level.ERROR, "Model for Soul Skull cannot be null!");
-					}
-					skullType.model = headModel;
-					break;
-			}
-		}
-	}
 
     @Override
     public void render(TileEntitySoulSkull te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -83,12 +42,15 @@ public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileE
         instance = this;
     }
 
+    /**
+     * 
+     */
     public void renderSkull(float x, float y, float z, EnumFacing facing, float rotationIn, int skullType, int destroyStage) {
-    	if (skullType >= SkullRegistryHelper.SoulSkullTypes.length) {
+    	if (skullType >= HuskRegistryHelper.Types.length) {
     		skullType = 0;
     	}
-    	SoulSkullType soulSkull = SkullRegistryHelper.SoulSkullTypes[skullType];
-        ModelHeadBase modelbase = soulSkull.model;
+    	HuskModelHelper helper = HuskRegistryHelper.Types[skullType];
+        HuskHeadBase modelbase = (HuskHeadBase)helper.parts.get(helper.headIdx);
 
         if (destroyStage >= 0) {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
@@ -99,7 +61,7 @@ public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileE
             GlStateManager.matrixMode(5888);
         }
         else {
-        	this.bindTexture(soulSkull.texture);
+        	this.bindTexture(helper.texture);
         }
 
         GlStateManager.pushMatrix();
@@ -122,7 +84,15 @@ public class TileEntitySoulSkullRenderer extends TileEntitySpecialRenderer<TileE
         GlStateManager.scale(-1, -1, 1);
         GlStateManager.enableAlpha();
 
-        modelbase.render((Entity)null, 0, 0, 0, rotationIn, 0, 0.0625F);
+        // Since the appearance of husk offsets, have to physically add this in here otherwise it offsets the skulls too
+        modelbase.base.offsetX = 0;
+        modelbase.base.offsetY = 0;
+        modelbase.base.offsetZ = 0;
+        modelbase.base.rotationPointX = 0;
+        modelbase.base.rotationPointY = 0;
+        modelbase.base.rotationPointZ = 0;
+        
+        modelbase.render((Entity)null, 0, 0, 0, rotationIn, 0, modelbase.scale); // Use headbase render func
         GlStateManager.popMatrix();
 
         if (destroyStage >= 0) {

@@ -3,7 +3,6 @@ package com.zeropoints.ensoulomancy.items.tools;
 import org.apache.logging.log4j.Level;
 
 import com.zeropoints.ensoulomancy.entity.EntityHusk;
-import com.zeropoints.ensoulomancy.entity.EntityHusk.HuskOptions;
 import com.zeropoints.ensoulomancy.init.ModItems;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,10 +16,8 @@ import net.minecraft.world.World;
 
 public class Bla extends ToolSword {
 
-	private static final String name = "bla";
-	
 	public Bla() {
-		super(name, ModItems.MATERIAL_SOUL_INGOT);
+		super("bla", ModItems.MATERIAL_SOUL_INGOT);
 	}
 	
 	@Override
@@ -32,21 +29,16 @@ public class Bla extends ToolSword {
      */
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		HuskOptions options = new HuskOptions();
-		options.head = "Chicken";
-		options.body = "Chicken";
-		options.extraOptions.add("spiderLegs");
-			
-		EntityHusk husk = new EntityHusk(world, options);
-		husk.setOptions(options);
+		EntityHusk husk = new EntityHusk(world);
 		husk.setPosition(player.posX, player.posY, player.posZ);
 		
 		if (!player.world.isRemote) {
 			world.spawnEntity(husk);
+			husk.getDataManager().set(husk.souls, "Guardian,Bat"); // Hopefully this causes a change? 
+			husk.getDataManager().setDirty(husk.souls);
 		}
 		
 		return EnumActionResult.PASS;
 	}
-	
 	
 }

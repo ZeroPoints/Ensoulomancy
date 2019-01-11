@@ -3,13 +3,13 @@ package com.zeropoints.ensoulomancy.items.tools;
 import java.util.Random;
 
 import com.zeropoints.ensoulomancy.init.ModItems;
-import com.zeropoints.ensoulomancy.model.heads.ModelCatHead;
-import com.zeropoints.ensoulomancy.model.heads.ModelHorseHead;
-import com.zeropoints.ensoulomancy.model.heads.ModelLlamaHead;
-import com.zeropoints.ensoulomancy.model.heads.ModelParrotHead;
-import com.zeropoints.ensoulomancy.model.heads.ModelRabbitHead;
+import com.zeropoints.ensoulomancy.model.husk.head.CatHead;
+import com.zeropoints.ensoulomancy.model.husk.head.HorseHead;
+import com.zeropoints.ensoulomancy.model.husk.head.LlamaHead;
+import com.zeropoints.ensoulomancy.model.husk.head.ParrotHead;
+import com.zeropoints.ensoulomancy.model.husk.head.RabbitHead;
 import com.zeropoints.ensoulomancy.render.tileentity.TileEntitySoulSkullRenderer;
-import com.zeropoints.ensoulomancy.util.SoulSkullType.SkullRegistryHelper;
+import com.zeropoints.ensoulomancy.util.HuskModelHelper;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -68,14 +68,14 @@ public class ToolBeheading {
 	    return event.getDrops().stream().map(EntityItem::getItem).anyMatch(drop -> ItemStack.areItemStacksEqual(drop, head));
 	}
 	
-	/*
+	/**
 	 * Get the type of item to drop. Works for vanilla and custom skulls listed in the TileEntitySoulSkullRenderer class
 	 */
 	private ItemStack getHeadDrop(EntityLivingBase entity) {
 		String entityName = EntityList.getEntityString(entity);
 		//System.out.println(entityName + ", " + entity.getName());
 		
-		// Players are special - get their meta and return the special head 
+		// Players are special - get their meta and return the head 
 		if (entity instanceof EntityPlayer) {
 	    	ItemStack head = new ItemStack(Items.SKULL, 1, 3);
 	    	NBTUtil.writeGameProfile(head.getOrCreateSubCompound("SkullOwner"), ((EntityPlayer)entity).getGameProfile());
@@ -99,29 +99,29 @@ public class ToolBeheading {
 			case "Horse": // Horses have two textures layers. Variants are split by 256 + type
 				variant = ((EntityHorse)entity).getHorseVariant(); 
 				while(variant > 6) variant-=256;
-				entityName += "." + ModelHorseHead.subTypes[variant];
+				entityName += "." + HorseHead.subTypes[variant];
 				break;
 			case "Parrot":
 				variant = ((EntityParrot)entity).getVariant();
-				entityName += "." + ModelParrotHead.subTypes[variant];
+				entityName += "." + ParrotHead.subTypes[variant];
 				break;
 			case "Llama":
 				variant = ((EntityLlama)entity).getVariant();
-				entityName += "." + ModelLlamaHead.subTypes[variant];
+				entityName += "." + LlamaHead.subTypes[variant];
 				break;
 			case "Ozelot":
 				variant = ((EntityOcelot)entity).getTameSkin();
-				entityName += "." + ModelCatHead.subTypes[variant];
+				entityName += "." + CatHead.subTypes[variant];
 				break;
 			case "Rabbit":
 				variant = "Toast".equals(TextFormatting.getTextWithoutFormattingCodes(entity.getName())) ? 6 : ((EntityRabbit)entity).getRabbitType();
-				entityName += "." + ModelRabbitHead.subTypes[variant];
+				entityName += "." + RabbitHead.subTypes[variant];
 				break;
 		}
 		
 		// Custom heads, look up using the meta index using SoulSkullTypeMap
-		if (SkullRegistryHelper.SoulSkullTypeMap.containsKey(entityName)) {
-			return new ItemStack(ModItems.SOUL_SKULL, 1, SkullRegistryHelper.SoulSkullTypeMap.get(entityName));
+		if (HuskModelHelper.HuskRegistryHelper.TypeMap.containsKey(entityName)) {
+			return new ItemStack(ModItems.SOUL_SKULL, 1, HuskModelHelper.HuskRegistryHelper.TypeMap.get(entityName));
 		}
 	    
 	    // Entity does not have a skull drop
