@@ -5,7 +5,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 
 
-public class GenLayerRiverStyx extends GenLayer
+public class GenLayerVoid extends GenLayer
 {
 	
 	
@@ -14,7 +14,7 @@ public class GenLayerRiverStyx extends GenLayer
 	 * @param seed
 	 * @param parentIn
 	 */
-    public GenLayerRiverStyx(long seed, GenLayer parentIn)
+    public GenLayerVoid(long seed, GenLayer parentIn)
     {
         super(seed);
         parent = parentIn;

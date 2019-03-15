@@ -1,32 +1,34 @@
-package com.zeropoints.ensoulomancy.world.biome;
+package com.zeropoints.ensoulomancy.world.biome.hallowed;
 
 import java.util.Random;
 
 import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.entity.hallowed.EntityPixie;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
+import com.zeropoints.ensoulomancy.world.biome.ICustomBiome;
 
-
+import net.minecraft.block.BlockColored;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 
 
-public class HallowedBiome extends Biome implements ICustomBiome {
+public class CloudBiome extends Biome implements ICustomBiome {
 
 	/**
 	 * Initiates the purgatories Hallowed biome 
 	 */
-	public HallowedBiome() {
-		super(new Biome.BiomeProperties("HallowedBiome").setBaseHeight(7.7F).setHeightVariation(0.4F));
+	public CloudBiome() {
+		super(new Biome.BiomeProperties("CloudBiome").setBaseHeight(7.7F).setHeightVariation(0.4F));
 
 		//May aswell register it i guess
-		this.setRegistryName(Main.MOD_ID, "hallowed");
+		this.setRegistryName(Main.MOD_ID, "cloud");
 
 		//Set some default blocks for this biome
-		this.topBlock = Blocks.END_STONE.getDefaultState(); 
-		this.fillerBlock = ModBlocks.SOUL_STONE.getDefaultState();
+		this.topBlock = Blocks.WOOL.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE); 
+		this.fillerBlock = Blocks.WOOL.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE);
 
 		//Clear and set new defaults
 		this.spawnableMonsterList.clear();

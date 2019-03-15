@@ -2,7 +2,7 @@ package com.zeropoints.ensoulomancy.world.biome;
 
 import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.world.gen.layer.GenLayerPurgatory;
-import com.zeropoints.ensoulomancy.world.gen.layer.GenLayerRiverStyx;
+import com.zeropoints.ensoulomancy.world.gen.layer.GenLayerVoid;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
@@ -50,7 +50,7 @@ public class PurgatoryBiomeProvider extends BiomeProvider {
         biomes = new GenLayerSmooth(1000L, biomes);
 
         //Creates voids between our 3 custom biomes from the purgatory biome
-        biomes = new GenLayerRiverStyx(1000L, biomes);
+        biomes = new GenLayerVoid(1000L, biomes);
 
         //Smothes the edges of biomes. Can probably move this up higher on.
         biomes = new GenLayerSmooth(1000L, biomes);

@@ -1,9 +1,15 @@
 package com.zeropoints.ensoulomancy.init;
 
-import com.zeropoints.ensoulomancy.world.biome.HallowedBiome;
-import com.zeropoints.ensoulomancy.world.biome.ProfaneBiome;
-import com.zeropoints.ensoulomancy.world.biome.SpiritBiome;
 import com.zeropoints.ensoulomancy.world.biome.VoidBiome;
+import com.zeropoints.ensoulomancy.world.biome.hallowed.CloudBiome;
+import com.zeropoints.ensoulomancy.world.biome.hallowed.HesperidesBiome;
+import com.zeropoints.ensoulomancy.world.biome.hallowed.OlympusBiome;
+import com.zeropoints.ensoulomancy.world.biome.profane.PandemoniumBiome;
+import com.zeropoints.ensoulomancy.world.biome.profane.ShadowDenBiome;
+import com.zeropoints.ensoulomancy.world.biome.profane.TartarusBiome;
+import com.zeropoints.ensoulomancy.world.biome.spirit.DeadPlainsBiome;
+import com.zeropoints.ensoulomancy.world.biome.spirit.DryadForestBiome;
+import com.zeropoints.ensoulomancy.world.biome.spirit.RiverStyxBiome;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -13,11 +19,21 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class ModBiomes {
 
 
-    public static final HallowedBiome HALLOWED_BIOME = new HallowedBiome();
-    public static final SpiritBiome SPIRIT_BIOME = new SpiritBiome();
-    public static final ProfaneBiome PROFANE_BIOME = new ProfaneBiome();
+    public static final CloudBiome CLOUD_BIOME = new CloudBiome();
+    public static final HesperidesBiome HESPERIDES_BIOME = new HesperidesBiome();
+    public static final OlympusBiome OLYMPUS_BIOME = new OlympusBiome();
+
+    public static final DeadPlainsBiome DEADPLAINS_BIOME = new DeadPlainsBiome();
+    public static final DryadForestBiome DRYADFOREST_BIOME = new DryadForestBiome();
+    public static final RiverStyxBiome RIVERSTYX_BIOME = new RiverStyxBiome();
+
+    public static final TartarusBiome TARTARUS_BIOME = new TartarusBiome();
+    public static final PandemoniumBiome PANDEMONIUM_BIOME = new PandemoniumBiome();
+    public static final ShadowDenBiome SHADOWDEN_BIOME = new ShadowDenBiome();
+    
     public static final VoidBiome VOID_BIOME = new VoidBiome();
 
+    
     //public static final RiverStyxBiome RIVERSTYX_BIOME = new RiverStyxBiome(new Biome.BiomeProperties("RiverStyxBiome"));
 
     
@@ -34,23 +50,41 @@ public class ModBiomes {
 	public static void init() {
 		
 		//Cant remember what this did
-		ForgeRegistries.BIOMES.register(PROFANE_BIOME);
-		ForgeRegistries.BIOMES.register(HALLOWED_BIOME);
-		ForgeRegistries.BIOMES.register(SPIRIT_BIOME);
+		ForgeRegistries.BIOMES.register(TARTARUS_BIOME);
+		ForgeRegistries.BIOMES.register(PANDEMONIUM_BIOME);
+		ForgeRegistries.BIOMES.register(SHADOWDEN_BIOME);
+		ForgeRegistries.BIOMES.register(CLOUD_BIOME);
+		ForgeRegistries.BIOMES.register(HESPERIDES_BIOME);
+		ForgeRegistries.BIOMES.register(OLYMPUS_BIOME);
+		ForgeRegistries.BIOMES.register(DEADPLAINS_BIOME);
+		ForgeRegistries.BIOMES.register(DRYADFOREST_BIOME);
+		ForgeRegistries.BIOMES.register(RIVERSTYX_BIOME);
 		ForgeRegistries.BIOMES.register(VOID_BIOME);
 		
 		//Cant remember what this did
-		BiomeDictionary.addTypes(PROFANE_BIOME, Type.MAGICAL);
-		BiomeDictionary.addTypes(HALLOWED_BIOME, Type.MAGICAL);
-		BiomeDictionary.addTypes(SPIRIT_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(TARTARUS_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(PANDEMONIUM_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(SHADOWDEN_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(CLOUD_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(HESPERIDES_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(OLYMPUS_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(DEADPLAINS_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(DRYADFOREST_BIOME, Type.MAGICAL);
+		BiomeDictionary.addTypes(RIVERSTYX_BIOME, Type.MAGICAL);
 		BiomeDictionary.addTypes(VOID_BIOME, Type.MAGICAL);
 		
 
 		
-		PurgatoryBiomesList = new Biome[3];
-		PurgatoryBiomesList[0] = PROFANE_BIOME;
-		PurgatoryBiomesList[1] = HALLOWED_BIOME;
-		PurgatoryBiomesList[2] = SPIRIT_BIOME;
+		PurgatoryBiomesList = new Biome[9];
+		PurgatoryBiomesList[0] = TARTARUS_BIOME;
+		PurgatoryBiomesList[1] = PANDEMONIUM_BIOME;
+		PurgatoryBiomesList[2] = SHADOWDEN_BIOME;
+		PurgatoryBiomesList[3] = CLOUD_BIOME;
+		PurgatoryBiomesList[4] = HESPERIDES_BIOME;
+		PurgatoryBiomesList[5] = OLYMPUS_BIOME;
+		PurgatoryBiomesList[6] = DEADPLAINS_BIOME;
+		PurgatoryBiomesList[7] = DRYADFOREST_BIOME;
+		PurgatoryBiomesList[8] = RIVERSTYX_BIOME;
 		
 		
 	}

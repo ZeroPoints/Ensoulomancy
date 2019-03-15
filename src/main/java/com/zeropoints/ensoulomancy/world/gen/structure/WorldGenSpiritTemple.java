@@ -82,7 +82,7 @@ public class WorldGenSpiritTemple implements IWorldGenerator {
 			Biome currentBiome = world.getBiome(basePos);
 			// Biome is spirit biome only
 			//LIMIT BIOME SPAWN
-			if (currentBiome.getRegistryName() != ModBiomes.SPIRIT_BIOME.getRegistryName()) {
+			if (currentBiome.getRegistryName() != ModBiomes.DEADPLAINS_BIOME.getRegistryName()) {
 				return;
 			}
 
