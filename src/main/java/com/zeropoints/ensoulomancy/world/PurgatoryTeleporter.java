@@ -2,25 +2,40 @@
 
 package com.zeropoints.ensoulomancy.world;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.zeropoints.ensoulomancy.Main;
+import com.zeropoints.ensoulomancy.blocks.BlockSoulSkull;
 import com.zeropoints.ensoulomancy.init.ModBlocks;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
+import com.zeropoints.ensoulomancy.tileentity.TileEntitySoulSkull;
+import com.zeropoints.ensoulomancy.util.BlockComparing;
+import com.zeropoints.ensoulomancy.util.PortalMapping;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
 
 
 
@@ -56,6 +71,81 @@ public class PurgatoryTeleporter extends Teleporter {
 	
 	
 	
+	/*
+	 * Shape of our portal to match
+	 */
+	public List<BlockComparing> Portal = InitPortalShape();
+	
+	private static List<BlockComparing> InitPortalShape(){
+		HashMap<String, BlockComparing> blocksMap = new HashMap<String, BlockComparing>();
+
+		//White space negative.
+		for(int x = -2; x <= 2; x++) {
+			for(int y = 0; y <= 4; y++) {
+				for(int z = -2; z <= 2; z++) {
+					blocksMap.put(x + "," + y + "," + z, new BlockComparing(new BlockPos(x,y,z), Arrays.asList(Blocks.AIR.getDefaultState())));
+				}	
+			}	
+		}
+		
+		
+		//Bottom-Obsidian-Circle+0
+		blocksMap.put("1,0,0", new BlockComparing(new BlockPos(1,0,0), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("1,0,1", new BlockComparing(new BlockPos(1,0,1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("1,0,-1", new BlockComparing(new BlockPos(1,0,-1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("-1,0,0", new BlockComparing(new BlockPos(-1,0,0), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("-1,0,1", new BlockComparing(new BlockPos(-1,0,1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("-1,0,-1", new BlockComparing(new BlockPos(-1,0,-1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("0,0,-1", new BlockComparing(new BlockPos(0,0,-1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		blocksMap.put("0,0,1", new BlockComparing(new BlockPos(0,0,1), Arrays.asList(Blocks.OBSIDIAN.getDefaultState())));
+		
+
+		//Corners+0
+		blocksMap.put("2,0,2", new BlockComparing(new BlockPos(2,0,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("2,0,-2", new BlockComparing(new BlockPos(2,0,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,0,2", new BlockComparing(new BlockPos(-2,0,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,0,-2", new BlockComparing(new BlockPos(-2,0,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+
+
+		//Corners+1
+		blocksMap.put("2,1,2", new BlockComparing(new BlockPos(2,1,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("2,1,-2", new BlockComparing(new BlockPos(2,1,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,1,2", new BlockComparing(new BlockPos(-2,1,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,1,-2", new BlockComparing(new BlockPos(-2,1,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		//Corners+2
+		blocksMap.put("2,2,2", new BlockComparing(new BlockPos(2,2,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("2,2,-2", new BlockComparing(new BlockPos(2,2,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,2,2", new BlockComparing(new BlockPos(-2,2,2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-2,2,-2", new BlockComparing(new BlockPos(-2,2,-2), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		//Corners-Skull+3
+		blocksMap.put("2,3,2", new BlockComparing(new BlockPos(2,3,2), Arrays.asList(Blocks.SKULL.getDefaultState(), ModBlocks.SOUL_SKULL.getDefaultState() )));
+		blocksMap.put("2,3,-2", new BlockComparing(new BlockPos(2,3,-2), Arrays.asList(Blocks.SKULL.getDefaultState(), ModBlocks.SOUL_SKULL.getDefaultState() )));
+		blocksMap.put("-2,3,2", new BlockComparing(new BlockPos(-2,3,2), Arrays.asList(Blocks.SKULL.getDefaultState(), ModBlocks.SOUL_SKULL.getDefaultState() )));
+		blocksMap.put("-2,3,-2", new BlockComparing(new BlockPos(-2,3,-2), Arrays.asList(Blocks.SKULL.getDefaultState(), ModBlocks.SOUL_SKULL.getDefaultState() )));
+
+		//Top-Obsidian-Circle+4
+		blocksMap.put("1,4,0", new BlockComparing(new BlockPos(1,4,0), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("1,4,1", new BlockComparing(new BlockPos(1,4,1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("1,4,-1", new BlockComparing(new BlockPos(1,4,-1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-1,4,0", new BlockComparing(new BlockPos(-1,4,0), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-1,4,1", new BlockComparing(new BlockPos(-1,4,1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("-1,4,-1", new BlockComparing(new BlockPos(-1,4,-1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("0,4,-1", new BlockComparing(new BlockPos(0,4,-1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		blocksMap.put("0,4,1", new BlockComparing(new BlockPos(0,4,1), Arrays.asList(Blocks.STONEBRICK.getDefaultState())));
+		
+		
+		//Top-Center+4
+		blocksMap.put("0,4,0", new BlockComparing(new BlockPos(0,4,0), Arrays.asList(Blocks.GOLD_BLOCK.getDefaultState())));
+		
+		//Bottom-Center+0
+		blocksMap.put("0,0,0", new BlockComparing(new BlockPos(0,0,0), Arrays.asList(ModBlocks.MYSTICAL_BLOCK.getDefaultState())));
+				
+		return new ArrayList<BlockComparing>(blocksMap.values());
+	}
+	
+	
+	
+	
 	/**
 	 * Performs everything for creating a portal
 	 */
@@ -80,7 +170,44 @@ public class PurgatoryTeleporter extends Teleporter {
 			return true;
 		}
 		else {
-			if(BuildPortal(entity, targetDim, senderBlockPos, chunkPos)) {
+			//Check parts of portal.
+			Main.log("Checking Structure");
+			WorldServer targetServer;
+			WorldServer sendingServer;
+			if(targetDim == ModDimensions.dimensionId) {
+				sendingServer = OverWorldServer;
+				targetServer = PurgatoryWorldServer;
+	        }
+	        else {
+	        	sendingServer = PurgatoryWorldServer;
+				targetServer = OverWorldServer;
+	        }
+			
+			
+			for(int i = 0; i < Portal.size(); i++) {
+				String notFoundStr = "Block Match Not Found: ";
+
+				BlockPos tmpy = senderBlockPos.add(Portal.get(i).TargetPos);
+				boolean found = false;
+				for(int j = 0; j < Portal.get(i).PossibleStates.size(); j++) {
+	    			if(sendingServer.getBlockState(tmpy).getBlock().getDefaultState() == Portal.get(i).PossibleStates.get(j)) {
+	    				Main.log("Portal Structure Block Match Found: " + sendingServer.getBlockState(tmpy) + " - " + Portal.get(i).PossibleStates.get(j));
+	    				found = true;
+	    				break;
+	    			}
+	    			else {
+	    				notFoundStr += Portal.get(i).PossibleStates.get(j) + ". ";
+	    			}
+				}
+				
+				if(!found) {
+					Main.log(notFoundStr);
+					return found;
+				}
+			}
+			
+			//build corresponding portal
+			if(BuildPortal(entity, sendingServer, targetServer, targetDim, senderBlockPos, chunkPos)) {
 				//dont do this if buildportal fails.
 				PortalMapping pm = blockMappingCache.get(chunkPos);
 				ShiftEntityY(entity, targetDim, pm);
@@ -135,53 +262,33 @@ public class PurgatoryTeleporter extends Teleporter {
 	 * Builds the portal using blocks from the sending dimension.
 	 * Only rebuilds if it can't find one that already exists.
 	 * 
-	 * Slight annoying condition can be hit but i can't be bothered fixing:
-	 * 		If you already had a portal built in chunk and server restarts and you put a new sender block in same chunk
-	 * 		it will rebuild a portal for the new sender block unless you first click the original block. This is kind of an exception case though.
+	 * TODO: Look into caching into a file the mappings
 	 * 
-	 * Other problems:
-	 * 		Since i scan blocks around if a player builds 2 portal blocks and places them next to each other at chunk boundary 
-	 * 		and they keep going back and forth and restarting game it will keep rebuilding portal. Its a slow way to dupe these blocks.
-	 * 		I dont think its a game breaking problem as it takes too much effort for little gain when you can easily farm the blocks..
-	 * 
-	 * TODO: Will need to alter this later so it will not replace Biome structure blocks...maybe. 
-	 * TODO: Get bounds of portal and maybe dont build in targetdim until it finds a box of empty area to build portal...Dont want to delete a structure...
 	 */
-	private Boolean BuildPortal(Entity entity, int targetDim, BlockPos senderBlockPos, long chunkPos) {
-        int surfaceY = senderBlockPos.getY();
-		WorldServer targetServer;
-		WorldServer oldServer;
-		if(targetDim == ModDimensions.dimensionId) {
-			oldServer = OverWorldServer;
-			targetServer = PurgatoryWorldServer;
-        }
-        else {
-        	oldServer = PurgatoryWorldServer;
-			targetServer = OverWorldServer;
-        }
+	private Boolean BuildPortal(Entity entity, WorldServer sendingServer, WorldServer targetServer, int targetDim, BlockPos senderBlockPos, long chunkPos) {
 		//Make Portal blockpos identical to receiver
 		BlockPos receiverControllerBlockPos = new BlockPos(senderBlockPos);
 		IBlockState bs;
         boolean portalFound = false;
         Biome bi = targetServer.getBiome(receiverControllerBlockPos);
+        
 		
         //When the biome maps directly to void biome just build at that location
+    	//Due to restart the portal may already exist before. Check that before actually re-building portal
         if(bi.getBiomeName() == "VoidBiome") {
         	Main.log("VOID Selected");
-        	//Due to restart the portal may already exist before. Check that before actually re-building portal
         	bs = targetServer.getBlockState(receiverControllerBlockPos);
         	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
         		portalFound = true;
         	}
         }
         else {
-
     		Boolean newSurfaceYSet = false;
+    		
     		//Any other biome other then void will store the players portal at the surfaceY level for that biome. But also checks if the portal already exists in the x,z first.
 	        for(int i = 256; i > 0; i--) {		        	
 	        	BlockPos tmpBlockPos = new BlockPos(senderBlockPos.getX(), i, senderBlockPos.getZ());
 	        	bs = targetServer.getBlockState(tmpBlockPos);
-	        	
 	        	//Checks that we already havent got a mystical block in this chunkpos that was removed from restart.
 	        	if(bs.getBlock().getRegistryName() == ModBlocks.MYSTICAL_BLOCK.getRegistryName()) {
 	        		receiverControllerBlockPos = tmpBlockPos;
@@ -193,43 +300,50 @@ public class PurgatoryTeleporter extends Teleporter {
 	        	
 	        	if(bs.getMaterial() != Material.AIR && !newSurfaceYSet ) {
 	        		newSurfaceYSet = true;
-	        		surfaceY = i;
+	        		//Go one block backwards to above the surface.
+	        		receiverControllerBlockPos = tmpBlockPos.add(0, 1, 0);
 	        	}
+	        }
+	        
+	        //We found a surface. But check around for a clear space as to not delete blocks
+	        if(newSurfaceYSet) {
+	        	//TODO: Possible future code to check for blocks that we are allowed to delete. eg air/sand/dirt/stone/cobble......OR our structures...
+	        	
 	        }
         }
         
+
+		//Portal not found so we will build a corresponding portal
 		if(!portalFound) {
-			//Portal not found so we will get the blocks from the sender dim that are relevant to new portal and add to cache for building.
-			//will only takke control wool.
-			Map<BlockPos, IBlockState> blockFrameCache = new HashMap<BlockPos, IBlockState>();
-	        for(int x = -6; x <= 6; x++) {
-        		for(int z = -6; z <= 6; z++) {
-        			//Go from top down. No  reason anymore but before i was attempting to do magic 
-        			//where i would detect blocks underneath and offset portal base using this to make better structures
-        			for(int y = 6; y >= 0; y--) {	   
-	                	BlockPos oldbp = new BlockPos(senderBlockPos.getX()+x, senderBlockPos.getY()+y, senderBlockPos.getZ()+z);
-	                	BlockPos newbp = new BlockPos(senderBlockPos.getX()+x, surfaceY + y, senderBlockPos.getZ()+z);
-	                	bs = oldServer.getBlockState(oldbp);
-	                	//Add the control block to cache, which is always at center
-	                	
-	                	if(y == 0 && x == 0 && z == 0) {
-	                		receiverControllerBlockPos = newbp;
-	                		blockFrameCache.put(newbp, bs);
-	                	}
-	                	if(bs.getBlock().getRegistryName() == Blocks.WOOL.getRegistryName() ) {
-	                		
-	                		blockFrameCache.put(newbp, bs);
-	                	}
-	                }
-	            }
-	        } 
-
-			Main.log("Found Portal Blocks: " + blockFrameCache.size());
-			//Build new portal in otherworld
-			for(Map.Entry<BlockPos, IBlockState> entry: blockFrameCache.entrySet()) {
-				targetServer.setBlockState(new BlockPos(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ()), entry.getValue());
-	        }
-
+			for(int i = 0; i < Portal.size(); i++) {
+				BlockPos receiverBlockPosTarget = receiverControllerBlockPos.add(Portal.get(i).TargetPos);
+				IBlockState targetIBlockState = targetServer.getBlockState(receiverBlockPosTarget);
+				if(targetIBlockState.getMaterial() != Material.AIR) {
+					Main.log("Portal Erasing Block: " + targetIBlockState);
+				}
+    			
+	        	BlockPos senderBlockPosTarget = senderBlockPos.add(Portal.get(i).TargetPos);
+	        	IBlockState senderIBlockState = sendingServer.getBlockState(senderBlockPosTarget);
+	        	TileEntity senderTileEntity = null;
+	        	if(senderIBlockState.getBlock() instanceof BlockSkull || senderIBlockState.getBlock() instanceof BlockSoulSkull) {
+	        		//Means we have a TileEntity
+	        		senderTileEntity = sendingServer.getTileEntity(senderBlockPosTarget);
+	        	}
+				targetServer.setBlockState(new BlockPos(receiverBlockPosTarget), sendingServer.getBlockState(senderBlockPosTarget));				
+				if(senderTileEntity != null) {
+					TileEntity tileEntityTarget = targetServer.getTileEntity(receiverBlockPosTarget);					
+					if(senderTileEntity instanceof TileEntitySkull) {
+		        		((TileEntitySkull)tileEntityTarget).setSkullRotation( ((TileEntitySkull)senderTileEntity).getSkullRotation());
+		        		((TileEntitySkull)tileEntityTarget).setType( ((TileEntitySkull)senderTileEntity).getSkullType());
+					}
+					else if(senderTileEntity instanceof TileEntitySoulSkull) {
+		        		((TileEntitySoulSkull)tileEntityTarget).setSkullRotation( ((TileEntitySoulSkull)senderTileEntity).getSkullRotation());
+		        		((TileEntitySoulSkull)tileEntityTarget).setType( ((TileEntitySoulSkull)senderTileEntity).getSkullType());
+					}
+				}
+			}
+			
+			targetServer.setBlockState(receiverControllerBlockPos,ModBlocks.MYSTICAL_BLOCK.getDefaultState());
 			Main.log("Portal Built");
 		}
 
@@ -344,30 +458,7 @@ public class PurgatoryTeleporter extends Teleporter {
 	
 	
 	
-	
 
 
-	/*
-	 * Obj to store a 1 to 1 mapping of sender rececivers for easy lookup
-	 */
-    public class PortalMapping 
-    {
-    	public BlockPos PurgatoryBlock;
-    	public BlockPos OverWorldBlock;
-    	
-    	
-        public PortalMapping(BlockPos pb, BlockPos ob)
-        {
-        	
-        	PurgatoryBlock = pb;
-        	OverWorldBlock = ob;
-        	
-        }
-        
-        
-        
-    }
-
-	
 
 }

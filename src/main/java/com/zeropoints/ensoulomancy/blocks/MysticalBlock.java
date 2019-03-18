@@ -1,16 +1,27 @@
 package com.zeropoints.ensoulomancy.blocks;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.zeropoints.ensoulomancy.Main;
 import com.zeropoints.ensoulomancy.init.ModDimensions;
 import com.zeropoints.ensoulomancy.world.PurgatoryTeleporter;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -74,8 +85,9 @@ public class MysticalBlock extends BlockBase  {
 	        	ModDimensions.PURGATORY_TELEPORTER = new PurgatoryTeleporter(overworldServer, purgatoryServer);
 	        	purgatoryServer.customTeleporters.add(ModDimensions.PURGATORY_TELEPORTER);
 	        }
-	       
-			
+	        
+
+	        
 	        if (ModDimensions.PURGATORY_TELEPORTER.CalculateReceiverPortal(entityPlayerMP, newDimension, blockPos)) {
 		        //Test both below for server problems...SP both work
 	        	entity.changeDimension(newDimension, ModDimensions.PURGATORY_TELEPORTER);
